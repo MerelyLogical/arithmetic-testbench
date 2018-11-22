@@ -1,0 +1,19 @@
+module my_adder (
+  clk,
+  rst,
+  a,
+  b,
+  o
+);
+
+input        clk;
+input        rst;
+
+input  [7:0] a;
+input  [7:0] b;
+output [7:0] c;
+
+always @(posedge clk)
+	c <= a + b;
+
+endmodule
