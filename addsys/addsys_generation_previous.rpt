@@ -12,22 +12,3 @@ Progress: Validating
 Progress: Done reading input file
 Info: qsys-generate succeeded.
 Info: Finished: Create block symbol file (.bsf)
-Info: 
-Info: Starting: Create HDL design files for synthesis
-Info: qsys-generate H:\4year\fyp\gitlab\cyclone-v-system-test\addsys.qsys --synthesis=VERILOG --output-directory=H:\4year\fyp\gitlab\cyclone-v-system-test\addsys\synthesis --family="Cyclone V" --part=5CSXFC6D6F31C6
-Progress: Loading cyclone-v-system-test/addsys.qsys
-Progress: Reading input file
-Progress: Adding clk_0 [clock_source 16.0]
-Progress: Parameterizing module clk_0
-Progress: Adding my_adder [my_adder 1.0]
-Progress: Parameterizing module my_adder
-Progress: Building connections
-Progress: Parameterizing connections
-Progress: Validating
-Progress: Done reading input file
-Info: addsys: Generating addsys "addsys" for QUARTUS_SYNTH
-Info: my_adder: "addsys" instantiated my_adder "my_adder"
-Info: rst_controller: "addsys" instantiated altera_reset_controller "rst_controller"
-Info: addsys: Done "addsys" with 3 modules, 5 files
-Info: qsys-generate succeeded.
-Info: Finished: Create HDL design files for synthesis

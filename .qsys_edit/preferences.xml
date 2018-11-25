@@ -3,11 +3,11 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="63" />
-   <irq preferredWidth="34" />
+   <connections preferredWidth="319" />
+   <irq preferredWidth="63" />
   </columns>
  </systemtable>
- <library expandedCategories="Library,Project/Custom,Project" />
- <window width="1920" height="1036" x="0" y="0" />
- <generation synthesis="NONE" />
+ <library expandedCategories="Library,Project,Project/Custom" />
+ <window width="1920" height="1050" x="0" y="0" />
+ <generation path="_PROJECT_NAME_" />
 </preferences>

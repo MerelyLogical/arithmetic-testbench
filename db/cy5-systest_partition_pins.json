@@ -4,107 +4,47 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "o[0]",
+					"name" : "fpga_led_pio[0]",
 					"strict" : false
 				},
 				{
-					"name" : "o[1]",
+					"name" : "fpga_led_pio[1]",
 					"strict" : false
 				},
 				{
-					"name" : "o[2]",
+					"name" : "fpga_led_pio[2]",
 					"strict" : false
 				},
 				{
-					"name" : "o[3]",
+					"name" : "fpga_led_pio[3]",
 					"strict" : false
 				},
 				{
-					"name" : "o[4]",
+					"name" : "fpga_dipsw_pio[0]",
 					"strict" : false
 				},
 				{
-					"name" : "o[5]",
+					"name" : "fpga_dipsw_pio[1]",
 					"strict" : false
 				},
 				{
-					"name" : "o[6]",
+					"name" : "fpga_dipsw_pio[2]",
 					"strict" : false
 				},
 				{
-					"name" : "o[7]",
+					"name" : "fpga_dipsw_pio[3]",
 					"strict" : false
 				},
 				{
-					"name" : "clk",
+					"name" : "fpga_clk_50",
 					"strict" : false
 				},
 				{
-					"name" : "rst",
+					"name" : "fpga_button_pio[0]",
 					"strict" : false
 				},
 				{
-					"name" : "b[0]",
-					"strict" : false
-				},
-				{
-					"name" : "a[0]",
-					"strict" : false
-				},
-				{
-					"name" : "b[1]",
-					"strict" : false
-				},
-				{
-					"name" : "a[1]",
-					"strict" : false
-				},
-				{
-					"name" : "b[2]",
-					"strict" : false
-				},
-				{
-					"name" : "a[2]",
-					"strict" : false
-				},
-				{
-					"name" : "b[3]",
-					"strict" : false
-				},
-				{
-					"name" : "a[3]",
-					"strict" : false
-				},
-				{
-					"name" : "b[4]",
-					"strict" : false
-				},
-				{
-					"name" : "a[4]",
-					"strict" : false
-				},
-				{
-					"name" : "b[5]",
-					"strict" : false
-				},
-				{
-					"name" : "a[5]",
-					"strict" : false
-				},
-				{
-					"name" : "b[6]",
-					"strict" : false
-				},
-				{
-					"name" : "a[6]",
-					"strict" : false
-				},
-				{
-					"name" : "b[7]",
-					"strict" : false
-				},
-				{
-					"name" : "a[7]",
+					"name" : "fpga_button_pio[1]",
 					"strict" : false
 				}
 			]

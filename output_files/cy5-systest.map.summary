@@ -1,17 +1,17 @@
-Analysis & Synthesis Status : Successful - Thu Nov 22 19:39:08 2018
-Quartus Prime Version : 16.0.0 Build 211 04/27/2016 SJ Standard Edition
+Analysis & Synthesis Status : Successful - Sun Nov 25 20:26:34 2018
+Quartus Prime Version : 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 Revision Name : cy5-systest
-Top-level Entity Name : my_adder
+Top-level Entity Name : sys_top
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 8
-Total pins : 26
+Total registers : 4699
+Total pins : 157
 Total virtual pins : 0
-Total block memory bits : 0
+Total block memory bits : 527,104
 Total DSP Blocks : 0
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0
 Total HSSI PMA TX Serializers : 0
 Total PLLs : 0
-Total DLLs : 0
+Total DLLs : 1
