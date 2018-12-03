@@ -619,7 +619,6 @@ set_instance_assignment -name GLOBAL_SIGNAL OFF -to soc_inst|hps_0|hps_io|border
 set_instance_assignment -name GLOBAL_SIGNAL OFF -to soc_inst|hps_0|hps_io|border|hps_sdram_inst|p0|umemphy|uread_datapath|reset_n_fifo_wraddress[4] -tag __hps_sdram_p0
 set_instance_assignment -name ENABLE_BENEFICIAL_SKEW_OPTIMIZATION_FOR_NON_GLOBAL_CLOCKS ON -to soc_inst|hps_0|hps_io|border|hps_sdram_inst -tag __hps_sdram_p0
 set_instance_assignment -name PLL_COMPENSATION_MODE DIRECT -to soc_inst|hps_0|hps_io|border|hps_sdram_inst|pll0|fbout -tag __hps_sdram_p0
-set_global_assignment -name QIP_FILE addsys/synthesis/addsys.qip
 set_global_assignment -name BDF_FILE "cy5-systest.bdf"
 set_global_assignment -name VERILOG_FILE my_adder.v
 set_global_assignment -name QIP_FILE soc_system/synthesis/soc_system.qip

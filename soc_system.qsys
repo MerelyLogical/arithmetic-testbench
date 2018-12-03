@@ -9,64 +9,6 @@
    categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
-   element adder_a
-   {
-      datum _sortIndex
-      {
-         value = "13";
-         type = "int";
-      }
-   }
-   element adder_a.s1
-   {
-      datum _lockedAddress
-      {
-         value = "0";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "1048576";
-         type = "String";
-      }
-   }
-   element adder_b
-   {
-      datum _sortIndex
-      {
-         value = "14";
-         type = "int";
-      }
-   }
-   element adder_b.s1
-   {
-      datum baseAddress
-      {
-         value = "1048592";
-         type = "String";
-      }
-   }
-   element adder_o
-   {
-      datum _sortIndex
-      {
-         value = "15";
-         type = "int";
-      }
-   }
-   element adder_o.s1
-   {
-      datum _lockedAddress
-      {
-         value = "0";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "1048608";
-         type = "String";
-      }
-   }
    element button_pio
    {
       datum _sortIndex
@@ -263,8 +205,16 @@
    {
       datum _sortIndex
       {
-         value = "16";
+         value = "13";
          type = "int";
+      }
+   }
+   element my_adder_0.slave
+   {
+      datum baseAddress
+      {
+         value = "1048576";
+         type = "String";
       }
    }
    element onchip_memory2_0
@@ -285,6 +235,14 @@
       datum baseAddress
       {
          value = "65536";
+         type = "String";
+      }
+   }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
          type = "String";
       }
    }
@@ -398,48 +356,6 @@
    dir="end" />
  <interface name="memory" internal="hps_0.memory" type="conduit" dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
- <module name="adder_a" kind="altera_avalon_pio" version="16.0" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="8" />
- </module>
- <module name="adder_b" kind="altera_avalon_pio" version="16.0" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="8" />
- </module>
- <module name="adder_o" kind="altera_avalon_pio" version="16.0" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="8" />
- </module>
  <module name="button_pio" kind="altera_avalon_pio" version="16.0" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="true" />
   <parameter name="bitModifyingOutReg" value="false" />
@@ -1102,8 +1018,8 @@
   <parameter name="USE_AUTO_ADDRESS_WIDTH" value="1" />
   <parameter name="USE_RESPONSE" value="0" />
  </module>
- <module name="my_adder_0" kind="my_adder" version="1.0" enabled="1">
-  <parameter name="WIDTH" value="8" />
+ <module name="my_adder_0" kind="my_adder" version="2.0" enabled="1">
+  <parameter name="WIDTH" value="32" />
  </module>
  <module
    name="onchip_memory2_0"
@@ -1165,25 +1081,7 @@
    kind="avalon"
    version="16.0"
    start="hps_0.h2f_lw_axi_master"
-   end="adder_o.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00100020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.0"
-   start="hps_0.h2f_lw_axi_master"
-   end="adder_b.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00100010" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.0"
-   start="hps_0.h2f_lw_axi_master"
-   end="adder_a.s1">
+   end="my_adder_0.slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00100000" />
   <parameter name="defaultConnection" value="false" />
@@ -1331,9 +1229,6 @@
    start="clk_0.clk"
    end="f2sdram_only_master.clk" />
  <connection kind="clock" version="16.0" start="clk_0.clk" end="mm_bridge_0.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="adder_a.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="adder_b.clk" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="adder_o.clk" />
  <connection
    kind="clock"
    version="16.0"
@@ -1344,6 +1239,7 @@
    version="16.0"
    start="clk_0.clk"
    end="intr_capturer_0.clock" />
+ <connection kind="clock" version="16.0" start="clk_0.clk" end="my_adder_0.clock" />
  <connection
    kind="clock"
    version="16.0"
@@ -1364,39 +1260,6 @@
    version="16.0"
    start="clk_0.clk"
    end="hps_0.h2f_lw_axi_clock" />
- <connection
-   kind="conduit"
-   version="16.0"
-   start="adder_a.external_connection"
-   end="my_adder_0.in_a">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="16.0"
-   start="adder_b.external_connection"
-   end="my_adder_0.in_b">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="16.0"
-   start="adder_o.external_connection"
-   end="my_adder_0.out_o">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
  <connection
    kind="interrupt"
    version="16.0"
@@ -1488,17 +1351,7 @@
    kind="reset"
    version="16.0"
    start="clk_0.clk_reset"
-   end="adder_a.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_0.clk_reset"
-   end="adder_b.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_0.clk_reset"
-   end="adder_o.reset" />
+   end="my_adder_0.reset" />
  <connection
    kind="reset"
    version="16.0"
