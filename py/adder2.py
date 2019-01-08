@@ -2,6 +2,7 @@
 
 import mmap
 import struct
+import time
 
 # Generic AXI module class. Intended to be inherited by specific module classes
 # James Davis, 2016
@@ -71,8 +72,21 @@ ad = adder(ax, 0x00000000)
 a = int(input('Input a: '))
 b = int(input('Input b: '))
 
-ad.write_a(a)
-ad.write_b(b)
-o = ad.read_out()
+t1 = time.clock()
+for x in range(1000):
+	ad.write_a(a)
+	ad.write_b(b)
+	o = ad.read_out()
+t2 = time.clock()
+t1 = t2 - t1
 
-print('a + b = {}'.format(o))
+print('FPGA: in {}s: a + b = {}'.format(t1, o))
+
+t1 = time.clock()
+for x in range(1000):
+	o = a + b
+t2 = time.clock()
+t1 = t2 - t1
+
+print('HPS: in {}s: a + b = {}'.format(t1, o))
+
