@@ -201,22 +201,6 @@
          type = "String";
       }
    }
-   element my_adder_0
-   {
-      datum _sortIndex
-      {
-         value = "13";
-         type = "int";
-      }
-   }
-   element my_adder_0.slave
-   {
-      datum baseAddress
-      {
-         value = "1048576";
-         type = "String";
-      }
-   }
    element onchip_memory2_0
    {
       datum _sortIndex
@@ -288,6 +272,27 @@
       datum baseAddress
       {
          value = "64";
+         type = "String";
+      }
+   }
+   element test_wrapper_0
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
+   element test_wrapper_0.slave
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "1048576";
          type = "String";
       }
    }
@@ -1018,9 +1023,6 @@
   <parameter name="USE_AUTO_ADDRESS_WIDTH" value="1" />
   <parameter name="USE_RESPONSE" value="0" />
  </module>
- <module name="my_adder_0" kind="my_adder" version="2.0" enabled="1">
-  <parameter name="WIDTH" value="32" />
- </module>
  <module
    name="onchip_memory2_0"
    kind="altera_avalon_onchip_memory2"
@@ -1059,6 +1061,9 @@
    enabled="1">
   <parameter name="id" value="-1395321840" />
  </module>
+ <module name="test_wrapper_0" kind="test_wrapper" version="1.0" enabled="1">
+  <parameter name="WIDTH" value="32" />
+ </module>
  <connection
    kind="avalon"
    version="16.0"
@@ -1081,7 +1086,7 @@
    kind="avalon"
    version="16.0"
    start="hps_0.h2f_lw_axi_master"
-   end="my_adder_0.slave">
+   end="test_wrapper_0.slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00100000" />
   <parameter name="defaultConnection" value="false" />
@@ -1239,7 +1244,11 @@
    version="16.0"
    start="clk_0.clk"
    end="intr_capturer_0.clock" />
- <connection kind="clock" version="16.0" start="clk_0.clk" end="my_adder_0.clock" />
+ <connection
+   kind="clock"
+   version="16.0"
+   start="clk_0.clk"
+   end="test_wrapper_0.clock" />
  <connection
    kind="clock"
    version="16.0"
@@ -1351,7 +1360,7 @@
    kind="reset"
    version="16.0"
    start="clk_0.clk_reset"
-   end="my_adder_0.reset" />
+   end="test_wrapper_0.reset" />
  <connection
    kind="reset"
    version="16.0"

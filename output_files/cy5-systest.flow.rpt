@@ -1,5 +1,5 @@
 Flow report for cy5-systest
-Mon Jan 21 23:53:41 2019
+Mon Feb 11 00:45:42 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 
 
@@ -41,15 +41,15 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Mon Jan 21 23:51:51 2019       ;
+; Flow Status                     ; Successful - Mon Feb 11 00:44:14 2019       ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
 ; Revision Name                   ; cy5-systest                                 ;
 ; Top-level Entity Name           ; sys_top                                     ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSXFC6D6F31C6                              ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 3,231 / 41,910 ( 8 % )                      ;
-; Total registers                 ; 4705                                        ;
+; Logic utilization (in ALMs)     ; 3,113 / 41,910 ( 7 % )                      ;
+; Total registers                 ; 4426                                        ;
 ; Total pins                      ; 157 / 499 ( 31 % )                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 527,104 / 5,662,720 ( 9 % )                 ;
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 01/21/2019 23:40:28 ;
+; Start date & time ; 02/11/2019 00:34:06 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cy5-systest         ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
 ; Assignment Name                       ; Value                                                                    ; Default Value ; Entity Name                    ; Section Id     ;
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
-; COMPILER_SIGNATURE_ID                 ; 35490518070253.154811402706152                                           ; --            ; --                             ; --             ;
+; COMPILER_SIGNATURE_ID                 ; 35490518070253.154984523711676                                           ; --            ; --                             ; --             ;
 ; ECO_REGENERATE_REPORT                 ; On                                                                       ; Off           ; --                             ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT                ; None                                                                     ; --            ; --                             ; eda_simulation ;
 ; ENABLE_SIGNALTAP                      ; On                                                                       ; --            ; --                             ; --             ;
@@ -121,11 +121,12 @@ agreement for further details.
 ; PARTITION_FITTER_PRESERVATION_LEVEL   ; PLACEMENT_AND_ROUTING                                                    ; --            ; sys_top                        ; Top            ;
 ; PARTITION_NETLIST_TYPE                ; SOURCE                                                                   ; --            ; sys_top                        ; Top            ;
 ; POWER_BOARD_THERMAL_MODEL             ; None (CONSERVATIVE)                                                      ; --            ; --                             ; --             ;
+; POWER_DEFAULT_INPUT_IO_TOGGLE_RATE    ; 12.5 %                                                                   ; 12.5%         ; --                             ; --             ;
 ; POWER_PRESET_COOLING_SOLUTION         ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                    ; --            ; --                             ; --             ;
 ; PROJECT_OUTPUT_DIRECTORY              ; output_files                                                             ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.regmap                                   ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.debuginfo                                ; --            ; --                             ; --             ;
-; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1548113880             ; --            ; soc_system                     ; --             ;
+; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1549843485             ; --            ; soc_system                     ; --             ;
 ; SOPCINFO_FILE                         ; soc_system/synthesis/../../soc_system.sopcinfo                           ; --            ; --                             ; --             ;
 ; SYNTHESIS_ONLY_QIP                    ; On                                                                       ; --            ; --                             ; --             ;
 ; TOP_LEVEL_ENTITY                      ; sys_top                                                                  ; cy5-systest   ; --                             ; --             ;
@@ -139,11 +140,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:01:50     ; 1.0                     ; 5471 MB             ; 00:02:18                           ;
-; Fitter                    ; 00:05:20     ; 1.0                     ; 7082 MB             ; 00:06:28                           ;
-; Assembler                 ; 00:00:23     ; 1.0                     ; 5161 MB             ; 00:00:20                           ;
-; TimeQuest Timing Analyzer ; 00:01:48     ; 1.0                     ; 5899 MB             ; 00:01:39                           ;
-; Total                     ; 00:09:21     ; --                      ; --                  ; 00:10:45                           ;
+; Analysis & Synthesis      ; 00:01:38     ; 1.0                     ; 5518 MB             ; 00:02:12                           ;
+; Fitter                    ; 00:04:43     ; 1.0                     ; 7096 MB             ; 00:05:59                           ;
+; Assembler                 ; 00:00:18     ; 1.0                     ; 5155 MB             ; 00:00:18                           ;
+; TimeQuest Timing Analyzer ; 00:01:26     ; 1.0                     ; 5889 MB             ; 00:01:22                           ;
+; Total                     ; 00:08:05     ; --                      ; --                  ; 00:09:51                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
