@@ -12,7 +12,12 @@ module test_wrapper #(
 	input                  slave_read,
 	input                  slave_write,
 	input      [WIDTH-1:0] slave_writedata,
-	output reg [WIDTH-1:0] slave_readdata
+	output reg [WIDTH-1:0] slave_readdata,
+	
+	// DUT conduit
+	output [WIDTH-1:0] dut_a,
+	output [WIDTH-1:0] dut_b,
+	input  [WIDTH-1:0] dut_s
 );
 
 	// Avalon slave logic
@@ -41,9 +46,13 @@ module test_wrapper #(
 	wire [31:0] rand_a;
 	wire [31:0] drive_a;
 	wire [31:0] drive_b;
-	
-	assign o_hpc_o = drive_a;
-	
+	wire [31:0] dut_out;
+	wire [31:0] mnt_events;
+	assign dut_a = drive_a;
+	assign dut_b = drive_b;
+	assign o_hpc_o = mnt_events;
+	assign dut_out = dut_s;
+
 	// LFSR randomiser
 	randomiser #(
 		.WIDTH    ( WIDTH      )
@@ -69,4 +78,17 @@ module test_wrapper #(
 		.o_drive_b( drive_b    )
 	);
 
+	// monitor
+	monitor #(
+		.WIDTH    ( WIDTH      )
+	) u_monitor (
+		.clk      ( clk_tb     ),
+		.reset    ( reset_tb   ),
+		
+		.i_dut_ia ( drive_a    ),
+		.i_dut_ib ( drive_b    ),
+		.i_dut_os ( dut_out    ),
+		.o_event  ( mnt_events )
+	);
+	
 endmodule

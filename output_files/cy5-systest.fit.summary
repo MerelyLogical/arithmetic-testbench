@@ -1,12 +1,12 @@
-Fitter Status : Successful - Mon Feb 11 14:03:40 2019
+Fitter Status : Successful - Mon Feb 18 01:09:24 2019
 Quartus Prime Version : 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 Revision Name : cy5-systest
 Top-level Entity Name : sys_top
 Family : Cyclone V
 Device : 5CSXFC6D6F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 3,214 / 41,910 ( 8 % )
-Total registers : 4641
+Logic utilization (in ALMs) : 3,227 / 41,910 ( 8 % )
+Total registers : 4600
 Total pins : 157 / 499 ( 31 % )
 Total virtual pins : 0
 Total block memory bits : 527,104 / 5,662,720 ( 9 % )

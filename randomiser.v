@@ -11,12 +11,10 @@ module randomiser #(
 );
 
 	reg [31:0] r;
-	always @(posedge clk or negedge reset)
-	begin
+	always @(posedge clk or negedge reset) begin
 		if (~reset)
 			r <= i_initial;
-		else if (enable)
-			begin
+		else if (enable) begin
 				// 32 bit Galois LFSR has taps at 32, 30, 26, 25.
 				r[31] <= r[0];
 				r[29] <= r[30] ^ r[0];

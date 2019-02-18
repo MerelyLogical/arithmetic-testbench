@@ -2,7 +2,7 @@
   <sld_infos>
     <sld_info hpath="soc_system:soc_inst" name="soc_inst">
       <assignment_values>
-        <assignment_value text="QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1549893006"/>
+        <assignment_value text="QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1550450654"/>
       </assignment_values>
     </sld_info>
     <sld_info hpath="sld_hub:auto_hub|alt_sld_fab:\instrumentation_fabric_with_node_gen:instrumentation_fabric" library="alt_sld_fab" name="instrumentation_fabric">
