@@ -48,47 +48,59 @@ module test_wrapper #(
 	wire [31:0] drive_b;
 	wire [31:0] dut_out;
 	wire [31:0] mnt_events;
+	wire [ 7:0] event_ctr;
 	assign dut_a = drive_a;
 	assign dut_b = drive_b;
-	assign o_hpc_o = mnt_events;
+	assign o_hpc_o = event_ctr;
 	assign dut_out = dut_s;
 
 	// LFSR randomiser
 	randomiser #(
-		.WIDTH    ( WIDTH      )
+		.WIDTH      ( WIDTH      )
 	) u_randomiser (
-	  .clk       ( clk_tb     ),
-	  .reset     ( reset_tb   ),
-	  .enable    ( i_hpc_a[0] ),
+	  .clk         ( clk_tb     ),
+	  .reset       ( reset_tb   ),
+	  .enable      ( i_hpc_a[0] ),
 	  
-	  .i_initial ( 32'hFFFF   ),
-	  .o         ( rand_a     )
+	  .i_initial   ( 32'hFFFF   ),
+	  .o           ( rand_a     )
 	);
 
-	// driver
+	// provides signal to drive DUT
 	driver #(
-		.WIDTH    ( WIDTH      )
+		.WIDTH      ( WIDTH      )
 	) u_driver (
-		.clk      ( clk_tb     ),
-		.reset    ( reset_tb   ),
+		.clk        ( clk_tb     ),
+		.reset      ( reset_tb   ),
 		
-		.i_rand_a ( rand_a     ),
-		.i_rand_b ( rand_a     ),
-		.o_drive_a( drive_a    ),
-		.o_drive_b( drive_b    )
+		.i_rand_a   ( rand_a     ),
+		.i_rand_b   ( rand_a     ),
+		.o_drive_a  ( drive_a    ),
+		.o_drive_b  ( drive_b    )
 	);
 
-	// monitor
+	// find errors and other interesting events
 	monitor #(
-		.WIDTH    ( WIDTH      )
+		.WIDTH      ( WIDTH      )
 	) u_monitor (
-		.clk      ( clk_tb     ),
-		.reset    ( reset_tb   ),
+		.clk        ( clk_tb     ),
+		.reset      ( reset_tb   ),
 		
-		.i_dut_ia ( drive_a    ),
-		.i_dut_ib ( drive_b    ),
-		.i_dut_os ( dut_out    ),
-		.o_event  ( mnt_events )
+		.i_dut_ia   ( drive_a    ),
+		.i_dut_ib   ( drive_b    ),
+		.i_dut_os   ( dut_out    ),
+		.o_event    ( mnt_events )
 	);
-	
+
+	// counts events
+	scoreboard #(
+		.WIDTH      ( WIDTH      )
+	) u_scoreboard (
+		.clk        ( clk_tb     ),
+		.reset      ( reset_tb   ),
+
+		.i_event    ( mnt_events ),
+		.o_event_ctr( event_ctr  )
+	);
+
 endmodule
