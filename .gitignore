@@ -1,5 +1,5 @@
 db/
-addersys/
 soc_system/
 incremental_db/
 .qsys_edit/
+*.bak

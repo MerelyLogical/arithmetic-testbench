@@ -1,5 +1,5 @@
 Flow report for cy5-systest
-Wed Feb 20 15:31:43 2019
+Wed Feb 20 16:22:42 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 
 
@@ -41,25 +41,25 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Wed Feb 20 15:29:38 2019       ;
+; Flow Status                     ; Successful - Wed Feb 20 16:22:42 2019       ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
 ; Revision Name                   ; cy5-systest                                 ;
 ; Top-level Entity Name           ; sys_top                                     ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSXFC6D6F31C6                              ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 3,216 / 41,910 ( 8 % )                      ;
-; Total registers                 ; 4877                                        ;
-; Total pins                      ; 157 / 499 ( 31 % )                          ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 5570                                        ;
+; Total pins                      ; 157                                         ;
 ; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 527,104 / 5,662,720 ( 9 % )                 ;
-; Total DSP Blocks                ; 0 / 112 ( 0 % )                             ;
-; Total HSSI RX PCSs              ; 0 / 9 ( 0 % )                               ;
-; Total HSSI PMA RX Deserializers ; 0 / 9 ( 0 % )                               ;
-; Total HSSI TX PCSs              ; 0 / 9 ( 0 % )                               ;
-; Total HSSI PMA TX Serializers   ; 0 / 9 ( 0 % )                               ;
-; Total PLLs                      ; 2 / 15 ( 13 % )                             ;
-; Total DLLs                      ; 1 / 4 ( 25 % )                              ;
+; Total block memory bits         ; 527,104                                     ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 2                                           ;
+; Total DLLs                      ; 1                                           ;
 +---------------------------------+---------------------------------------------+
 
 
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 02/20/2019 15:12:55 ;
+; Start date & time ; 02/20/2019 16:17:37 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cy5-systest         ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
 ; Assignment Name                       ; Value                                                                    ; Default Value ; Entity Name                    ; Section Id     ;
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
-; COMPILER_SIGNATURE_ID                 ; 44077777638019.155067556703104                                           ; --            ; --                             ; --             ;
+; COMPILER_SIGNATURE_ID                 ; 44077777638019.155067945007792                                           ; --            ; --                             ; --             ;
 ; ECO_REGENERATE_REPORT                 ; On                                                                       ; Off           ; --                             ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT                ; None                                                                     ; --            ; --                             ; eda_simulation ;
 ; ENABLE_SIGNALTAP                      ; On                                                                       ; --            ; --                             ; --             ;
@@ -126,7 +126,7 @@ agreement for further details.
 ; PROJECT_OUTPUT_DIRECTORY              ; output_files                                                             ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.regmap                                   ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.debuginfo                                ; --            ; --                             ; --             ;
-; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1550673668             ; --            ; soc_system                     ; --             ;
+; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1550679345             ; --            ; soc_system                     ; --             ;
 ; SOPCINFO_FILE                         ; soc_system/synthesis/../../soc_system.sopcinfo                           ; --            ; --                             ; --             ;
 ; SYNTHESIS_ONLY_QIP                    ; On                                                                       ; --            ; --                             ; --             ;
 ; TOP_LEVEL_ENTITY                      ; sys_top                                                                  ; cy5-systest   ; --                             ; --             ;
@@ -135,35 +135,29 @@ agreement for further details.
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------+
-; Flow Elapsed Time                                                                                                             ;
-+---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
-+---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:01:56     ; 1.0                     ; 5487 MB             ; 00:02:19                           ;
-; Fitter                    ; 00:10:55     ; 1.0                     ; 7154 MB             ; 00:11:30                           ;
-; TimeQuest Timing Analyzer ; 00:01:57     ; 1.0                     ; 5919 MB             ; 00:01:49                           ;
-; Total                     ; 00:14:48     ; --                      ; --                  ; 00:15:38                           ;
-+---------------------------+--------------+-------------------------+---------------------+------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                        ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis ; 00:01:59     ; 1.0                     ; 5551 MB             ; 00:02:27                           ;
+; Total                ; 00:01:59     ; --                      ; --                  ; 00:02:27                           ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+----------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                        ;
-+---------------------------+------------------+-----------+------------+----------------+
-; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
-+---------------------------+------------------+-----------+------------+----------------+
-; Analysis & Synthesis      ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
-; Fitter                    ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
-; TimeQuest Timing Analyzer ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
-+---------------------------+------------------+-----------+------------+----------------+
++-----------------------------------------------------------------------------------+
+; Flow OS Summary                                                                   ;
++----------------------+------------------+-----------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
++----------------------+------------------+-----------+------------+----------------+
+; Analysis & Synthesis ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
++----------------------+------------------+-----------+------------+----------------+
 
 
 ------------
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off cy5-systest -c cy5-systest
-quartus_fit --read_settings_files=on --write_settings_files=off cy5-systest -c cy5-systest
-quartus_sta cy5-systest -c cy5-systest
 
 
 
