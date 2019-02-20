@@ -4,9 +4,9 @@ set input_clk_pin $input_clk
 set input_clk_period 20
 
 # Net and pin (origin of net) of PLL-derived clock
-set variable_clk "variable_clk"
-set variable_clk_pin "soc_inst|pll_800m|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk"
-# soc_system:soc_inst|soc_system_pll_800M:pll_800m|altera_pll:altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk
+set variable_clk "clk_tb, clk_dut"
+set variable_clk_pin "soc_inst|pll_tb|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk, soc_inst|pll_dut|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk"
+# soc_system:soc_inst|soc_system_pll_tb:pll_tb|altera_pll:altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk
 
 create_clock -period $input_clk_period -name $input_clk [get_ports $input_clk_pin]
 

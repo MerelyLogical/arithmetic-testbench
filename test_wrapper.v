@@ -7,6 +7,9 @@ module test_wrapper #(
 	input clk_tb,
 	input reset_tb,
 	
+	input clk_dut,
+	input reset_dut,
+	
 	// Avalon slave
 	input            [3:0] slave_address,
 	input                  slave_read,
@@ -28,6 +31,8 @@ module test_wrapper #(
 	localparam B_ADDR = 4'h4;
 	localparam O_ADDR = 4'h8;
 	
+	// *_hpc_* are in clk_tb
+	// avalon slave is in clk
 	always @(posedge clk) begin
 		case (slave_address)
 			A_ADDR:
@@ -72,6 +77,7 @@ module test_wrapper #(
 	) u_driver (
 		.clk        ( clk_tb     ),
 		.reset      ( reset_tb   ),
+		.clk_dut    ( clk_dut    ),
 		
 		.i_rand_a   ( rand_a     ),
 		.i_rand_b   ( rand_a     ),
