@@ -53,10 +53,11 @@ module test_wrapper #(
 	wire [31:0] drive_b;
 	wire [31:0] dut_out;
 	wire [31:0] mnt_events;
+	wire [23:0] data_ctr;
 	wire [ 7:0] event_ctr;
 	assign dut_a = drive_a;
 	assign dut_b = drive_b;
-	assign o_hpc_o = event_ctr;
+	assign o_hpc_o = {data_ctr, event_ctr};
 	assign dut_out = dut_s;
 
 	// LFSR randomiser
@@ -106,7 +107,8 @@ module test_wrapper #(
 		.reset      ( reset_tb   ),
 
 		.i_event    ( mnt_events ),
-		.o_event_ctr( event_ctr  )
+		.o_event_ctr( event_ctr  ),
+		.o_data_ctr ( data_ctr   )
 	);
 
 endmodule
