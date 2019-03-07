@@ -1,5 +1,5 @@
 Flow report for cy5-systest
-Wed Feb 20 17:25:03 2019
+Fri Mar 01 20:05:08 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Wed Feb 20 17:18:53 2019       ;
+; Flow Status                     ; Successful - Fri Mar 01 20:05:08 2019       ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
 ; Revision Name                   ; cy5-systest                                 ;
 ; Top-level Entity Name           ; sys_top                                     ;
@@ -147,7 +147,8 @@ agreement for further details.
 ; Fitter                    ; 00:05:11     ; 1.0                     ; 7174 MB             ; 00:06:22                           ;
 ; TimeQuest Timing Analyzer ; 00:01:25     ; 1.0                     ; 5948 MB             ; 00:01:24                           ;
 ; TimeQuest Timing Analyzer ; 00:00:48     ; 1.0                     ; 5520 MB             ; 00:00:48                           ;
-; Total                     ; 00:11:56     ; --                      ; --                  ; 00:13:30                           ;
+; Assembler                 ; 00:00:22     ; 1.0                     ; 5185 MB             ; 00:00:18                           ;
+; Total                     ; 00:12:18     ; --                      ; --                  ; 00:13:48                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -163,6 +164,7 @@ agreement for further details.
 ; Fitter                    ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
 ; TimeQuest Timing Analyzer ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
 ; TimeQuest Timing Analyzer ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
+; Assembler                 ; MerelySP6        ; Windows 8 ; 6.2        ; x86_64         ;
 +---------------------------+------------------+-----------+------------+----------------+
 
 
@@ -176,6 +178,7 @@ quartus_fit --read_settings_files=on --write_settings_files=off cy5-systest -c c
 quartus_fit --read_settings_files=on --write_settings_files=off cy5-systest -c cy5-systest
 quartus_sta cy5-systest -c cy5-systest
 quartus_sta cy5-systest -c cy5-systest
+quartus_asm --read_settings_files=on --write_settings_files=off cy5-systest -c cy5-systest
 
 
 

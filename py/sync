@@ -1,4 +1,0 @@
-#!/bin/bash
-
-echo "Upload py folder"
-rsync -rtuv ./ root@ee-cy5soc3.ee.ic.ac.uk:/root/zw/py
