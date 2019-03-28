@@ -26,7 +26,7 @@ class module:
 
 class axi:
 	# actual offset is ff20 0000, but lowest address curerntly used it 10 0000.
-	def __init__(self, addr = 0xFF300000, size = 0x10050):
+	def __init__(self, addr = 0xFF300000, size = 0x10100):
 		self.addr = addr
 		self.size = size
 		self.mem = open('/dev/mem', 'r+b')
@@ -52,8 +52,8 @@ class wrapper(module):
 
 	regs = {
 		'a_in':  0x00,
-		'b_in':  0x04,
-		'o_out': 0x08,
+		'b_in':  0x10,
+		'o_out': 0x20,
 	}
 	
 	def write_a(self, value):
@@ -119,8 +119,6 @@ for i in range(15):
 	
 	o = pll_conf.set(0, 50 + 10*i)
 	print('PLL Configured to {}MHz'.format(o))
-	
-	time.sleep(3)
 	
 #disable
 wrap.write_a(0)
