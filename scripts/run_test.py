@@ -52,8 +52,8 @@ class wrapper(module):
 
 	regs = {
 		'a_in':  0x00,
-		'b_in':  0x10,
-		'o_out': 0x20,
+		'b_in':  0x04,
+		'o_out': 0x08,
 	}
 	
 	def write_a(self, value):
@@ -68,11 +68,11 @@ class wrapper(module):
 class pll(module):
 
 	regs = {
-		'mode': 4*0x0,
+		'mode'  : 4*0x0,
 		'status': 4*0x1,
-		'start': 4*0x2,
-		'm': 4*0x4,
-		'c': 4*0x5
+		'start' : 4*0x2,
+		'm'     : 4*0x4,
+		'c'     : 4*0x5
 	}
 	
 	def set(self, clk, freq):

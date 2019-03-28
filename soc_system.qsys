@@ -59,6 +59,14 @@
          type = "String";
       }
    }
+   element dut_adder
+   {
+      datum _sortIndex
+      {
+         value = "15";
+         type = "int";
+      }
+   }
    element f2sdram_only_master
    {
       datum _sortIndex
@@ -199,14 +207,6 @@
       {
          value = "0";
          type = "String";
-      }
-   }
-   element my_adder_0
-   {
-      datum _sortIndex
-      {
-         value = "15";
-         type = "int";
       }
    }
    element onchip_memory2_0
@@ -459,6 +459,9 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="4" />
+ </module>
+ <module name="dut_adder" kind="my_adder" version="3.0" enabled="1">
+  <parameter name="WIDTH" value="32" />
  </module>
  <module
    name="f2sdram_only_master"
@@ -1087,9 +1090,6 @@
   <parameter name="SYSINFO_ADDR_WIDTH" value="7" />
   <parameter name="USE_AUTO_ADDRESS_WIDTH" value="1" />
   <parameter name="USE_RESPONSE" value="0" />
- </module>
- <module name="my_adder_0" kind="my_adder" version="3.0" enabled="1">
-  <parameter name="WIDTH" value="32" />
  </module>
  <module
    name="onchip_memory2_0"
@@ -1801,7 +1801,7 @@
    kind="clock"
    version="16.0"
    start="pll_dut.outclk0"
-   end="my_adder_0.clock" />
+   end="dut_adder.clock" />
  <connection
    kind="clock"
    version="16.0"
@@ -1816,7 +1816,7 @@
    kind="conduit"
    version="16.0"
    start="test_wrapper_0.dut_conduit"
-   end="my_adder_0.conduit">
+   end="dut_adder.conduit">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -1926,11 +1926,6 @@
    kind="reset"
    version="16.0"
    start="clk_ref_50M.clk_reset"
-   end="led_pio.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_ref_50M.clk_reset"
    end="sysid_qsys.reset" />
  <connection
    kind="reset"
@@ -1951,12 +1946,17 @@
    kind="reset"
    version="16.0"
    start="clk_ref_50M.clk_reset"
-   end="my_adder_0.reset" />
+   end="dut_adder.reset" />
  <connection
    kind="reset"
    version="16.0"
    start="clk_ref_50M.clk_reset"
    end="pll_dut.reset" />
+ <connection
+   kind="reset"
+   version="16.0"
+   start="clk_ref_50M.clk_reset"
+   end="led_pio.reset" />
  <connection
    kind="reset"
    version="16.0"
