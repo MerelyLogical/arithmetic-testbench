@@ -25,8 +25,8 @@ class module:
 # James Davis, 2016
 
 class axi:
-	
-	def __init__(self, addr = 0xFF200000, size = 0x50):
+	# actual offset is ff20 0000, but lowest address curerntly used it 10 0000.
+	def __init__(self, addr = 0xFF300000, size = 0x10050):
 		self.addr = addr
 		self.size = size
 		self.mem = open('/dev/mem', 'r+b')
@@ -93,19 +93,34 @@ class pll(module):
 		while self.read(self.regs['status']) != 0:											# Wait until done
 			pass
 		return float(1600)/c_count
-
+		
+	def read_reg(self, reg):
+		return (self.read(self.regs[reg]))
 
 # -----main--------------------------------------------------------------------
 
 ax = axi()
-wrap = adder(ax, 0x00100000)
-pll_conf = pll(ax, 0x00110000)
+# 10 0000
+wrap = wrapper(ax, 0x00000000)
+# 11 0000
+pll_conf = pll(ax, 0x00010000)
 # a = int(input('Input a: '))
 # b = int(input('Input b: '))
 
-# wrap.write_a(a)
-# wrap.write_b(b)
+# enable
+wrap.write_a(1)
+
 for i in range(15):
 	o = wrap.read_out()
-	time.sleep(5)
-	print('Out: {}.'.format(o))
+	print('Out = {}'.format(o))
+	
+	o = pll_conf.read_reg('c')
+	print('PLL C Counter = {}'.format(o))
+	
+	o = pll_conf.set(0, 50 + 10*i)
+	print('PLL Configured to {}MHz'.format(o))
+	
+	time.sleep(3)
+	
+#disable
+wrap.write_a(0)
