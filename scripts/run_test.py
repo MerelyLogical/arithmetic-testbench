@@ -108,17 +108,24 @@ pll_conf = pll(ax, 0x00010000)
 # b = int(input('Input b: '))
 
 # enable
-wrap.write_a(1)
+# wrap.write_a(1)
 
-for i in range(15):
-	o = wrap.read_out()
-	print('Out = {}'.format(o))
-	
+for i in range(10):
+
+	if i == 3:
+		wrap.write_a(1)
+	elif i == 8:
+		wrap.write_a(0)
+
 	o = pll_conf.read_reg('c')
-	print('PLL C Counter = {}'.format(o))
-	
+	print('PLL C Counter   = {}'.format(o))
+
 	o = pll_conf.set(0, 50 + 10*i)
-	print('PLL Configured to {}MHz'.format(o))
+	print('PLL Configured to {:.2f}MHz'.format(o))
+
+	o = wrap.read_out()
+	print('Out             = {}'.format(o))
 	
+	time.sleep(1)
 #disable
 wrap.write_a(0)
