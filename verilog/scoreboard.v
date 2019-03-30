@@ -9,8 +9,8 @@ module scoreboard #(
 	output reg [23:0] o_data_ctr
 );
 
-	always @(posedge clk or negedge reset)
-		if (~reset) begin
+	always @(posedge clk or posedge reset)
+		if (reset) begin
 			o_event_ctr <= 8'b0;
 			o_data_ctr <= 24'b0;
 		end

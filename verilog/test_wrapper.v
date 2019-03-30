@@ -57,7 +57,7 @@ module test_wrapper #(
 	wire [ 7:0] event_ctr;
 	assign dut_a = drive_a;
 	assign dut_b = drive_b;
-	assign o_hpc_o = {data_ctr, event_ctr};
+	assign o_hpc_o = 32'h1234_5678; // {data_ctr, event_ctr};
 	assign dut_out = dut_s;
 
 	// LFSR randomiser
@@ -66,9 +66,9 @@ module test_wrapper #(
 	) u_randomiser (
 	  .clk         ( clk_tb     ),
 	  .reset       ( reset_tb   ),
-	  .enable      ( i_hpc_a[0] ),
+	  .enable      ( 1'b1       ), // i_hpc_a[0] ),
 	  
-	  .i_initial   ( 32'hFFFF   ),
+	  .i_initial   (32'hFFFFFFFF),
 	  .o           ( rand_a     )
 	);
 

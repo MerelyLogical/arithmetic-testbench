@@ -14,8 +14,8 @@ module monitor #(
 	// slow clock for sub_monitors
 	reg half_clk;
 	
-	always @(posedge clk or negedge reset)
-		if (~reset)
+	always @(posedge clk or posedge reset)
+		if (reset)
 			half_clk <= 1'b0;
 		else
 			half_clk <= ~half_clk;

@@ -622,6 +622,7 @@ set_instance_assignment -name SLEW_RATE 1 -to hps_trace_D7
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name VERILOG_FILE verilog/test_wrapper.v
 set_global_assignment -name SDC_FILE "cy5-systest.sdc"
 set_global_assignment -name VERILOG_FILE verilog/sys_top.v
 set_global_assignment -name VERILOG_FILE verilog/sub_mon.v
