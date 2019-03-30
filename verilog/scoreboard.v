@@ -5,14 +5,14 @@ module scoreboard #(
 	input reset,
 
 	input             i_event,
-	output reg [ 7:0] o_event_ctr,
-	output reg [23:0] o_data_ctr
+	output reg [31:0] o_event_ctr,
+	output reg [31:0] o_data_ctr
 );
 
 	always @(posedge clk or posedge reset)
 		if (reset) begin
-			o_event_ctr <= 8'b0;
-			o_data_ctr <= 24'b0;
+			o_event_ctr <= 31'b0;
+			o_data_ctr  <= 31'b0;
 		end
 		else begin
 			o_data_ctr <= o_data_ctr + 1'b1;

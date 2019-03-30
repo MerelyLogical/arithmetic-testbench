@@ -3,3 +3,4 @@ soc_system/
 incremental_db/
 .qsys_edit/
 *.bak
+verilog/*hw.tcl~

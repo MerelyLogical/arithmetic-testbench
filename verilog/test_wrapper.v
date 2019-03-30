@@ -11,7 +11,7 @@ module test_wrapper #(
 	input reset_dut,
 	
 	// Avalon slave
-	input            [3:0] slave_address,
+	input            [4:0] slave_address,
 	input                  slave_read,
 	input                  slave_write,
 	input      [WIDTH-1:0] slave_writedata,
@@ -24,40 +24,61 @@ module test_wrapper #(
 );
 
 	// Avalon slave logic
-	reg  [WIDTH-1:0] i_hpc_a;
-	reg  [WIDTH-1:0] i_hpc_b;
-	wire [WIDTH-1:0] o_hpc_o;
-	localparam A_ADDR = 4'h0;
-	localparam B_ADDR = 4'h4;
-	localparam O_ADDR = 4'h8;
+	reg  [WIDTH-1:0] i_hpc_i1;
+	reg  [WIDTH-1:0] i_hpc_i2;
+	wire [WIDTH-1:0] o_hpc_o1;
+	wire [WIDTH-1:0] o_hpc_o2;
+	wire [WIDTH-1:0] o_hpc_o3;
+	
+	localparam I1_ADDR = 5'h00;
+	localparam I2_ADDR = 5'h04;
+	localparam O1_ADDR = 5'h08;
+	localparam O2_ADDR = 5'h0C;
+	localparam O3_ADDR = 5'h10;
 	
 	// *_hpc_* are in clk_tb
 	// avalon slave is in clk
 	always @(posedge clk) begin
 		case (slave_address)
-			A_ADDR:
+			I1_ADDR:
 				if (~slave_read && slave_write)
-					i_hpc_a <= slave_writedata;
-			B_ADDR:
+					i_hpc_i1 <= slave_writedata;
+			I2_ADDR:
 				if (~slave_read && slave_write)
-					i_hpc_b <= slave_writedata;
-			O_ADDR:
+					i_hpc_i2 <= slave_writedata;
+			O1_ADDR:
 				if (slave_read && ~slave_write)
-					slave_readdata <= o_hpc_o;
+					slave_readdata <= o_hpc_o1;
+			O2_ADDR:
+				if (slave_read && ~slave_write)
+					slave_readdata <= o_hpc_o2;
+			O3_ADDR:
+				if (slave_read && ~slave_write)
+					slave_readdata <= o_hpc_o3;
 		endcase
 	end
 	
 	// wrapper wires
+	wire        hpc_reset;
+	wire        hpc_enable;
+	
+	assign hpc_reset  = i_hpc_i1[0];
+	assign hpc_enable = i_hpc_i2[0];
+	
+	
 	wire [31:0] rand_a;
 	wire [31:0] drive_a;
 	wire [31:0] drive_b;
 	wire [31:0] dut_out;
 	wire [31:0] mnt_events;
-	wire [23:0] data_ctr;
-	wire [ 7:0] event_ctr;
+	wire [31:0] data_ctr;
+	wire [31:0] event_ctr;
+	
 	assign dut_a = drive_a;
 	assign dut_b = drive_b;
-	assign o_hpc_o = 32'h1234_5678; // {data_ctr, event_ctr};
+	assign o_hpc_o1 = data_ctr;
+	assign o_hpc_o2 = event_ctr;
+	assign o_hpc_o3 = rand_a;
 	assign dut_out = dut_s;
 
 	// LFSR randomiser
@@ -65,8 +86,8 @@ module test_wrapper #(
 		.WIDTH      ( WIDTH      )
 	) u_randomiser (
 	  .clk         ( clk_tb     ),
-	  .reset       ( reset_tb   ),
-	  .enable      ( 1'b1       ), // i_hpc_a[0] ),
+	  .reset       ( hpc_reset  ),
+	  .enable      ( hpc_enable ),
 	  
 	  .i_initial   (32'hFFFFFFFF),
 	  .o           ( rand_a     )
@@ -77,7 +98,7 @@ module test_wrapper #(
 		.WIDTH      ( WIDTH      )
 	) u_driver (
 		.clk        ( clk_tb     ),
-		.reset      ( reset_tb   ),
+		.reset      ( hpc_reset  ),
 		.clk_dut    ( clk_dut    ),
 		
 		.i_rand_a   ( rand_a     ),
@@ -91,7 +112,7 @@ module test_wrapper #(
 		.WIDTH      ( WIDTH      )
 	) u_monitor (
 		.clk        ( clk_tb     ),
-		.reset      ( reset_tb   ),
+		.reset      ( hpc_reset  ),
 		
 		.i_dut_ia   ( drive_a    ),
 		.i_dut_ib   ( drive_b    ),
@@ -104,7 +125,7 @@ module test_wrapper #(
 		.WIDTH      ( WIDTH      )
 	) u_scoreboard (
 		.clk        ( clk_tb     ),
-		.reset      ( reset_tb   ),
+		.reset      ( hpc_reset  ),
 
 		.i_event    ( mnt_events ),
 		.o_event_ctr( event_ctr  ),

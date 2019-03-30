@@ -51,20 +51,23 @@ class axi:
 class wrapper(module):
 
 	regs = {
-		'a_in':  0x00,
-		'b_in':  0x10,
-		'o_out': 0x20,
+		'i1': 4*0x00,
+		'i2': 4*0x04,
+		'o1': 4*0x08,
+		'o2': 4*0x0C,
+		'o3': 4*0x10,
 	}
-	
-	def write_a(self, value):
-		self.write(self.regs['a_in'], value)
-	
-	def write_b(self, value):
-		self.write(self.regs['b_in'], value)
 
-	def read_out(self):
-		return (self.read(self.regs['o_out']))
+	def reset(self):
+		self.write(self.regs['i1'], 0x00000001)
+		wrap.write(self.regs['i1'], 0x00000000)
 
+	def enable(self):
+		self.write(self.regs['i2'], 0x00000001)
+
+	def disable(self):
+		self.write(self.regs['i2'], 0x00000000)
+		
 class pll(module):
 
 	regs = {
@@ -93,9 +96,6 @@ class pll(module):
 		while self.read(self.regs['status']) != 0:											# Wait until done
 			pass
 		return float(1600)/c_count
-		
-	def read_reg(self, reg):
-		return (self.read(self.regs[reg]))
 
 # -----main--------------------------------------------------------------------
 
@@ -108,24 +108,25 @@ pll_conf = pll(ax, 0x00010000)
 # b = int(input('Input b: '))
 
 # enable
-# wrap.write_a(1)
+wrap.reset()
+wrap.enable()
 
 for i in range(10):
-
-	if i == 3:
-		wrap.write_a(1)
-	elif i == 8:
-		wrap.write_a(0)
-
-	o = pll_conf.read_reg('c')
-	print('PLL C Counter   = {}'.format(o))
-
+	wrap.reset()
+	
 	o = pll_conf.set(0, 50 + 10*i)
 	print('PLL Configured to {:.2f}MHz'.format(o))
 
-	o = wrap.read_out()
-	print('Out             = {}'.format(o))
+	o = wrap.read(wrap.regs['o1'])
+	print('data_ctr        = {}'.format(o))
 	
+	o = wrap.read(wrap.regs['o2'])
+	print('event_ctr       = {}'.format(o))
+	
+	o = wrap.read(wrap.regs['o3'])
+	print('rand_a          = {}'.format(o))
+
 	time.sleep(1)
+
 #disable
-wrap.write_a(0)
+wrap.disable()
