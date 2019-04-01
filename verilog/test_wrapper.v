@@ -67,6 +67,7 @@ module test_wrapper #(
 	
 	
 	wire [31:0] rand_a;
+	wire [31:0] rand_b;
 	wire [31:0] drive_a;
 	wire [31:0] drive_b;
 	wire [31:0] dut_out;
@@ -84,15 +85,26 @@ module test_wrapper #(
 	// LFSR randomiser
 	randomiser #(
 		.WIDTH      ( WIDTH      )
-	) u_randomiser (
-	  .clk         ( clk_tb     ),
+	) u_randomiser_a (
+	  .clk         ( clk_dut    ),
 	  .reset       ( hpc_reset  ),
 	  .enable      ( hpc_enable ),
 	  
-	  .i_initial   (32'hFFFFFFFF),
+	  .i_initial   (32'hCAFEF00D),
 	  .o           ( rand_a     )
 	);
 
+	randomiser #(
+		.WIDTH      ( WIDTH      )
+	) u_randomiser_b (
+	  .clk         ( clk_dut    ),
+	  .reset       ( hpc_reset  ),
+	  .enable      ( hpc_enable ),
+	  
+	  .i_initial   (32'hFEEDC0DE),
+	  .o           ( rand_b     )
+	);
+	
 	// provides signal to drive DUT
 	driver #(
 		.WIDTH      ( WIDTH      )
@@ -102,7 +114,7 @@ module test_wrapper #(
 		.clk_dut    ( clk_dut    ),
 		
 		.i_rand_a   ( rand_a     ),
-		.i_rand_b   ( rand_a     ),
+		.i_rand_b   ( rand_b     ),
 		.o_drive_a  ( drive_a    ),
 		.o_drive_b  ( drive_b    )
 	);
@@ -111,7 +123,7 @@ module test_wrapper #(
 	monitor #(
 		.WIDTH      ( WIDTH      )
 	) u_monitor (
-		.clk        ( clk_tb     ),
+		.clk        ( clk_dut    ),
 		.reset      ( hpc_reset  ),
 		
 		.i_dut_ia   ( drive_a    ),
@@ -124,7 +136,7 @@ module test_wrapper #(
 	scoreboard #(
 		.WIDTH      ( WIDTH      )
 	) u_scoreboard (
-		.clk        ( clk_tb     ),
+		.clk        ( clk_dut    ),
 		.reset      ( hpc_reset  ),
 
 		.i_event    ( mnt_events ),

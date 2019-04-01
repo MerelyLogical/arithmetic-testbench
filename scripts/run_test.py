@@ -111,22 +111,23 @@ pll_conf = pll(ax, 0x00010000)
 wrap.reset()
 wrap.enable()
 
-for i in range(10):
+for i in range(15):
+	o = pll_conf.set(0, 50 + 25*i)
+	print('PLL Configured to {:.2f}MHz'.format(o))
+	
 	wrap.reset()
 	
-	o = pll_conf.set(0, 50 + 10*i)
-	print('PLL Configured to {:.2f}MHz'.format(o))
-
-	o = wrap.read(wrap.regs['o1'])
-	print('data_ctr        = {}'.format(o))
-	
-	o = wrap.read(wrap.regs['o2'])
-	print('event_ctr       = {}'.format(o))
-	
-	o = wrap.read(wrap.regs['o3'])
-	print('rand_a          = {}'.format(o))
-
 	time.sleep(1)
 
+	o = wrap.read(wrap.regs['o1'])
+	print('data  counter     {}'.format(o))
+	
+	o = wrap.read(wrap.regs['o2'])
+	print('event counter     {}'.format(o))
+	
+	#o = wrap.read(wrap.regs['o3'])
+	#print('rand_a          = {}'.format(o))
+	print('')
+	
 #disable
 wrap.disable()
