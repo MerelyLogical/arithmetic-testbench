@@ -19,8 +19,8 @@ module sub_mon #(
 	// checking logic
 	always @(posedge clk)
 		if (i_dut_o == tmp_o)
-			o_event <= 1'b1;
-		else
 			o_event <= 1'b0;
+		else
+			o_event <= 1'b1;
 
 endmodule

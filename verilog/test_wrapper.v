@@ -70,6 +70,8 @@ module test_wrapper #(
 	wire [31:0] rand_b;
 	wire [31:0] drive_a;
 	wire [31:0] drive_b;
+	wire [31:0] drive_delayed_a;
+	wire [31:0] drive_delayed_b;
 	wire [31:0] dut_out;
 	wire [31:0] mnt_events;
 	wire [31:0] data_ctr;
@@ -116,7 +118,9 @@ module test_wrapper #(
 		.i_rand_a   ( rand_a     ),
 		.i_rand_b   ( rand_b     ),
 		.o_drive_a  ( drive_a    ),
-		.o_drive_b  ( drive_b    )
+		.o_drive_b  ( drive_b    ),
+		.o_drive_delayed_a ( drive_delayed_a ),
+		.o_drive_delayed_b ( drive_delayed_b )
 	);
 
 	// find errors and other interesting events
@@ -126,8 +130,8 @@ module test_wrapper #(
 		.clk        ( clk_dut    ),
 		.reset      ( hpc_reset  ),
 		
-		.i_dut_ia   ( drive_a    ),
-		.i_dut_ib   ( drive_b    ),
+		.i_dut_ia   ( drive_delayed_a ),
+		.i_dut_ib   ( drive_delayed_b ),
 		.i_dut_os   ( dut_out    ),
 		.o_event    ( mnt_events )
 	);

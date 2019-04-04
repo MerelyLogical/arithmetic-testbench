@@ -10,12 +10,19 @@ module driver #(
 	input      [31:0] i_rand_a,
 	input      [31:0] i_rand_b,
 	output reg [31:0] o_drive_a,
-	output reg [31:0] o_drive_b
+	output reg [31:0] o_drive_b,
+	output reg [31:0] o_drive_delayed_a,
+	output reg [31:0] o_drive_delayed_b
 );
 
 	always @(posedge clk_dut) begin
+		// normal output to DUT
 		o_drive_a <= i_rand_a;
 		o_drive_b <= i_rand_b;
+		
+		// delayed output to monitor
+		o_drive_delayed_a <= o_drive_a;
+		o_drive_delayed_b <= o_drive_b;
 	end
 
 endmodule

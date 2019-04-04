@@ -13,7 +13,7 @@ set clk_dut_pin "soc_inst|pll_dut|altera_pll_i|cyclonev_pll|counter[0].output_co
 create_clock -period $input_clk_period -name $input_clk [get_ports $input_clk_pin]
 
 derive_pll_clocks
-# create_clock -add -period [get_clock_info -period [get_clocks $clk_tb_pin]] -name $clk_tb [get_net_info -name [get_pin_info -net $clk_tb_pin]]
+create_clock -add -period [get_clock_info -period [get_clocks $clk_tb_pin]] -name $clk_tb [get_net_info -name [get_pin_info -net $clk_tb_pin]]
 create_clock -add -period [get_clock_info -period [get_clocks $clk_dut_pin]] -name $clk_dut [get_net_info -name [get_pin_info -net $clk_dut_pin]]
 
 remove_clock $clk_tb_pin
