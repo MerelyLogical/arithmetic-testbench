@@ -112,7 +112,7 @@ wrap.reset()
 wrap.enable()
 
 for i in range(15):
-	o = pll_conf.set(0, 50 + 25*i)
+	o = pll_conf.set(0, 400 - 25*i)
 	print('PLL Configured to {:.2f}MHz'.format(o))
 	
 	wrap.reset()
