@@ -6,10 +6,10 @@ module monitor #(
 	input clk,
 	input reset,
 
-	input      [WIDTH-1:0] i_dut_ia,
-	input      [WIDTH-1:0] i_dut_ib,
-	input      [WIDTH-1:0] i_dut_os,
-	output reg [WIDTH-1:0] o_event
+	input  [WIDTH-1:0] i_dut_ia,
+	input  [WIDTH-1:0] i_dut_ib,
+	input  [WIDTH-1:0] i_dut_os,
+	output o_event
 );
 
 	// one hot counter for distributer
@@ -33,27 +33,29 @@ module monitor #(
 	reg  [NUM_SUB_MON*WIDTH-1:0] b;
 	reg  [NUM_SUB_MON*WIDTH-1:0] o_dut;
 	wire [NUM_SUB_MON*WIDTH-1:0] o_mon;
-
+	reg  [NUM_SUB_MON-1:0] sub_event;
+	reg  [NUM_SUB_MON-1:0] sub_event_delayed;
 	wire [NUM_SUB_MON-1:0] clk_sub;
-
+	
+	always @(posedge clk)
+		sub_event_delayed <= sub_event;
+	
+	assign o_event = |(sub_event & ~sub_event_delayed);
 
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
-		// assign inputs to sub_monitors
 		always @(posedge clk)
 			if (dist_ctr[gi]) begin
+				// assign inputs to sub_monitors
 				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_ia;
 				b    [(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_ib;
 				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_os;
+				// gather events from sub_monitors' last test back
+				sub_event[gi] <= o_dut[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
 			end
 
-		// gather events from sub_monitors' last test back
-		always @(posedge clk)
-			if (dist_ctr[gi])
-				o_event <= o_dut[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
-
 		// insane or stupid clk???
-		assign clk_sub[gi] = dist_ctr_delayed[gi] & ~clk;
+		assign clk_sub[gi] = dist_ctr_delayed[gi];
 		
 		// instantiate sub monitors
 		sub_mon #(

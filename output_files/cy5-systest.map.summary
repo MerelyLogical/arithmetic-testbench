@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Fri Apr 05 16:27:05 2019
+Analysis & Synthesis Status : Successful - Fri Apr 05 20:17:35 2019
 Quartus Prime Version : 16.0.0 Build 211 04/27/2016 SJ Standard Edition
 Revision Name : cy5-systest
 Top-level Entity Name : sys_top
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 5858
+Total registers : 6124
 Total pins : 157
 Total virtual pins : 0
 Total block memory bits : 527,104

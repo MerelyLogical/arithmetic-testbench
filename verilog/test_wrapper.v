@@ -11,7 +11,7 @@ module test_wrapper #(
 	input reset_dut,
 	
 	// Avalon slave
-	input            [4:0] slave_address,
+	input            [3:0] slave_address,
 	input                  slave_read,
 	input                  slave_write,
 	input      [WIDTH-1:0] slave_writedata,
@@ -30,14 +30,12 @@ module test_wrapper #(
 	wire [WIDTH-1:0] o_hpc_o2;
 	wire [WIDTH-1:0] o_hpc_o3;
 	
-	localparam I1_ADDR = 5'h00;
-	localparam I2_ADDR = 5'h04;
-	localparam O1_ADDR = 5'h08;
-	localparam O2_ADDR = 5'h0C;
-	localparam O3_ADDR = 5'h10;
+	localparam I1_ADDR = 4'h00;
+	localparam I2_ADDR = 4'h01;
+	localparam O1_ADDR = 4'h02;
+	localparam O2_ADDR = 4'h03;
+	localparam O3_ADDR = 4'h04;
 	
-	// *_hpc_* are in clk_tb
-	// avalon slave is in clk
 	always @(posedge clk) begin
 		case (slave_address)
 			I1_ADDR:
@@ -73,7 +71,7 @@ module test_wrapper #(
 	wire [31:0] drive_delayed_a;
 	wire [31:0] drive_delayed_b;
 	wire [31:0] dut_out;
-	wire [31:0] mnt_events;
+	wire        mnt_event;
 	wire [31:0] data_ctr;
 	wire [31:0] event_ctr;
 	
@@ -133,7 +131,7 @@ module test_wrapper #(
 		.i_dut_ia   ( drive_delayed_a ),
 		.i_dut_ib   ( drive_delayed_b ),
 		.i_dut_os   ( dut_out    ),
-		.o_event    ( mnt_events )
+		.o_event    ( mnt_event  )
 	);
 
 	// counts events
@@ -143,7 +141,7 @@ module test_wrapper #(
 		.clk        ( clk_dut    ),
 		.reset      ( hpc_reset  ),
 
-		.i_event    ( mnt_events ),
+		.i_event    ( mnt_event  ),
 		.o_event_ctr( event_ctr  ),
 		.o_data_ctr ( data_ctr   )
 	);

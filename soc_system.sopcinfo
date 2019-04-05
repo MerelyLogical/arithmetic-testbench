@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="soc_system" kind="soc_system" version="1.0" fabric="QSYS">
  <!-- Format version 16.0 211 (Future versions may contain additional information.) -->
- <!-- 2019.04.05.16:19:56 -->
+ <!-- 2019.04.05.20:10:41 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1554477592</value>
+  <value>1554491438</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -20800,7 +20800,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>slave</slaveName>
     <name>test_wrapper_0.slave</name>
     <baseAddress>1048576</baseAddress>
-    <span>128</span>
+    <span>64</span>
    </memoryBlock>
   </interface>
   <interface name="f2h_irq0" kind="interrupt_receiver" version="16.0">
@@ -47819,7 +47819,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>slave</slaveName>
     <name>test_wrapper_0.slave</name>
     <baseAddress>1048576</baseAddress>
-    <span>128</span>
+    <span>64</span>
    </memoryBlock>
   </interface>
   <interface name="f2h_axi_clock" kind="clock_sink" version="16.0">
@@ -49860,7 +49860,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>slave</slaveName>
     <name>test_wrapper_0.slave</name>
     <baseAddress>4281335808</baseAddress>
-    <span>128</span>
+    <span>64</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
@@ -50755,7 +50755,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>slave</slaveName>
     <name>test_wrapper_0.slave</name>
     <baseAddress>4281335808</baseAddress>
-    <span>128</span>
+    <span>64</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
@@ -91860,7 +91860,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1554477592</value>
+   <value>1554491438</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -91880,7 +91880,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1554477592</value>
+   <value>1554491438</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -91896,7 +91896,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1554477592</value>
+   <value>1554491438</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -92356,7 +92356,7 @@ parameters are a RESULT of the module parameters. -->
  <module
    name="test_wrapper_0"
    kind="test_wrapper"
-   version="1.5"
+   version="1.6"
    path="test_wrapper_0">
   <!-- Describes a single module. Module parameters are
 the requested settings for a module instance. -->
@@ -92512,7 +92512,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="addressSpan">
     <type>java.math.BigInteger</type>
-    <value>128</value>
+    <value>64</value>
     <derived>true</derived>
     <enabled>true</enabled>
     <visible>false</visible>
@@ -92811,7 +92811,7 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>slave_address</name>
     <direction>Input</direction>
-    <width>5</width>
+    <width>4</width>
     <role>address</role>
    </port>
    <port>
@@ -106090,7 +106090,7 @@ parameters are a RESULT of the module parameters. -->
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IModule</subtype>
   <displayName>test_wrapper</displayName>
-  <version>1.5</version>
+  <version>1.6</version>
  </plugin>
  <plugin>
   <instanceCount>60</instanceCount>
