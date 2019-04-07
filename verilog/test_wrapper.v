@@ -61,8 +61,8 @@ module test_wrapper #(
 	wire        hpc_enable;
 	
 	assign hpc_reset  = i_hpc_i1[0];
-	assign hpc_enable = i_hpc_i2[0];
-	
+	assign hpc_enable = i_hpc_i1[1];
+	assign hpc_freeze = i_hpc_i1[2];
 	
 	wire [31:0] rand_a;
 	wire [31:0] rand_b;
@@ -141,6 +141,7 @@ module test_wrapper #(
 		.clk        ( clk_dut    ),
 		.reset      ( hpc_reset  ),
 
+		.i_freeze   ( hpc_freeze ),
 		.i_event    ( mnt_event  ),
 		.o_event_ctr( event_ctr  ),
 		.o_data_ctr ( data_ctr   )

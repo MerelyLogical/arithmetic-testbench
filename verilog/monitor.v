@@ -1,7 +1,7 @@
 module monitor #(
 	// placeholder. doesn't support other widths.
 	parameter WIDTH       = 32,
-	parameter NUM_SUB_MON = 4
+	parameter NUM_SUB_MON = 2
 )(
 	input clk,
 	input reset,
@@ -18,9 +18,9 @@ module monitor #(
 	reg [NUM_SUB_MON-1:0] dist_ctr_delayed;
 	always @(posedge clk) begin
 		if (reset) begin
-			dist_ctr[0]                       <= 1'b1;
-			dist_ctr[NUM_SUB_MON-1:1]         <= 0;
-			dist_ctr_delayed[NUM_SUB_MON-1:1] <= 0;
+			dist_ctr[NUM_SUB_MON-1]           <= 1'b1;
+			dist_ctr[NUM_SUB_MON-2:0]         <= 0;
+			dist_ctr_delayed[NUM_SUB_MON-1:0] <= 0;
 		end
 		else begin
 			dist_ctr[0]               <= dist_ctr[NUM_SUB_MON-1];
@@ -39,9 +39,25 @@ module monitor #(
 	
 	always @(posedge clk)
 		sub_event_delayed <= sub_event;
-	
-	assign o_event = |(sub_event & ~sub_event_delayed);
 
+	// to show when monitors are ready after reset
+	// this happens at the cycle after distributer has returned to the first position
+	reg [1:0] ready_ctr;
+	always @(posedge clk) begin
+		if (reset)
+			ready_ctr <= 2'b00;
+		else if (dist_ctr[0])
+			case (ready_ctr)
+				2'b00:   ready_ctr <= 2'b01;
+				2'b01:   ready_ctr <= 2'b10;
+				2'b10:   ready_ctr <= 2'b10;
+				default: ready_ctr <= 2'b00;
+			endcase
+	end
+	
+	// fix output to 0 if not ready
+	assign o_event = ready_ctr[1] ? |(sub_event & ~sub_event_delayed) : 0;
+	
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
 		always @(posedge clk)
@@ -54,7 +70,7 @@ module monitor #(
 				sub_event[gi] <= o_dut[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
 			end
 
-		// insane or stupid clk???
+		// sub monitors run on delayed clock to ensure data has been written in
 		assign clk_sub[gi] = dist_ctr_delayed[gi];
 		
 		// instantiate sub monitors

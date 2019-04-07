@@ -1,1 +1,7 @@
-hps_isw_handoff/* linguist-generated=true
+greybox_tmp/* linguist-generated=true
+hps_isw_handoff/soc_system_hps_0/* linguist-vendored=true
+ip/* linguist-vendored=true
+output_files/* linguist-generated=true
+unsaved/* linguist-generated=true
+*.rpt linguist-generated=true
+*.bak linguist-generated=true

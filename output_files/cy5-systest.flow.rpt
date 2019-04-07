@@ -1,5 +1,5 @@
 Flow report for cy5-systest
-Fri Apr 05 20:25:10 2019
+Sun Apr 07 17:44:36 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
 
 
@@ -41,15 +41,15 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Fri Apr 05 20:25:10 2019           ;
+; Flow Status                     ; Successful - Sun Apr 07 17:44:36 2019           ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Standard Edition ;
 ; Revision Name                   ; cy5-systest                                     ;
 ; Top-level Entity Name           ; sys_top                                         ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSXFC6D6F31C6                                  ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 4,501 / 41,910 ( 11 % )                         ;
-; Total registers                 ; 6302                                            ;
+; Logic utilization (in ALMs)     ; 4,439 / 41,910 ( 11 % )                         ;
+; Total registers                 ; 6054                                            ;
 ; Total pins                      ; 157 / 499 ( 31 % )                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 527,104 / 5,662,720 ( 9 % )                     ;
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/05/2019 20:12:13 ;
+; Start date & time ; 04/07/2019 17:31:59 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cy5-systest         ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
 ; Assignment Name                       ; Value                                                                    ; Default Value ; Entity Name                    ; Section Id     ;
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
-; COMPILER_SIGNATURE_ID                 ; 176831339027095.155449152601888                                          ; --            ; --                             ; --             ;
+; COMPILER_SIGNATURE_ID                 ; 176831339027073.155465471306920                                          ; --            ; --                             ; --             ;
 ; ECO_REGENERATE_REPORT                 ; On                                                                       ; Off           ; --                             ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT                ; Verilog Hdl                                                              ; --            ; --                             ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                   ; ModelSim-Altera (Verilog)                                                ; <None>        ; --                             ; --             ;
@@ -127,7 +127,7 @@ agreement for further details.
 ; PROJECT_OUTPUT_DIRECTORY              ; output_files                                                             ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.regmap                                   ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.debuginfo                                ; --            ; --                             ; --             ;
-; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1554491438             ; --            ; soc_system                     ; --             ;
+; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1554654496             ; --            ; soc_system                     ; --             ;
 ; SOPCINFO_FILE                         ; soc_system/synthesis/../../soc_system.sopcinfo                           ; --            ; --                             ; --             ;
 ; SYNTHESIS_ONLY_QIP                    ; On                                                                       ; --            ; --                             ; --             ;
 ; TOP_LEVEL_ENTITY                      ; sys_top                                                                  ; cy5-systest   ; --                             ; --             ;
@@ -141,12 +141,12 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:02:24     ; 1.9                     ; 1421 MB             ; 00:03:04                           ;
-; Fitter                    ; 00:02:47     ; 1.2                     ; 3649 MB             ; 00:05:54                           ;
-; Assembler                 ; 00:00:23     ; 1.0                     ; 1025 MB             ; 00:00:16                           ;
-; TimeQuest Timing Analyzer ; 00:01:14     ; 1.4                     ; 1857 MB             ; 00:01:20                           ;
-; EDA Netlist Writer        ; 00:00:33     ; 1.0                     ; 1127 MB             ; 00:00:15                           ;
-; Total                     ; 00:07:21     ; --                      ; --                  ; 00:10:49                           ;
+; Analysis & Synthesis      ; 00:02:23     ; 1.9                     ; 1422 MB             ; 00:02:58                           ;
+; Fitter                    ; 00:02:42     ; 1.2                     ; 3655 MB             ; 00:05:41                           ;
+; Assembler                 ; 00:00:23     ; 1.0                     ; 1024 MB             ; 00:00:16                           ;
+; TimeQuest Timing Analyzer ; 00:01:13     ; 1.3                     ; 1855 MB             ; 00:01:18                           ;
+; EDA Netlist Writer        ; 00:00:31     ; 1.0                     ; 1120 MB             ; 00:00:15                           ;
+; Total                     ; 00:07:12     ; --                      ; --                  ; 00:10:28                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -155,11 +155,11 @@ agreement for further details.
 +---------------------------+------------------+-----------+------------+----------------+
 ; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
 +---------------------------+------------------+-----------+------------+----------------+
-; Analysis & Synthesis      ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
-; Assembler                 ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
-; EDA Netlist Writer        ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; skee-506a-010    ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; skee-506a-010    ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; skee-506a-010    ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; skee-506a-010    ; Windows 7 ; 6.1        ; x86_64         ;
+; EDA Netlist Writer        ; skee-506a-010    ; Windows 7 ; 6.1        ; x86_64         ;
 +---------------------------+------------------+-----------+------------+----------------+
 
 
