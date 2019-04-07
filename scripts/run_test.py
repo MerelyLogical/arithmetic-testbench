@@ -59,15 +59,28 @@ class wrapper(module):
 	}
 
 	def reset(self):
-		self.write(self.regs['i1'], 0x00000001)
-		wrap.write(self.regs['i1'], 0x00000000)
+		tmp = self.read(self.regs['i1'])
+		self.write(self.regs['i1'], tmp | 0x1)
+		time.sleep(0.001)
+		self.write(self.regs['i1'], tmp & 0xE)
 
 	def enable(self):
-		self.write(self.regs['i2'], 0x00000001)
+		tmp = self.read(self.regs['i1'])
+		self.write(self.regs['i1'], tmp | 0x2)
 
 	def disable(self):
-		self.write(self.regs['i2'], 0x00000000)
-		
+		tmp = self.read(self.regs['i1'])
+		self.write(self.regs['i1'], tmp & 0xD)
+
+	def freeze(self):
+		tmp = self.read(self.regs['i1'])
+		self.write(self.regs['i1'], tmp | 0x4)
+
+	def unfreeze(self):
+		tmp = self.read(self.regs['i1'])
+		self.write(self.regs['i1'], tmp & 0xB)
+
+
 class pll(module):
 
 	regs = {
@@ -116,12 +129,9 @@ for fq in fqs:
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
 	
 	wrap.reset()
-	wrap.disable()
-	time.sleep(0.01)
-	wrap.reset()
-	wrap.enable()
-	
+	wrap.unfreeze()
 	time.sleep(1)
+	wrap.freeze()
 
 	data_ctr = wrap.read(wrap.regs['o1'])
 	print('data  counter     {}'.format(data_ctr))
