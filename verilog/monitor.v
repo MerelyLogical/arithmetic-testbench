@@ -1,7 +1,7 @@
 module monitor #(
 	// placeholder. doesn't support other widths.
 	parameter WIDTH       = 32,
-	parameter NUM_SUB_MON = 2
+	parameter NUM_SUB_MON = 4
 )(
 	input clk,
 	input reset,
@@ -68,7 +68,8 @@ module monitor #(
 				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_os;
 				// gather events from sub_monitors' last test back
 				sub_event[gi] <= o_dut[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
-			end
+			end else
+				sub_event[gi] <= 1'b0;
 
 		// sub monitors run on delayed clock to ensure data has been written in
 		assign clk_sub[gi] = dist_ctr_delayed[gi];

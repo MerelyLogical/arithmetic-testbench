@@ -60,27 +60,29 @@ class wrapper(module):
 
 	def reset(self):
 		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp | 0x1)
+		self.write(self.regs['i1'], tmp | 0b0001)
 		time.sleep(0.001)
-		self.write(self.regs['i1'], tmp & 0xE)
+		self.write(self.regs['i1'], tmp & 0b1110)
 
 	def enable(self):
 		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp | 0x2)
+		self.write(self.regs['i1'], tmp | 0b0010)
 
 	def disable(self):
 		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp & 0xD)
+		self.write(self.regs['i1'], tmp & 0b1101)
 
 	def freeze(self):
 		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp | 0x4)
+		self.write(self.regs['i1'], tmp | 0b0100)
 
 	def unfreeze(self):
 		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp & 0xB)
+		self.write(self.regs['i1'], tmp & 0b1011)
 
-
+	def version(self):
+		return self.read(self.regs['o3'])
+		
 class pll(module):
 
 	regs = {
@@ -123,16 +125,16 @@ pll_conf = pll(ax, 0x00010000)
 # enable
 wrap.reset()
 wrap.enable()
+print('Running version   {}'.format(wrap.version()))
 fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
 for fq in fqs:
 	pll_fq = pll_conf.set(0, fq)
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
 	
 	wrap.reset()
-	wrap.unfreeze()
 	time.sleep(1)
 	wrap.freeze()
-
+	
 	data_ctr = wrap.read(wrap.regs['o1'])
 	print('data  counter     {}'.format(data_ctr))
 	
@@ -145,5 +147,6 @@ for fq in fqs:
 	#print('rand_a          = {}'.format(o))
 	print('')
 	
+	wrap.unfreeze()
 #disable
 wrap.disable()

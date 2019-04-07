@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="soc_system" kind="soc_system" version="1.0" fabric="QSYS">
  <!-- Format version 16.0 211 (Future versions may contain additional information.) -->
- <!-- 2019.04.07.17:28:19 -->
+ <!-- 2019.04.07.19:52:30 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1554654496</value>
+  <value>1554663147</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -91860,7 +91860,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1554654496</value>
+   <value>1554663147</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -91880,7 +91880,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1554654496</value>
+   <value>1554663147</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -91896,7 +91896,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1554654496</value>
+   <value>1554663147</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -92356,10 +92356,18 @@ parameters are a RESULT of the module parameters. -->
  <module
    name="test_wrapper_0"
    kind="test_wrapper"
-   version="1.6"
+   version="1.7"
    path="test_wrapper_0">
   <!-- Describes a single module. Module parameters are
 the requested settings for a module instance. -->
+  <parameter name="SYS_VERSION">
+   <type>int</type>
+   <value>7</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
   <parameter name="WIDTH">
    <type>int</type>
    <value>32</value>
@@ -106090,7 +106098,7 @@ parameters are a RESULT of the module parameters. -->
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IModule</subtype>
   <displayName>test_wrapper</displayName>
-  <version>1.6</version>
+  <version>1.7</version>
  </plugin>
  <plugin>
   <instanceCount>60</instanceCount>

@@ -1,4 +1,5 @@
 module test_wrapper #(
+	parameter SYS_VERSION = 7,
 	parameter WIDTH = 32
 )(
 	input clk,
@@ -41,6 +42,8 @@ module test_wrapper #(
 			I1_ADDR:
 				if (~slave_read && slave_write)
 					i_hpc_i1 <= slave_writedata;
+				else if (slave_read && ~slave_write)
+					slave_readdata <= i_hpc_i1;
 			I2_ADDR:
 				if (~slave_read && slave_write)
 					i_hpc_i2 <= slave_writedata;
@@ -79,7 +82,7 @@ module test_wrapper #(
 	assign dut_b = drive_b;
 	assign o_hpc_o1 = data_ctr;
 	assign o_hpc_o2 = event_ctr;
-	assign o_hpc_o3 = rand_a;
+	assign o_hpc_o3 = SYS_VERSION;
 	assign dut_out = dut_s;
 
 	// LFSR randomiser

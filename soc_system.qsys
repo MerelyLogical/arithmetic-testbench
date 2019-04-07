@@ -1545,7 +1545,7 @@
    enabled="1">
   <parameter name="id" value="-1395321840" />
  </module>
- <module name="test_wrapper_0" kind="test_wrapper" version="1.6" enabled="1">
+ <module name="test_wrapper_0" kind="test_wrapper" version="1.7" enabled="1">
   <parameter name="WIDTH" value="32" />
  </module>
  <connection
