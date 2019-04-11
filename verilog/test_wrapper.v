@@ -1,5 +1,5 @@
 module test_wrapper #(
-	parameter SYS_VERSION = 7,
+	parameter SYS_VERSION = 8,
 	parameter WIDTH = 32
 )(
 	input clk,
@@ -59,95 +59,24 @@ module test_wrapper #(
 		endcase
 	end
 	
-	// wrapper wires
-	wire        hpc_reset;
-	wire        hpc_enable;
-	
-	assign hpc_reset  = i_hpc_i1[0];
-	assign hpc_enable = i_hpc_i1[1];
-	assign hpc_freeze = i_hpc_i1[2];
-	
-	wire [31:0] rand_a;
-	wire [31:0] rand_b;
-	wire [31:0] drive_a;
-	wire [31:0] drive_b;
-	wire [31:0] drive_delayed_a;
-	wire [31:0] drive_delayed_b;
-	wire [31:0] dut_out;
-	wire        mnt_event;
-	wire [31:0] data_ctr;
-	wire [31:0] event_ctr;
-	
-	assign dut_a = drive_a;
-	assign dut_b = drive_b;
-	assign o_hpc_o1 = data_ctr;
-	assign o_hpc_o2 = event_ctr;
 	assign o_hpc_o3 = SYS_VERSION;
-	assign dut_out = dut_s;
 
-	// LFSR randomiser
-	randomiser #(
+	testbench #(
 		.WIDTH      ( WIDTH      )
-	) u_randomiser_a (
-	  .clk         ( clk_dut    ),
-	  .reset       ( hpc_reset  ),
-	  .enable      ( hpc_enable ),
-	  
-	  .i_initial   (32'hCAFEF00D),
-	  .o           ( rand_a     )
-	);
-
-	randomiser #(
-		.WIDTH      ( WIDTH      )
-	) u_randomiser_b (
-	  .clk         ( clk_dut    ),
-	  .reset       ( hpc_reset  ),
-	  .enable      ( hpc_enable ),
-	  
-	  .i_initial   (32'hFEEDC0DE),
-	  .o           ( rand_b     )
-	);
-	
-	// provides signal to drive DUT
-	driver #(
-		.WIDTH      ( WIDTH      )
-	) u_driver (
-		.clk        ( clk_tb     ),
-		.reset      ( hpc_reset  ),
+	) u_testbench (
+		.clk_tb     ( clk_tb     ),
 		.clk_dut    ( clk_dut    ),
 		
-		.i_rand_a   ( rand_a     ),
-		.i_rand_b   ( rand_b     ),
-		.o_drive_a  ( drive_a    ),
-		.o_drive_b  ( drive_b    ),
-		.o_drive_delayed_a ( drive_delayed_a ),
-		.o_drive_delayed_b ( drive_delayed_b )
-	);
-
-	// find errors and other interesting events
-	monitor #(
-		.WIDTH      ( WIDTH      )
-	) u_monitor (
-		.clk        ( clk_dut    ),
-		.reset      ( hpc_reset  ),
+		.reset      ( i_hpc_i1[0]),
+		.enable     ( i_hpc_i1[1]),
+		.freeze     ( i_hpc_i1[2]),
 		
-		.i_dut_ia   ( drive_delayed_a ),
-		.i_dut_ib   ( drive_delayed_b ),
-		.i_dut_os   ( dut_out    ),
-		.o_event    ( mnt_event  )
-	);
-
-	// counts events
-	scoreboard #(
-		.WIDTH      ( WIDTH      )
-	) u_scoreboard (
-		.clk        ( clk_dut    ),
-		.reset      ( hpc_reset  ),
-
-		.i_freeze   ( hpc_freeze ),
-		.i_event    ( mnt_event  ),
-		.o_event_ctr( event_ctr  ),
-		.o_data_ctr ( data_ctr   )
+		.o_data_ctr ( o_hpc_o1   ),
+		.o_event_ctr( o_hpc_o2   ),
+		
+		.o_drive_a  ( dut_a      ),
+		.o_drive_b  ( dut_b      ),
+		.i_dut_out  ( dut_s      )
 	);
 
 endmodule

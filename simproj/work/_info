@@ -1,0 +1,120 @@
+m255
+K3
+13
+cModel Technology
+dC:\modeltech64_10.1b\examples
+T_opt
+VmEaQ`K3LBJPDoEPz@f1F]0
+04 12 4 work test_wrapper fast 0
+=1-a0d3c125da97-5caf5861-123-2b58
+o-quiet -auto_acc_if_foreign -work work
+n@_opt
+OL;O;10.1b;51
+vdriver
+I_>3jZlL;jNOUMWX;i`[^d0
+Vz[^6F7d]hzek^ViXafi=12
+Z0 dH:\arithmetic-testbench\simproj
+w1554477488
+8H:/arithmetic-testbench/verilog/driver.v
+FH:/arithmetic-testbench/verilog/driver.v
+L0 1
+Z1 OL;L;10.1b;51
+r1
+31
+Z2 o-work work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 Jg1GdAFHQO2YBNQ=C7YC52
+!s90 -reportprogress|300|-work|work|-vopt|H:/arithmetic-testbench/verilog/driver.v|
+!s108 1554995267.614000
+!s107 H:/arithmetic-testbench/verilog/driver.v|
+!i10b 1
+!s85 0
+vmonitor
+I]fN_c^?[GNPSU:b`KJ>`P0
+VzE[D[if8RAK[65MlmPm@n3
+Z3 dH:\arithmetic-testbench\simproj
+w1554662923
+8H:/arithmetic-testbench/verilog/monitor.v
+FH:/arithmetic-testbench/verilog/monitor.v
+L0 1
+R1
+r1
+31
+R2
+!s100 F88V7oZY<U_zT`D5nDjO<1
+!s90 -reportprogress|300|-work|work|-vopt|H:/arithmetic-testbench/verilog/monitor.v|
+!s108 1554995270.317000
+!s107 H:/arithmetic-testbench/verilog/monitor.v|
+!i10b 1
+!s85 0
+vrandomiser
+IzCjQN`n@5[eWB9=ZRBgia1
+Vj45TFIS8hT<>j=:WieeE[3
+R3
+w1554469321
+8H:/arithmetic-testbench/verilog/randomiser.v
+FH:/arithmetic-testbench/verilog/randomiser.v
+L0 1
+R1
+r1
+31
+R2
+!s100 7nlFJKJZegk?P6Lg1M5mI3
+!s90 -reportprogress|300|-work|work|-vopt|H:/arithmetic-testbench/verilog/randomiser.v|
+!s108 1554995266.500000
+!s107 H:/arithmetic-testbench/verilog/randomiser.v|
+!i10b 1
+!s85 0
+vscoreboard
+I5WjTF^=n=7D4HXT29mE3G2
+VA22Y5JDXDTAbM94eL`aac0
+R3
+w1554654350
+8H:/arithmetic-testbench/verilog/scoreboard.v
+FH:/arithmetic-testbench/verilog/scoreboard.v
+L0 1
+R1
+r1
+31
+R2
+!s100 OO0Pe=M4KE00ATOFo=_V[3
+!s90 -reportprogress|300|-work|work|-vopt|H:/arithmetic-testbench/verilog/scoreboard.v|
+!s108 1554995270.692000
+!s107 H:/arithmetic-testbench/verilog/scoreboard.v|
+!i10b 1
+!s85 0
+vsub_mon
+IO3X^[<i4]PXT5g``SOH^R3
+VfnAZO@0_07R<e737Jn?m22
+R3
+w1554662574
+8H:/arithmetic-testbench/verilog/sub_mon.v
+FH:/arithmetic-testbench/verilog/sub_mon.v
+L0 1
+R1
+r1
+31
+R2
+!s100 =84Hb;zi??34lf>W29g=61
+!s90 -reportprogress|300|-work|work|-vopt|H:/arithmetic-testbench/verilog/sub_mon.v|
+!s108 1554995268.896000
+!s107 H:/arithmetic-testbench/verilog/sub_mon.v|
+!i10b 1
+!s85 0
+vtest_wrapper
+I:D9Z2^>Rz]fW3W=UbUUN?3
+V`AH0GWbC>RFWMoXCCVgRJ1
+R3
+w1554995197
+8H:/arithmetic-testbench/verilog/test_wrapper.v
+FH:/arithmetic-testbench/verilog/test_wrapper.v
+L0 1
+R1
+r1
+31
+R2
+!s100 ;YIl@QHbB68_U^eV8;?750
+!s90 -reportprogress|300|-work|work|-vopt|H:/arithmetic-testbench/verilog/test_wrapper.v|
+!i10b 1
+!s85 0
+!s108 1554995271.056000
+!s107 H:/arithmetic-testbench/verilog/test_wrapper.v|
