@@ -79,7 +79,7 @@ module monitor #(
 			.WIDTH     ( WIDTH    )
 		) u_sub_mon (
 			.clk       ( clk_sub[gi] ),
-			.reset     ( reset    ),
+			// .reset     ( reset    ),
 			
 			.i_a       ( a    [(gi+1)*WIDTH-1:gi*WIDTH] ),
 			.i_b       ( b    [(gi+1)*WIDTH-1:gi*WIDTH] ),

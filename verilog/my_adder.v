@@ -2,7 +2,7 @@ module my_adder #(
 	parameter WIDTH = 32
 )(
 	input clk,
-	input reset,
+	// input reset,
 
 	input  [WIDTH-1:0] i_a,
 	input  [WIDTH-1:0] i_b,
@@ -12,5 +12,4 @@ module my_adder #(
 	// adder logic
 	always @(posedge clk)
 		o_s <= i_a + i_b;
-
 endmodule

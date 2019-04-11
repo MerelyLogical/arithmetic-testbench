@@ -37,7 +37,7 @@ class axi:
 		self.mem.close()
 		
 	def read(self, addr):
-		'Read 8 bytes from register at addr'
+		'Read 4 bytes from register at addr'
 		# print ('read  addr: ' + hex(addr))
 		self.map.seek(addr)
 		return struct.unpack('<L', self.map.read(4))[0]
@@ -51,11 +51,13 @@ class axi:
 class wrapper(module):
 
 	regs = {
-		'i1': 4*0x00,
-		'i2': 4*0x01,
-		'o1': 4*0x02,
-		'o2': 4*0x03,
-		'o3': 4*0x04,
+		'i1': 4*0x0,
+		'o1': 4*0x4,
+		'o2': 4*0x8,
+		'o3': 4*0xC,
+		'o4': 4*0x10,
+		'o5': 4*0x14,
+		'o6': 4*0x18,
 	}
 
 	def reset(self):
@@ -123,30 +125,33 @@ pll_conf = pll(ax, 0x00010000)
 # b = int(input('Input b: '))
 
 # enable
-wrap.reset()
-wrap.enable()
+# wrap.reset()
+# wrap.enable()
+wrap.write(wrap.regs['i1'], 0b0001)
+wrap.write(wrap.regs['i1'], 0b0010)
 print('Running version   {}'.format(wrap.version()))
 fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
 for fq in fqs:
 	pll_fq = pll_conf.set(0, fq)
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
 	
-	wrap.reset()
+	wrap.write(wrap.regs['i1'], 0b0011)
+	wrap.write(wrap.regs['i1'], 0b0010)
 	time.sleep(1)
-	wrap.freeze()
-	
-	data_ctr = wrap.read(wrap.regs['o1'])
-	print('data  counter     {}'.format(data_ctr))
-	
+	wrap.write(wrap.regs['i1'], 0b0110)
+
 	event_ctr = wrap.read(wrap.regs['o2'])
 	print('event counter     {}'.format(event_ctr))
 	
+	data_ctr = wrap.read(wrap.regs['o1'])
+	print('data  counter     {}'.format(data_ctr))
+
+
 	if data_ctr != 0:
-		print('error rate        {:.3f}'.format(event_ctr / float(data_ctr)))
-	#o = wrap.read(wrap.regs['o3'])
-	#print('rand_a          = {}'.format(o))
+		print('error rate        {:.6f}'.format(event_ctr / float(data_ctr)))
+
 	print('')
 	
-	wrap.unfreeze()
+	wrap.write(wrap.regs['i1'], 0b0010)
 #disable
-wrap.disable()
+wrap.write(wrap.regs['i1'], 0b0001)

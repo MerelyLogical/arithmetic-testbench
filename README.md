@@ -10,7 +10,7 @@
 - [x] Monitor that accumulates this register together
 - [ ] Make TimeQuest work with clk_tb again
 - [x] fix error events at the start of each run
-- [x] ModelSim doesn't work with `test_wrapper`. How to include other files?
+- [x] ModelSim doesn't work with `test_wrapper`. ~How to include other files?~
 - [x] Separate avalon slave from main testbench
 
 # Low priority
@@ -24,8 +24,8 @@
 ## Notes
 # Compilation time
 3rd floor PC
-	- Window 7 enterprise sp1
-	- i7-4770 @ 3.40GHz
-	- 8 GB
-	- Unknown network drive
-	- 13m12s
+	* Window 7 enterprise sp1
+	* i7-4770 @ 3.40GHz
+	* 8 GB
+	* Unknown network drive
+	* 13m12s, 13m00s, 13m08s

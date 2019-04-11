@@ -2,10 +2,10 @@ module driver #(
 	// placeholder. doesn't support other widths.
 	parameter WIDTH = 32
 )(
-	input clk,
-	input reset,
+	// input clk,
+	// input reset,
 	input clk_dut,
-	input reset_dut,
+	// input reset_dut,
 
 	input      [31:0] i_rand_a,
 	input      [31:0] i_rand_b,

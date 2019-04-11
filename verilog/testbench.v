@@ -1,7 +1,7 @@
 module testbench #(
 	parameter WIDTH = 32
 )(
-	input clk_tb,
+	// input clk_tb,
 	input clk_dut,
 	
 	input reset,
@@ -9,20 +9,36 @@ module testbench #(
 	input freeze,
 	
 	output [WIDTH-1:0] o_data_ctr,
-	output [WIDTH-1:0] o_event_ctr,
+	output [WIDTH-1:0] o_event_ctr/*,
 	
 	// DUT conduit
 	output [WIDTH-1:0] o_drive_a,
 	output [WIDTH-1:0] o_drive_b,
-	input  [WIDTH-1:0] i_dut_out
+	input  [WIDTH-1:0] i_dut_out*/
 );
 
-	wire [31:0] rand_a;
-	wire [31:0] rand_b;
-	wire [31:0] drive_delayed_a;
-	wire [31:0] drive_delayed_b;
-	wire        mnt_event;
-
+	wire [WIDTH-1:0] rand_a;
+	wire [WIDTH-1:0] rand_b;
+	wire [WIDTH-1:0] drive_delayed_a;
+	wire [WIDTH-1:0] drive_delayed_b;
+	wire             mnt_event;
+	
+	// ----INTERNAL ADDER, FOR TESTING ONLY------------
+	
+	wire [WIDTH-1:0] o_drive_a;
+	wire [WIDTH-1:0] o_drive_b;
+	reg  [WIDTH-1:0] i_dut_out;
+	
+	always @(posedge clk_dut)
+		// introduce 25% error rate
+		if (o_drive_a[0] && o_drive_b[0])
+			i_dut_out <= o_drive_a;
+		else
+			i_dut_out <= 32'h00ABCDEF; //o_drive_a + o_drive_b;
+	
+	// ------------------------------------------------
+	
+	
 	// LFSR randomiser
 	randomiser #(
 		.WIDTH      ( WIDTH      )
@@ -50,10 +66,10 @@ module testbench #(
 	driver #(
 		.WIDTH      ( WIDTH      )
 	) u_driver (
-		.clk        ( clk_tb     ),
-		.reset      ( reset      ),
+		// .clk        ( clk_tb     ),
+		// .reset      ( reset      ),
 		.clk_dut    ( clk_dut    ),
-		.reset_dut  ( reset      ),
+		// .reset_dut  ( reset      ),
 		
 		.i_rand_a   ( rand_a     ),
 		.i_rand_b   ( rand_b     ),

@@ -2,7 +2,7 @@ module sub_mon #(
 	parameter WIDTH = 32
 )(
 	input clk,
-	input reset,
+	// input reset,
 
 	input      [WIDTH-1:0] i_a,
 	input      [WIDTH-1:0] i_b,
@@ -11,10 +11,6 @@ module sub_mon #(
 
 	// adder logic
 	always @(posedge clk)
-		// introduce 25% error rate
-		if (i_a[0] && i_b[0])
-			o_mon_o <= i_a;
-		else
-			o_mon_o <= i_a + i_b;
+		o_mon_o <= 32'h00ABCDEF; //i_a + i_b;
 
 endmodule
