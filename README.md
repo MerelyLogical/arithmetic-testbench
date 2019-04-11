@@ -10,8 +10,8 @@
 - [x] Monitor that accumulates this register together
 - [ ] Make TimeQuest work with clk_tb again
 - [x] fix error events at the start of each run
-- [ ] ModelSim doesn't work with `test_wrapper`. How to include other files?
-- [ ] Separate avalon slave from main testbench
+- [x] ModelSim doesn't work with `test_wrapper`. How to include other files?
+- [x] Separate avalon slave from main testbench
 
 # Low priority
 - [ ] Upgrade PLL config class to python3
