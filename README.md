@@ -12,10 +12,12 @@
 - [x] fix error events at the start of each run
 - [x] ModelSim doesn't work with `test_wrapper`. ~How to include other files?~
 - [x] Separate avalon slave from main testbench
+- [x] Improved PLL reconfiguration granularity
+- [ ] Figure out if the issue with adder in Qsys is with the delay or something else.
 
 # Low priority
 - [ ] Upgrade PLL config class to python3
-- [ ] Method to determine DUT delay
+- [x] Method to determine DUT delay
 - [ ] Consider regular AXI bridge vs lightweight bridge
 - [ ] Investigate interesting warning from Quartus
 - [ ] Write to `/dev/leds` and stuff for coolness
@@ -24,8 +26,14 @@
 ## Notes
 # Compilation time
 3rd floor PC
-	* Window 7 enterprise sp1
-	* i7-4770 @ 3.40GHz
-	* 8 GB
-	* Unknown network drive
-	* 13m12s, 13m00s, 13m08s
+* Window 7 enterprise sp1
+* i7-4770 @ 3.40GHz
+* 8 GB
+* Unknown network drive
+* 13m12s, 13m00s, 13m08s
+5th floor PC
+* Window 7 enterprise sp1
+* i7-4770 @ 3.40GHz
+* 12 GB
+* Unknown network drive
+* 13m18s

@@ -9,12 +9,15 @@ module testbench #(
 	input freeze,
 	
 	output [WIDTH-1:0] o_data_ctr,
-	output [WIDTH-1:0] o_event_ctr/*,
+	output [WIDTH-1:0] o_event_ctr,
+	// ------------------------------------------------
+	output [WIDTH-1:0] o_debug,
+	// ------------------------------------------------
 	
 	// DUT conduit
 	output [WIDTH-1:0] o_drive_a,
 	output [WIDTH-1:0] o_drive_b,
-	input  [WIDTH-1:0] i_dut_out*/
+	input  [WIDTH-1:0] i_dut_out
 );
 
 	wire [WIDTH-1:0] rand_a;
@@ -24,7 +27,7 @@ module testbench #(
 	wire             mnt_event;
 	
 	// ----INTERNAL ADDER, FOR TESTING ONLY------------
-	
+	/*
 	wire [WIDTH-1:0] o_drive_a;
 	wire [WIDTH-1:0] o_drive_b;
 	reg  [WIDTH-1:0] i_dut_out;
@@ -34,8 +37,8 @@ module testbench #(
 		if (o_drive_a[0] && o_drive_b[0])
 			i_dut_out <= o_drive_a;
 		else
-			i_dut_out <= 32'h00ABCDEF; //o_drive_a + o_drive_b;
-	
+			i_dut_out <= o_drive_a + o_drive_b;
+	*/
 	// ------------------------------------------------
 	
 	
@@ -67,12 +70,17 @@ module testbench #(
 		.WIDTH      ( WIDTH      )
 	) u_driver (
 		// .clk        ( clk_tb     ),
-		// .reset      ( reset      ),
+		.reset      ( reset      ),
 		.clk_dut    ( clk_dut    ),
 		// .reset_dut  ( reset      ),
 		
 		.i_rand_a   ( rand_a     ),
 		.i_rand_b   ( rand_b     ),
+		// ------------------------------------------------
+		// Debug: send dut out to driver to test delay.
+		.i_dut_out  ( i_dut_out  ),
+		.o_dut_delay( o_debug    ),
+		// ------------------------------------------------
 		.o_drive_a  ( o_drive_a  ),
 		.o_drive_b  ( o_drive_b  ),
 		.o_drive_delayed_a ( drive_delayed_a ),

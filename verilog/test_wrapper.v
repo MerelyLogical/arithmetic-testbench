@@ -16,12 +16,12 @@ module test_wrapper #(
 	input                  slave_read,
 	input                  slave_write,
 	input      [WIDTH-1:0] slave_writedata,
-	output reg [WIDTH-1:0] slave_readdata/*,
+	output reg [WIDTH-1:0] slave_readdata,
 	
 	// DUT conduit
 	output [WIDTH-1:0] dut_a,
 	output [WIDTH-1:0] dut_b,
-	input  [WIDTH-1:0] dut_s*/
+	input  [WIDTH-1:0] dut_s
 );
 
 	// Avalon slave logic
@@ -29,11 +29,13 @@ module test_wrapper #(
 	wire [WIDTH-1:0] o_hpc_o1;
 	wire [WIDTH-1:0] o_hpc_o2;
 	wire [WIDTH-1:0] o_hpc_o3;
+	wire [WIDTH-1:0] o_hpc_o4;
 	
 	localparam I1_ADDR = 5'h0;
 	localparam O1_ADDR = 5'h4;
 	localparam O2_ADDR = 5'h8;
 	localparam O3_ADDR = 5'hC;
+	localparam O4_ADDR = 5'h10;
 	
 	always @(posedge clk) begin
 		case (slave_address)
@@ -51,6 +53,9 @@ module test_wrapper #(
 			O3_ADDR:
 				if (slave_read && ~slave_write)
 					slave_readdata <= o_hpc_o3;
+			O4_ADDR:
+				if (slave_read && ~slave_write)
+					slave_readdata <= o_hpc_o4;
 		endcase
 	end
 	
@@ -67,11 +72,13 @@ module test_wrapper #(
 		.freeze     ( i_hpc_i1[2]),
 		
 		.o_data_ctr ( o_hpc_o1   ),
-		.o_event_ctr( o_hpc_o2   )/*,
-		
+		.o_event_ctr( o_hpc_o2   ),
+		// ------------------------------------------------
+		.o_debug    ( o_hpc_o4   ),
+		// ------------------------------------------------
 		.o_drive_a  ( dut_a      ),
 		.o_drive_b  ( dut_b      ),
-		.i_dut_out  ( dut_s      )*/
+		.i_dut_out  ( dut_s      )
 	);
 
 endmodule

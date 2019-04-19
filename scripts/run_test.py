@@ -135,7 +135,7 @@ wrap.enable()
 wrap.reset()
 print('Running version   {}'.format(wrap.version()))
 # fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
-fqs = range(300, 500, 25)
+fqs = range(100, 300, 25)
 for fq in fqs:
 	pll_fq = pll_conf.set(0, fq)
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
@@ -149,7 +149,10 @@ for fq in fqs:
 
 	event_ctr = wrap.read(wrap.regs['o2'])
 	print('event counter     {}'.format(event_ctr))
-
+	
+	debug_ctr = wrap.read(wrap.regs['o4'])
+	print('debug counter     {}'.format(debug_ctr))
+	
 	if data_ctr != 0:
 		print('error rate        {:.6f}'.format(event_ctr / float(data_ctr)))
 
