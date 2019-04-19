@@ -18,19 +18,21 @@
 # Low priority
 - [ ] Upgrade PLL config class to python3
 - [x] Method to determine DUT delay
-- [ ] Consider regular AXI bridge vs lightweight bridge
+- [x] Consider regular AXI bridge vs lightweight bridge
 - [ ] Investigate interesting warning from Quartus
 - [ ] Write to `/dev/leds` and stuff for coolness
 - [ ] sub monitors only have `NUM_SUB_MON-1` cycles to get result, system breaks when only one sub monitor. Intentional?
 
 ## Notes
 # Compilation time
+
 3rd floor PC
 * Window 7 enterprise sp1
 * i7-4770 @ 3.40GHz
 * 8 GB
 * Unknown network drive
 * 13m12s, 13m00s, 13m08s
+
 5th floor PC
 * Window 7 enterprise sp1
 * i7-4770 @ 3.40GHz
