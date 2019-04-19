@@ -63,7 +63,6 @@ class wrapper(module):
 	def reset(self):
 		tmp = self.read(self.regs['i1'])
 		self.write(self.regs['i1'], tmp | 0b0001)
-		time.sleep(0.001)
 		self.write(self.regs['i1'], tmp & 0b1110)
 
 	def enable(self):
@@ -91,67 +90,71 @@ class pll(module):
 		'mode'  : 4*0x0,
 		'status': 4*0x1,
 		'start' : 4*0x2,
+		'n'     : 4*0x3,
 		'm'     : 4*0x4,
 		'c'     : 4*0x5
 	}
 	
 	def set(self, clk, freq):
 		'Set clock output clk to closest possible frequency to freq (MHz). Returns the actual frequency set'
-		self.write(self.regs['mode'], 1)													# Polling mode	
-		self.write(self.regs['m'], 0x2020)													# Set high_count(m) = low_count(m) = 32
-		c_count = int(round(float(1600)/freq))												# Set c_count to 1600/freq
-		if c_count % 2 == 0:																# Divide into high_count(c) and low_count(c). high_count = low_count => even division
-			high_count = c_count/2
-			low_count = c_count/2
-			division = 0
-		else:																				# high_count != low_count => high_count = low_count + 1, odd division
-			high_count = c_count/2 + 1
-			low_count = c_count/2
-			division = 1
-		self.write(self.regs['c'], (clk << 18) + (division << 17) + (high_count << 8) + low_count)
-		self.write(self.regs['start'], 1)													# Start reconfiguration
-		while self.read(self.regs['status']) != 0:											# Wait until done
+		self.write(self.regs['mode'], 1)                                                # Polling mode
+		n_count = 2
+		if n_count % 2 == 0:
+			high_count = n_count/2
+			low_count = n_count/2
+			odd_division = 0
+		else:
+			high_count = n_count/2 + 1
+			low_count = n_count/2
+			odd_division = 1
+		self.write(self.regs['n'], (odd_division << 17) + (high_count << 8) + low_count)
+		stepsize = 50/n_count                                                           # 50 is the frequency of the reference input
+		m_count = int(round(freq/float(stepsize)))
+		if m_count % 2 == 0:
+			high_count = m_count/2
+			low_count = m_count/2
+			odd_division = 0
+		else:
+			high_count = m_count/2 + 1
+			low_count = m_count/2
+			odd_division = 1
+		self.write(self.regs['m'], (odd_division << 17) + (high_count << 8) + low_count)
+		self.write(self.regs['c'], (clk << 18) + 0x10000)                               # disable c by setting c[16]
+		self.write(self.regs['start'], 1)                                               # Start reconfiguration
+		while self.read(self.regs['status']) != 0:                                      # Wait until done
 			pass
-		return float(1600)/c_count
+		return m_count*stepsize
 
 # -----main--------------------------------------------------------------------
 
 ax = axi()
-# 10 0000
 wrap = wrapper(ax, 0x00000000)
-# 11 0000
 pll_conf = pll(ax, 0x00010000)
-# a = int(input('Input a: '))
-# b = int(input('Input b: '))
 
-# enable
-# wrap.reset()
-# wrap.enable()
-wrap.write(wrap.regs['i1'], 0b0001)
-wrap.write(wrap.regs['i1'], 0b0010)
+wrap.enable()
+wrap.reset()
 print('Running version   {}'.format(wrap.version()))
-fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
+# fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
+fqs = range(300, 500, 25)
 for fq in fqs:
 	pll_fq = pll_conf.set(0, fq)
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
 	
-	wrap.write(wrap.regs['i1'], 0b0011)
-	wrap.write(wrap.regs['i1'], 0b0010)
+	wrap.reset()
 	time.sleep(1)
-	wrap.write(wrap.regs['i1'], 0b0110)
+	wrap.freeze()
 
-	event_ctr = wrap.read(wrap.regs['o2'])
-	print('event counter     {}'.format(event_ctr))
-	
 	data_ctr = wrap.read(wrap.regs['o1'])
 	print('data  counter     {}'.format(data_ctr))
 
+	event_ctr = wrap.read(wrap.regs['o2'])
+	print('event counter     {}'.format(event_ctr))
 
 	if data_ctr != 0:
 		print('error rate        {:.6f}'.format(event_ctr / float(data_ctr)))
 
 	print('')
 	
-	wrap.write(wrap.regs['i1'], 0b0010)
+	wrap.unfreeze()
 #disable
-wrap.write(wrap.regs['i1'], 0b0001)
+wrap.disable()
