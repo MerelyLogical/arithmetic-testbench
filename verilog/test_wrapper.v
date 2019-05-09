@@ -16,12 +16,14 @@ module test_wrapper #(
 	input                  slave_read,
 	input                  slave_write,
 	input      [WIDTH-1:0] slave_writedata,
-	output reg [WIDTH-1:0] slave_readdata,
+	output reg [WIDTH-1:0] slave_readdata
 	
 	// DUT conduit
+	/*
 	output [WIDTH-1:0] dut_a,
 	output [WIDTH-1:0] dut_b,
 	input  [WIDTH-1:0] dut_s
+	*/
 );
 
 	// Avalon slave logic

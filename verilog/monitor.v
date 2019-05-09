@@ -1,7 +1,7 @@
 module monitor #(
 	// placeholder. doesn't support other widths.
 	parameter WIDTH       = 32,
-	parameter NUM_SUB_MON = 4
+	parameter NUM_SUB_MON = 2
 )(
 	input clk,
 	input reset,
@@ -34,11 +34,7 @@ module monitor #(
 	reg  [NUM_SUB_MON*WIDTH-1:0] o_dut;
 	wire [NUM_SUB_MON*WIDTH-1:0] o_mon;
 	reg  [NUM_SUB_MON-1:0] sub_event;
-	reg  [NUM_SUB_MON-1:0] sub_event_delayed;
 	wire [NUM_SUB_MON-1:0] clk_sub;
-	
-	always @(posedge clk)
-		sub_event_delayed <= sub_event;
 
 	// to show when monitors are ready after reset
 	// this happens at the cycle after distributer has returned to the first position
@@ -50,13 +46,14 @@ module monitor #(
 			case (ready_ctr)
 				2'b00:   ready_ctr <= 2'b01;
 				2'b01:   ready_ctr <= 2'b10;
-				2'b10:   ready_ctr <= 2'b10;
+				2'b10:   ready_ctr <= 2'b11;
+				2'b11:	ready_ctr <= 2'b11;
 				default: ready_ctr <= 2'b00;
 			endcase
 	end
 	
 	// fix output to 0 if not ready
-	assign o_event = ready_ctr[1] ? |(sub_event & ~sub_event_delayed) : 0;
+	assign o_event = (ready_ctr == 2'b11) ? |sub_event : 0;
 	
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
