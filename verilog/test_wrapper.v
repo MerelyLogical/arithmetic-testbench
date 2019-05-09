@@ -60,7 +60,7 @@ module test_wrapper #(
 	end
 	
 	assign o_hpc_o3 = SYS_VERSION;
-
+	
 	testbench #(
 		.WIDTH      ( WIDTH      )
 	) u_testbench (
@@ -74,11 +74,13 @@ module test_wrapper #(
 		.o_data_ctr ( o_hpc_o1   ),
 		.o_event_ctr( o_hpc_o2   ),
 		// ------------------------------------------------
-		.o_debug    ( o_hpc_o4   ),
+		.o_debug    ( o_hpc_o4   )
 		// ------------------------------------------------
+		/*
 		.o_drive_a  ( dut_a      ),
 		.o_drive_b  ( dut_b      ),
 		.i_dut_out  ( dut_s      )
+		*/
 	);
 
 endmodule

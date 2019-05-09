@@ -10,6 +10,10 @@ module my_adder #(
 );
 
 	// adder logic
-	always @(posedge clk)
-		o_s <= i_a + i_b;
+	reg[WIDTH-1:0] delay_s;
+	
+	always @(posedge clk) begin
+		delay_s <= i_a + i_b;
+		o_s <= delay_s;
+	end
 endmodule

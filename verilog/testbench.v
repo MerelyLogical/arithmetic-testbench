@@ -11,13 +11,15 @@ module testbench #(
 	output [WIDTH-1:0] o_data_ctr,
 	output [WIDTH-1:0] o_event_ctr,
 	// ------------------------------------------------
-	output [WIDTH-1:0] o_debug,
+	output [WIDTH-1:0] o_debug
 	// ------------------------------------------------
 	
 	// DUT conduit
+	/*
 	output [WIDTH-1:0] o_drive_a,
 	output [WIDTH-1:0] o_drive_b,
 	input  [WIDTH-1:0] i_dut_out
+	*/
 );
 
 	wire [WIDTH-1:0] rand_a;
@@ -27,18 +29,17 @@ module testbench #(
 	wire             mnt_event;
 	
 	// ----INTERNAL ADDER, FOR TESTING ONLY------------
-	/*
+	
 	wire [WIDTH-1:0] o_drive_a;
 	wire [WIDTH-1:0] o_drive_b;
 	reg  [WIDTH-1:0] i_dut_out;
+	reg  [WIDTH-1:0] delay_s;
 	
-	always @(posedge clk_dut)
-		// introduce 25% error rate
-		if (o_drive_a[0] && o_drive_b[0])
-			i_dut_out <= o_drive_a;
-		else
-			i_dut_out <= o_drive_a + o_drive_b;
-	*/
+	always @(posedge clk_dut) begin
+		delay_s   <= o_drive_a + o_drive_b;
+		i_dut_out <= delay_s;
+	end
+	
 	// ------------------------------------------------
 	
 	

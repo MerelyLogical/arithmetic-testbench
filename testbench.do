@@ -12,9 +12,12 @@ add wave -position end -radix hex sim:/testbench/rand_a
 add wave -position end -radix hex sim:/testbench/rand_b
 add wave -position end -radix hex sim:/testbench/drive_delayed_a
 add wave -position end -radix hex sim:/testbench/drive_delayed_b
-add wave -position end sim:/testbench/mnt_event
+add wave -position end -radix hex sim:/testbench/mnt_event
+add wave -position end -radix hex sim:/testbench/u_monitor/gen_mon[0]/u_sub_mon/i_a
+add wave -position end -radix hex sim:/testbench/u_monitor/gen_mon[0]/u_sub_mon/i_b
+add wave -position end -radix hex sim:/testbench/u_monitor/gen_mon[0]/u_sub_mon/o_mon_o
 
-# restart -force
+restart -force
 
 force sim:/testbench/clk_dut 1 0, 0 {25 ns} -r 50ns
 force sim:/testbench/reset 1'b1 0
