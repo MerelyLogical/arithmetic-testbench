@@ -21,6 +21,7 @@ module driver #(
 
 
 	// ------------------------------------------
+	// measure delay from DUT
 	reg [31:0] delay_count;
 	reg [ 3:0] out_count;
 	reg [ 1:0] test_state;
@@ -77,6 +78,6 @@ module driver #(
 	end
 	
 	assign o_drive_delayed_a = a_2;
-	assign o_drive_delayed_b = a_2;
+	assign o_drive_delayed_b = b_2;
 
 endmodule
