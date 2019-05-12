@@ -22,19 +22,25 @@ module driver #(
 
 	// ------------------------------------------
 	// measure delay from DUT
+	// 16 bits means at max 200k clk ticks required to finish testing.
+	// which is 4ms at 50MHz. negligible.
+	// this reduces the error rate by 1/65k, negligible.
+	// testing with out='0 is safe.
+	// normally LFSR will not give '0 as dut input.
 	reg [31:0] delay_count;
-	reg [ 3:0] out_count;
+	reg [15:0] out_count;
 	reg [ 1:0] test_state;
-
+	localparam COUNT_TRIGGER = 16'hEEEE;
+	
 	always @(posedge clk_dut or posedge reset)
 		if (reset)
 			test_state <= 2'b00;
 		else case (test_state)
-			2'b00: if (i_dut_out == 32'h0) test_state <= 2'b01;
-			2'b01: if (out_count ==  4'hE) test_state <= 2'b10;
-			2'b10: if (i_dut_out == 32'h0) test_state <= 2'b11;
-			2'b11:                         test_state <= 2'b11;
-			default:                       test_state <= 2'b00;
+			2'b00: if (i_dut_out == 32'h0)         test_state <= 2'b01;
+			2'b01: if (out_count == COUNT_TRIGGER) test_state <= 2'b10;
+			2'b10: if (i_dut_out == 32'h0)         test_state <= 2'b11;
+			2'b11:                                 test_state <= 2'b11;
+			default:                               test_state <= 2'b00;
 		endcase
 	
 	always @(posedge clk_dut or posedge reset)
@@ -45,17 +51,16 @@ module driver #(
 	
 	always @(posedge clk_dut or posedge reset)
 		if (reset)
-			out_count <= 4'h0;
+			out_count <= 16'h0;
 		else
 			out_count <= out_count + 1'b1;
 	
-	assign o_drive_a = (out_count == 4'hE) ? 32'h0 : i_rand_a;
-	assign o_drive_b = (out_count == 4'hE) ? 32'h0 : i_rand_b;
+	assign o_drive_a = (out_count == COUNT_TRIGGER) ? 32'h0 : i_rand_a;
+	assign o_drive_b = (out_count == COUNT_TRIGGER) ? 32'h0 : i_rand_b;
 	
 	assign o_dut_delay = (test_state == 2'b11) ? delay_count : 32'hFFFF;
 	
 	// ------------------------------------------
-
 	// normal output to DUT
 	// assign as LSFR outputs are on clk_dut as well
 	//	assign o_drive_a = i_rand_a;
@@ -77,7 +82,7 @@ module driver #(
 		b_3 <= b_2;
 	end
 	
-	assign o_drive_delayed_a = a_2;
-	assign o_drive_delayed_b = b_2;
+	assign o_drive_delayed_a = a_3;
+	assign o_drive_delayed_b = b_3;
 
 endmodule
