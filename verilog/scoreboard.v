@@ -4,16 +4,16 @@ module scoreboard #(
 	input clk,
 	input reset,
 
-	input             i_freeze,
-	input             i_event,
-	output reg [31:0] o_event_ctr,
-	output reg [31:0] o_data_ctr
+	input  i_freeze,
+	input  i_event,
+	output reg [WIDTH-1:0] o_event_ctr,
+	output reg [WIDTH-1:0] o_data_ctr
 );
 
 	always @(posedge clk or posedge reset)
 		if (reset) begin
-			o_event_ctr <= 31'b0;
-			o_data_ctr  <= 31'b0;
+			o_event_ctr <= {WIDTH{1'b0}};
+			o_data_ctr  <= {WIDTH{1'b0}};
 		end
 		else if (!i_freeze) begin
 			o_data_ctr <= o_data_ctr + 1'b1;

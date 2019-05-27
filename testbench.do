@@ -16,14 +16,14 @@ add wave -position end -radix hex sim:/testbench/mnt_event
 
 restart -force
 
-force sim:/testbench/clk_dut 1 0, 0 {25 ns} -r 50ns
+force sim:/testbench/clk_dut 1 0, 0 {1 ns} -r 2ns
 force sim:/testbench/reset 1'b0 0
 force sim:/testbench/enable 1'b0 0
 force sim:/testbench/freeze 1'b0 0
-run 25ns
+run 1ns
 force sim:/testbench/reset 1'b1 0
-run 50ns
+run 2ns
 force sim:/testbench/reset 1'b0 0
 force sim:/testbench/enable 1'b1 0
-run 25ns
-run 5000ns
+run 1ns
+run 200ns

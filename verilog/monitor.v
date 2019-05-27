@@ -1,5 +1,4 @@
 module monitor #(
-	// placeholder. doesn't support other widths.
 	parameter WIDTH       = 32,
 	parameter NUM_SUB_MON = 2
 )(
@@ -53,7 +52,7 @@ module monitor #(
 	end
 	
 	// fix output to 0 if not ready
-	assign o_event = (ready_ctr == 2'b11) ? |sub_event : 0;
+	assign o_event = (&ready_ctr) ? (|sub_event) : 1'b0;
 	
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon

@@ -36,7 +36,7 @@ module testbench #(
 	reg  [WIDTH-1:0] delay_s;
 	
 	always @(posedge clk_dut) begin
-		delay_s   <= o_drive_a;// + o_drive_b;
+		delay_s   <= o_drive_a + o_drive_b;
 		i_dut_out <= delay_s;
 	end
 	
