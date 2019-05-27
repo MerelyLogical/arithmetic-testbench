@@ -29,7 +29,6 @@ module driver #(
 	reg [WIDTH-1:0] delay_count;
 	reg      [15:0] out_count;
 	reg      [ 3:0] test_state;
-	// localparam COUNT_TRIGGER = 16'hEEEE;
 	localparam STATE_IDLE  = 4'b0001;
 	localparam STATE_READY = 4'b0010;
 	localparam STATE_COUNT = 4'b0100;
@@ -59,8 +58,18 @@ module driver #(
 		else
 			out_count <= out_count + 1'b1;
 	
-	assign o_drive_a = (&out_count) ? {WIDTH{1'b0}} : i_rand_a;
-	assign o_drive_b = (&out_count) ? {WIDTH{1'b0}} : i_rand_b;
+	reg [WIDTH-1:0] a_0;
+	reg [WIDTH-1:0] b_0;
+	
+	always @(posedge clk_dut)
+		if (&out_count) begin
+			a_0 <= {WIDTH{1'b0}};
+			b_0 <= {WIDTH{1'b0}};
+		end
+		else begin
+			a_0 <= i_rand_a;
+			b_0 <= i_rand_b;
+		end
 	
 	assign o_dut_delay = (test_state == STATE_DONE) ? delay_count : {WIDTH{1'b1}};
 	
@@ -78,14 +87,16 @@ module driver #(
 	
 	always @(posedge clk_dut) begin
 		// delayed output to monitor
-		a_1 <= i_rand_a;
+		a_1 <= a_0;
 		a_2 <= a_1;
 		// a_3 <= a_2;
-		b_1 <= i_rand_b;
+		b_1 <= b_0;
 		b_2 <= b_1;
 		// b_3 <= b_2;
 	end
 	
+	assign o_drive_a = a_0;
+	assign o_drive_b = b_0;
 	assign o_drive_delayed_a = a_2;
 	assign o_drive_delayed_b = b_2;
 

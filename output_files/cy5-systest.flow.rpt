@@ -1,5 +1,5 @@
 Flow report for cy5-systest
-Mon May 27 18:57:03 2019
+Mon May 27 19:55:04 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
 
 
@@ -41,18 +41,18 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Mon May 27 18:57:03 2019           ;
+; Flow Status                     ; Successful - Mon May 27 19:55:04 2019           ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Standard Edition ;
 ; Revision Name                   ; cy5-systest                                     ;
 ; Top-level Entity Name           ; sys_top                                         ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSXFC6D6F31C6                                  ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 4,579 / 41,910 ( 11 % )                         ;
-; Total registers                 ; 6332                                            ;
+; Logic utilization (in ALMs)     ; 4,585 / 41,910 ( 11 % )                         ;
+; Total registers                 ; 6227                                            ;
 ; Total pins                      ; 157 / 499 ( 31 % )                              ;
 ; Total virtual pins              ; 0                                               ;
-; Total block memory bits         ; 527,104 / 5,662,720 ( 9 % )                     ;
+; Total block memory bits         ; 527,296 / 5,662,720 ( 9 % )                     ;
 ; Total DSP Blocks                ; 0 / 112 ( 0 % )                                 ;
 ; Total HSSI RX PCSs              ; 0 / 9 ( 0 % )                                   ;
 ; Total HSSI PMA RX Deserializers ; 0 / 9 ( 0 % )                                   ;
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/27/2019 18:44:01 ;
+; Start date & time ; 05/27/2019 19:41:50 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cy5-systest         ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
 ; Assignment Name                       ; Value                                                                    ; Default Value ; Entity Name                    ; Section Id     ;
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
-; COMPILER_SIGNATURE_ID                 ; 176831339043248.155897903509304                                          ; --            ; --                             ; --             ;
+; COMPILER_SIGNATURE_ID                 ; 176831339043248.155898250305728                                          ; --            ; --                             ; --             ;
 ; ECO_REGENERATE_REPORT                 ; On                                                                       ; Off           ; --                             ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT                ; Verilog Hdl                                                              ; --            ; --                             ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                   ; ModelSim-Altera (Verilog)                                                ; <None>        ; --                             ; --             ;
@@ -141,12 +141,12 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:02:23     ; 1.9                     ; 1416 MB             ; 00:02:57                           ;
-; Fitter                    ; 00:03:04     ; 1.3                     ; 3663 MB             ; 00:06:32                           ;
-; Assembler                 ; 00:00:23     ; 1.0                     ; 1021 MB             ; 00:00:16                           ;
+; Analysis & Synthesis      ; 00:02:28     ; 1.8                     ; 1381 MB             ; 00:03:02                           ;
+; Fitter                    ; 00:03:14     ; 1.2                     ; 3668 MB             ; 00:06:48                           ;
+; Assembler                 ; 00:00:22     ; 1.0                     ; 1026 MB             ; 00:00:15                           ;
 ; TimeQuest Timing Analyzer ; 00:01:13     ; 1.4                     ; 1868 MB             ; 00:01:22                           ;
-; EDA Netlist Writer        ; 00:00:33     ; 1.0                     ; 1127 MB             ; 00:00:15                           ;
-; Total                     ; 00:07:36     ; --                      ; --                  ; 00:11:22                           ;
+; EDA Netlist Writer        ; 00:00:33     ; 1.0                     ; 1127 MB             ; 00:00:16                           ;
+; Total                     ; 00:07:50     ; --                      ; --                  ; 00:11:43                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
