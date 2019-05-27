@@ -21,14 +21,16 @@ module driver #(
 
 	// ------------------------------------------
 	// measure delay from DUT
-	// 16 bits means at max 200k clk ticks required to finish testing.
+	// K = 16 means at max 200k clk ticks required to finish testing.
 	// which is 4ms at 50MHz. negligible.
 	// this reduces the error rate by 1/65k, negligible.
 	// testing with out='0 is safe.
 	// normally LFSR will not give '0 as dut input.
-	reg [WIDTH-1:0] delay_count;
-	reg      [15:0] out_count;
-	reg      [ 3:0] test_state;
+	// maximum detectable delay = 2^K
+	localparam K = 4;
+	reg [K-1:0] delay_count;
+	reg [K-1:0] out_count;
+	reg [  3:0] test_state;
 	localparam STATE_IDLE  = 4'b0001;
 	localparam STATE_READY = 4'b0010;
 	localparam STATE_COUNT = 4'b0100;
@@ -48,13 +50,13 @@ module driver #(
 	
 	always @(posedge clk_dut or posedge reset)
 		if (reset)
-			delay_count <= {WIDTH{1'b0}};
+			delay_count <= {K{1'b1}};
 		else if(test_state == STATE_COUNT)
 			delay_count <= delay_count + 1'b1;
 	
 	always @(posedge clk_dut or posedge reset)
 		if (reset)
-			out_count <= 16'h0;
+			out_count <= {K{1'b0}};
 		else
 			out_count <= out_count + 1'b1;
 	
@@ -71,7 +73,7 @@ module driver #(
 			b_0 <= i_rand_b;
 		end
 	
-	assign o_dut_delay = (test_state == STATE_DONE) ? delay_count : {WIDTH{1'b1}};
+	assign o_dut_delay = (test_state == STATE_DONE) ? delay_count : {K{1'b1}};
 	
 	// ------------------------------------------
 	// normal output to DUT

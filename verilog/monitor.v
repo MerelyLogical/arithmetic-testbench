@@ -72,7 +72,7 @@ module monitor #(
 		
 		// instantiate sub monitors
 		sub_mon #(
-			.WIDTH     ( WIDTH    )
+			.WIDTH     ( WIDTH )
 		) u_sub_mon (
 			.clk       ( clk_sub[gi] ),
 			// .reset     ( reset    ),
@@ -81,6 +81,19 @@ module monitor #(
 			.i_b       ( b    [(gi+1)*WIDTH-1:gi*WIDTH] ),
 			.o_mon_o   ( o_mon[(gi+1)*WIDTH-1:gi*WIDTH] )
 		);
+		
+		/*
+		// Comparator module to find position of first wrong digit
+		// Can be disabled and then only correctness will be provided as output
+		comparator #(
+			.WIDTH     ( WIDTH )
+		) u_comparator (
+			.clk       ( dist_ctr[gi] ),
+			.i_dut     (),
+			.i_mon     (),
+			.o_err     (),
+		*/
+		
 	end endgenerate
 
 endmodule
