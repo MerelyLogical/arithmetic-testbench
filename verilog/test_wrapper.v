@@ -12,11 +12,11 @@ module test_wrapper #(
 	// input reset_dut,
 	
 	// Avalon slave
-	input            [4:0] slave_address,
-	input                  slave_read,
-	input                  slave_write,
-	input      [WIDTH-1:0] slave_writedata,
-	output reg [WIDTH-1:0] slave_readdata
+	input       [4:0] slave_address,
+	input             slave_read,
+	input             slave_write,
+	input      [31:0] slave_writedata,
+	output reg [31:0] slave_readdata
 	
 	// DUT conduit
 	/*
@@ -27,11 +27,11 @@ module test_wrapper #(
 );
 
 	// Avalon slave logic
-	reg  [WIDTH-1:0] i_hpc_i1;
-	wire [WIDTH-1:0] o_hpc_o1;
-	wire [WIDTH-1:0] o_hpc_o2;
-	wire [WIDTH-1:0] o_hpc_o3;
-	wire [WIDTH-1:0] o_hpc_o4;
+	reg  [31:0] i_hpc_i1;
+	wire [31:0] o_hpc_o1;
+	wire [31:0] o_hpc_o2;
+	wire [31:0] o_hpc_o3;
+	wire [31:0] o_hpc_o4;
 	
 	localparam I1_ADDR = 5'h0;
 	localparam O1_ADDR = 5'h4;

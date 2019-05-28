@@ -10,7 +10,7 @@ module driver #(
 	input  [WIDTH-1:0] i_rand_b,
 	// ------------------------------------------
 	input  [WIDTH-1:0] i_dut_out,
-	output [WIDTH-1:0] o_dut_delay,
+	output      [31:0] o_dut_delay,
 	// ------------------------------------------
 	output [WIDTH-1:0] o_drive_a,
 	output [WIDTH-1:0] o_drive_b,
@@ -73,7 +73,7 @@ module driver #(
 			b_0 <= i_rand_b;
 		end
 	
-	assign o_dut_delay = (test_state == STATE_DONE) ? delay_count : {K{1'b1}};
+	assign o_dut_delay = (test_state == STATE_DONE) ? delay_count : {32{1'b1}};
 	
 	// ------------------------------------------
 	// normal output to DUT

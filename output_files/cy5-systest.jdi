@@ -1,6 +1,6 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="3a23f7542ff49664ad30"/>
+    <hash md5_digest_80b="2ae9fc5d188c3b7c0366"/>
   </project>
   <file_info>
     <file device="5CSXFC6D6F31C6" path="cy5-systest.sof" usercode="0xFFFFFFFF"/>
@@ -304,7 +304,7 @@
     </sld_info>
     <sld_info hpath="soc_system:soc_inst" name="soc_inst">
       <assignment_values>
-        <assignment_value text="QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1557673506"/>
+        <assignment_value text="QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1559057752"/>
       </assignment_values>
       <parameters/>
     </sld_info>

@@ -392,7 +392,7 @@
          type = "String";
       }
    }
-   element test_wrapper
+   element test_wrapper_0
    {
       datum _sortIndex
       {
@@ -400,7 +400,7 @@
          type = "int";
       }
    }
-   element test_wrapper.slave
+   element test_wrapper_0.slave
    {
       datum baseAddress
       {
@@ -1289,7 +1289,7 @@
   <parameter name="gui_multiply_factor" value="1" />
   <parameter name="gui_number_of_clocks" value="1" />
   <parameter name="gui_operation_mode" value="direct" />
-  <parameter name="gui_output_clock_frequency0" value="500.0" />
+  <parameter name="gui_output_clock_frequency0" value="100.0" />
   <parameter name="gui_output_clock_frequency1" value="600.0" />
   <parameter name="gui_output_clock_frequency10" value="100.0" />
   <parameter name="gui_output_clock_frequency11" value="100.0" />
@@ -1390,9 +1390,9 @@
    enabled="1">
   <parameter name="id" value="-1395321840" />
  </module>
- <module name="test_wrapper" kind="test_wrapper" version="2.0" enabled="1">
-  <parameter name="SYS_VERSION" value="25" />
-  <parameter name="WIDTH" value="32" />
+ <module name="test_wrapper_0" kind="test_wrapper" version="2.0" enabled="1">
+  <parameter name="SYS_VERSION" value="40" />
+  <parameter name="WIDTH" value="16" />
  </module>
  <connection
    kind="avalon"
@@ -1425,7 +1425,7 @@
    kind="avalon"
    version="16.0"
    start="hps_0.h2f_lw_axi_master"
-   end="test_wrapper.slave">
+   end="test_wrapper_0.slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00100000" />
   <parameter name="defaultConnection" value="false" />
@@ -1607,7 +1607,7 @@
    kind="clock"
    version="16.0"
    start="clk_ref_50M.clk"
-   end="test_wrapper.clock" />
+   end="test_wrapper_0.clock" />
  <connection
    kind="clock"
    version="16.0"
@@ -1642,7 +1642,7 @@
    kind="clock"
    version="16.0"
    start="pll_dut.outclk0"
-   end="test_wrapper.clock_dut" />
+   end="test_wrapper_0.clock_dut" />
  <connection
    kind="conduit"
    version="16.0"
@@ -1766,7 +1766,7 @@
    kind="reset"
    version="16.0"
    start="clk_ref_50M.clk_reset"
-   end="test_wrapper.reset" />
+   end="test_wrapper_0.reset" />
  <connection
    kind="reset"
    version="16.0"

@@ -1,5 +1,5 @@
 module testbench #(
-	parameter WIDTH = 32
+	parameter WIDTH = 16
 )(
 	// input clk_tb,
 	input clk_dut,
@@ -8,10 +8,10 @@ module testbench #(
 	input enable,
 	input freeze,
 	
-	output [WIDTH-1:0] o_data_ctr,
-	output [WIDTH-1:0] o_event_ctr,
+	output [31:0] o_data_ctr,
+	output [31:0] o_event_ctr,
 	// ------------------------------------------------
-	output [WIDTH-1:0] o_debug
+	output [31:0] o_debug
 	// ------------------------------------------------
 	
 	// DUT conduit

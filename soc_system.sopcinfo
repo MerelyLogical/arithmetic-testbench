@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="soc_system" kind="soc_system" version="1.0" fabric="QSYS">
  <!-- Format version 16.0 211 (Future versions may contain additional information.) -->
- <!-- 2019.05.12.16:05:10 -->
+ <!-- 2019.05.28.16:35:55 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1557673506</value>
+  <value>1559057752</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -1277,9 +1277,9 @@ parameters are a RESULT of the module parameters. -->
    </clockDomainMember>
    <clockDomainMember>
     <isBridge>false</isBridge>
-    <moduleName>test_wrapper</moduleName>
+    <moduleName>test_wrapper_0</moduleName>
     <slaveName>clock</slaveName>
-    <name>test_wrapper.clock</name>
+    <name>test_wrapper_0.clock</name>
    </clockDomainMember>
    <clockDomainMember>
     <isBridge>false</isBridge>
@@ -20615,9 +20615,9 @@ parameters are a RESULT of the module parameters. -->
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
-    <moduleName>test_wrapper</moduleName>
+    <moduleName>test_wrapper_0</moduleName>
     <slaveName>slave</slaveName>
-    <name>test_wrapper.slave</name>
+    <name>test_wrapper_0.slave</name>
     <baseAddress>1048576</baseAddress>
     <span>128</span>
    </memoryBlock>
@@ -47634,9 +47634,9 @@ parameters are a RESULT of the module parameters. -->
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
-    <moduleName>test_wrapper</moduleName>
+    <moduleName>test_wrapper_0</moduleName>
     <slaveName>slave</slaveName>
-    <name>test_wrapper.slave</name>
+    <name>test_wrapper_0.slave</name>
     <baseAddress>1048576</baseAddress>
     <span>128</span>
    </memoryBlock>
@@ -49675,9 +49675,9 @@ parameters are a RESULT of the module parameters. -->
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
-    <moduleName>test_wrapper</moduleName>
+    <moduleName>test_wrapper_0</moduleName>
     <slaveName>slave</slaveName>
-    <name>test_wrapper.slave</name>
+    <name>test_wrapper_0.slave</name>
     <baseAddress>4281335808</baseAddress>
     <span>128</span>
    </memoryBlock>
@@ -50570,9 +50570,9 @@ parameters are a RESULT of the module parameters. -->
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
-    <moduleName>test_wrapper</moduleName>
+    <moduleName>test_wrapper_0</moduleName>
     <slaveName>slave</slaveName>
-    <name>test_wrapper.slave</name>
+    <name>test_wrapper_0.slave</name>
     <baseAddress>4281335808</baseAddress>
     <span>128</span>
    </memoryBlock>
@@ -83211,7 +83211,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="gui_output_clock_frequency0">
    <type>double</type>
-   <value>500.0</value>
+   <value>100.0</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -83227,7 +83227,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="gui_actual_multiply_factor0">
    <type>int</type>
-   <value>10</value>
+   <value>6</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -83243,7 +83243,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="gui_actual_divide_factor0">
    <type>int</type>
-   <value>1</value>
+   <value>3</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -84931,7 +84931,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="output_clock_frequency0">
    <type>java.lang.String</type>
-   <value>500.000000 MHz</value>
+   <value>100.000000 MHz</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -85435,7 +85435,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="m_cnt_hi_div">
    <type>int</type>
-   <value>5</value>
+   <value>3</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -85443,7 +85443,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="m_cnt_lo_div">
    <type>int</type>
-   <value>5</value>
+   <value>3</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -85499,7 +85499,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="c_cnt_hi_div0">
    <type>int</type>
-   <value>256</value>
+   <value>2</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -85507,7 +85507,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="c_cnt_lo_div0">
    <type>int</type>
-   <value>256</value>
+   <value>1</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -85539,7 +85539,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="c_cnt_bypass_en0">
    <type>java.lang.String</type>
-   <value>true</value>
+   <value>false</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -85547,7 +85547,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="c_cnt_odd_div_duty_en0">
    <type>java.lang.String</type>
-   <value>false</value>
+   <value>true</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -86515,7 +86515,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="pll_cp_current">
    <type>int</type>
-   <value>20</value>
+   <value>30</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -86523,7 +86523,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="pll_bwctrl">
    <type>int</type>
-   <value>4000</value>
+   <value>2000</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -86531,7 +86531,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="pll_output_clk_frequency">
    <type>java.lang.String</type>
-   <value>500.0 MHz</value>
+   <value>300.0 MHz</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -86595,7 +86595,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="gui_parameter_values">
    <type>[Ljava.lang.String;</type>
-   <value>5,5,256,256,false,true,false,false,256,256,1,0,ph_mux_clk,true,false,2,20,4000,500.0 MHz,1,none,glb,m_cnt,ph_mux_clk,false</value>
+   <value>3,3,256,256,false,true,false,false,2,1,1,0,ph_mux_clk,false,true,2,30,2000,300.0 MHz,1,none,glb,m_cnt,ph_mux_clk,false</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -86897,7 +86897,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="clockRate">
     <type>long</type>
-    <value>500000000</value>
+    <value>100000000</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>true</visible>
@@ -86953,9 +86953,9 @@ parameters are a RESULT of the module parameters. -->
    </port>
    <clockDomainMember>
     <isBridge>false</isBridge>
-    <moduleName>test_wrapper</moduleName>
+    <moduleName>test_wrapper_0</moduleName>
     <slaveName>clock_dut</slaveName>
-    <name>test_wrapper.clock_dut</name>
+    <name>test_wrapper_0.clock_dut</name>
    </clockDomainMember>
   </interface>
   <interface name="reconfig_to_pll" kind="conduit_end" version="16.0">
@@ -87710,7 +87710,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1557673506</value>
+   <value>1559057752</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -87730,7 +87730,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1557673506</value>
+   <value>1559057752</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -87746,7 +87746,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1557673506</value>
+   <value>1559057752</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -88204,15 +88204,15 @@ parameters are a RESULT of the module parameters. -->
   </interface>
  </module>
  <module
-   name="test_wrapper"
+   name="test_wrapper_0"
    kind="test_wrapper"
    version="2.0"
-   path="test_wrapper">
+   path="test_wrapper_0">
   <!-- Describes a single module. Module parameters are
 the requested settings for a module instance. -->
   <parameter name="SYS_VERSION">
    <type>int</type>
-   <value>25</value>
+   <value>40</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -88220,7 +88220,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="WIDTH">
    <type>int</type>
-   <value>32</value>
+   <value>16</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -99023,11 +99023,11 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>s0</endConnectionPoint>
  </connection>
  <connection
-   name="hps_0_bridges.h2f_lw/test_wrapper.slave"
+   name="hps_0_bridges.h2f_lw/test_wrapper_0.slave"
    kind="avalon"
    version="16.0"
    start="hps_0_bridges.h2f_lw"
-   end="test_wrapper.slave">
+   end="test_wrapper_0.slave">
   <parameter name="arbitrationPriority">
    <type>int</type>
    <value>1</value>
@@ -99070,7 +99070,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <startModule>hps_0_bridges</startModule>
   <startConnectionPoint>h2f_lw</startConnectionPoint>
-  <endModule>test_wrapper</endModule>
+  <endModule>test_wrapper_0</endModule>
   <endConnectionPoint>slave</endConnectionPoint>
  </connection>
  <connection
@@ -100085,11 +100085,11 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>clock</endConnectionPoint>
  </connection>
  <connection
-   name="clk_ref_50M.clk/test_wrapper.clock"
+   name="clk_ref_50M.clk/test_wrapper_0.clock"
    kind="clock"
    version="16.0"
    start="clk_ref_50M.clk"
-   end="test_wrapper.clock">
+   end="test_wrapper_0.clock">
   <parameter name="deviceFamily">
    <type>java.lang.String</type>
    <value>UNKNOWN</value>
@@ -100108,7 +100108,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <startModule>clk_ref_50M</startModule>
   <startConnectionPoint>clk</startConnectionPoint>
-  <endModule>test_wrapper</endModule>
+  <endModule>test_wrapper_0</endModule>
   <endConnectionPoint>clock</endConnectionPoint>
  </connection>
  <connection
@@ -100274,11 +100274,11 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>refclk</endConnectionPoint>
  </connection>
  <connection
-   name="pll_dut.outclk0/test_wrapper.clock_dut"
+   name="pll_dut.outclk0/test_wrapper_0.clock_dut"
    kind="clock"
    version="16.0"
    start="pll_dut.outclk0"
-   end="test_wrapper.clock_dut">
+   end="test_wrapper_0.clock_dut">
   <parameter name="deviceFamily">
    <type>java.lang.String</type>
    <value>UNKNOWN</value>
@@ -100297,7 +100297,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <startModule>pll_dut</startModule>
   <startConnectionPoint>outclk0</startConnectionPoint>
-  <endModule>test_wrapper</endModule>
+  <endModule>test_wrapper_0</endModule>
   <endConnectionPoint>clock_dut</endConnectionPoint>
  </connection>
  <connection
@@ -100942,11 +100942,11 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>reset</endConnectionPoint>
  </connection>
  <connection
-   name="clk_ref_50M.clk_reset/test_wrapper.reset"
+   name="clk_ref_50M.clk_reset/test_wrapper_0.reset"
    kind="reset"
    version="16.0"
    start="clk_ref_50M.clk_reset"
-   end="test_wrapper.reset">
+   end="test_wrapper_0.reset">
   <parameter name="deviceFamily">
    <type>java.lang.String</type>
    <value>UNKNOWN</value>
@@ -100965,7 +100965,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <startModule>clk_ref_50M</startModule>
   <startConnectionPoint>clk_reset</startConnectionPoint>
-  <endModule>test_wrapper</endModule>
+  <endModule>test_wrapper_0</endModule>
   <endConnectionPoint>reset</endConnectionPoint>
  </connection>
  <connection
