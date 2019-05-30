@@ -1,5 +1,6 @@
 module testbench #(
-	parameter WIDTH = 16
+	parameter WIDTH = 16,
+	parameter NUM_SUB_MON = 2
 )(
 	// input clk_tb,
 	input clk_dut,
@@ -90,7 +91,8 @@ module testbench #(
 
 	// find errors and other interesting events
 	monitor #(
-		.WIDTH      ( WIDTH      )
+		.WIDTH      ( WIDTH      ),
+		.NUM_SUB_MON( NUM_SUB_MON)
 	) u_monitor (
 		.clk        ( clk_dut    ),
 		.reset      ( reset      ),

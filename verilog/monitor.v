@@ -15,7 +15,7 @@ module monitor #(
 	// this runs on clk_dut and gives inputs out in a round-robin fashion
 	reg [NUM_SUB_MON-1:0] dist_ctr;
 	reg [NUM_SUB_MON-1:0] dist_ctr_delayed;
-	always @(posedge clk) begin
+	always @(posedge clk or posedge reset) begin
 		if (reset) begin
 			dist_ctr[NUM_SUB_MON-1]           <= 1'b1;
 			dist_ctr[NUM_SUB_MON-2:0]         <= 0;
@@ -34,11 +34,12 @@ module monitor #(
 	wire [NUM_SUB_MON*WIDTH-1:0] o_mon;
 	reg  [NUM_SUB_MON-1:0] sub_event;
 	wire [NUM_SUB_MON-1:0] clk_sub;
+	wire [NUM_SUB_MON-1:0] sub_event_out;
 
 	// to show when monitors are ready after reset
 	// this happens at the cycle after distributer has returned to the first position
 	reg [1:0] ready_ctr;
-	always @(posedge clk) begin
+	always @(posedge clk or posedge reset) begin
 		if (reset)
 			ready_ctr <= 2'b00;
 		else if (dist_ctr[0])
@@ -52,21 +53,33 @@ module monitor #(
 	end
 	
 	// fix output to 0 if not ready
-	assign o_event = (&ready_ctr) ? (|sub_event) : 1'b0;
+	assign o_event = (&ready_ctr) ? (|sub_event_out) : 1'b0;
 	
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
-		always @(posedge clk)
-			if (dist_ctr[gi]) begin
+		always @(posedge dist_ctr[gi] or posedge reset)
+			if (reset) begin
+				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
+				b    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
+				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
+			end
+			else begin
 				// assign inputs to sub_monitors
 				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_ia;
 				b    [(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_ib;
 				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_os;
+			end
+		
+		always @(posedge clk or posedge reset)
+			if (reset)
+				sub_event[gi] <= 1'b0;
+			else
 				// gather events from sub_monitors' last test back
 				sub_event[gi] <= o_dut[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
-			end else
-				sub_event[gi] <= 1'b0;
-
+				
+		// set event out to zero when not its turn
+		assign sub_event_out[gi] = sub_event[gi] && dist_ctr[gi];
+		
 		// sub monitors run on delayed clock to ensure data has been written in
 		assign clk_sub[gi] = dist_ctr_delayed[gi];
 		
