@@ -33,5 +33,5 @@ run 2ns
 force sim:/testbench/reset 1'b0 0
 force sim:/testbench/enable 1'b1 0
 run 1ns
-run 100ns
+run 200ns
 

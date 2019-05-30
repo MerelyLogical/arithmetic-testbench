@@ -4,3 +4,5 @@ echo "Upload py folder"
 rsync -rtuv ./ root@ee-cy5soc3.ee.ic.ac.uk:/home/zw4215/scripts
 
 # .\pscp.exe .\run_test.py root@ee-cy5soc3.ee.ic.ac.uk:/home/zw4215/scripts
+
+# vsim -L altera_lnsim_ver -L altera_ver -L cyclonev_ver
