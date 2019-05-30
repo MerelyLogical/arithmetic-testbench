@@ -1,6 +1,7 @@
 module test_wrapper #(
 	parameter SYS_VERSION = 20,
-	parameter WIDTH = 32
+	parameter WIDTH = 32,
+	parameter NUM_SUB_MON = 2
 )(
 	input clk,
 	input reset,
@@ -64,7 +65,8 @@ module test_wrapper #(
 	assign o_hpc_o3 = SYS_VERSION;
 	
 	testbench #(
-		.WIDTH      ( WIDTH      )
+		.WIDTH      ( WIDTH      ),
+		.NUM_SUB_MON( NUM_SUB_MON)
 	) u_testbench (
 		// .clk_tb     ( clk_tb     ),
 		.clk_dut    ( clk_dut    ),

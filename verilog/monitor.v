@@ -32,9 +32,10 @@ module monitor #(
 	reg  [NUM_SUB_MON*WIDTH-1:0] b;
 	reg  [NUM_SUB_MON*WIDTH-1:0] o_dut;
 	wire [NUM_SUB_MON*WIDTH-1:0] o_mon;
+	// dtm = dut throught sub monitor
+	wire [NUM_SUB_MON*WIDTH-1:0] o_dtm;
 	reg  [NUM_SUB_MON-1:0] sub_event;
 	wire [NUM_SUB_MON-1:0] clk_sub;
-	wire [NUM_SUB_MON-1:0] sub_event_out;
 
 	// to show when monitors are ready after reset
 	// this happens at the cycle after distributer has returned to the first position
@@ -53,32 +54,30 @@ module monitor #(
 	end
 	
 	// fix output to 0 if not ready
-	assign o_event = (&ready_ctr) ? (|sub_event_out) : 1'b0;
+	assign o_event = (&ready_ctr) ? (|sub_event) : 1'b0;
 	
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
-		always @(posedge dist_ctr[gi] or posedge reset)
+		always @(posedge clk or posedge reset)
 			if (reset) begin
 				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
 				b    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
 				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
 			end
-			else begin
+			else if (dist_ctr[gi]) begin
 				// assign inputs to sub_monitors
 				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_ia;
 				b    [(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_ib;
 				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_os;
 			end
-		
+
 		always @(posedge clk or posedge reset)
 			if (reset)
 				sub_event[gi] <= 1'b0;
+			else if (dist_ctr[gi])
+				sub_event[gi] <= o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
 			else
-				// gather events from sub_monitors' last test back
-				sub_event[gi] <= o_dut[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
-				
-		// set event out to zero when not its turn
-		assign sub_event_out[gi] = sub_event[gi] && dist_ctr[gi];
+				sub_event[gi] <= 1'b0;
 		
 		// sub monitors run on delayed clock to ensure data has been written in
 		assign clk_sub[gi] = dist_ctr_delayed[gi];
@@ -92,7 +91,9 @@ module monitor #(
 			
 			.i_a       ( a    [(gi+1)*WIDTH-1:gi*WIDTH] ),
 			.i_b       ( b    [(gi+1)*WIDTH-1:gi*WIDTH] ),
-			.o_mon_o   ( o_mon[(gi+1)*WIDTH-1:gi*WIDTH] )
+			.i_dut_o   ( o_dut[(gi+1)*WIDTH-1:gi*WIDTH] ),
+			.o_mon_o   ( o_mon[(gi+1)*WIDTH-1:gi*WIDTH] ),
+			.o_dtm_o   ( o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] )
 		);
 		
 		/*

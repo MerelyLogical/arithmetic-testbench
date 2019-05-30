@@ -1,6 +1,6 @@
 module testbench #(
 	parameter WIDTH = 16,
-	parameter NUM_SUB_MON = 2
+	parameter NUM_SUB_MON = 3
 )(
 	// input clk_tb,
 	input clk_dut,
