@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="soc_system" kind="soc_system" version="1.0" fabric="QSYS">
  <!-- Format version 16.0 211 (Future versions may contain additional information.) -->
- <!-- 2019.05.28.16:35:55 -->
+ <!-- 2019.05.30.19:57:09 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1559057752</value>
+  <value>1559242626</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -87710,7 +87710,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1559057752</value>
+   <value>1559242626</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -87730,7 +87730,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1559057752</value>
+   <value>1559242626</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -87746,7 +87746,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1559057752</value>
+   <value>1559242626</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -88206,7 +88206,7 @@ parameters are a RESULT of the module parameters. -->
  <module
    name="test_wrapper_0"
    kind="test_wrapper"
-   version="2.0"
+   version="3.0"
    path="test_wrapper_0">
   <!-- Describes a single module. Module parameters are
 the requested settings for a module instance. -->
@@ -88221,6 +88221,14 @@ the requested settings for a module instance. -->
   <parameter name="WIDTH">
    <type>int</type>
    <value>16</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="NUM_SUB_MON">
+   <type>int</type>
+   <value>2</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -101492,7 +101500,7 @@ parameters are a RESULT of the module parameters. -->
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IModule</subtype>
   <displayName>test_wrapper</displayName>
-  <version>2.0</version>
+  <version>3.0</version>
  </plugin>
  <plugin>
   <instanceCount>56</instanceCount>

@@ -1390,7 +1390,8 @@
    enabled="1">
   <parameter name="id" value="-1395321840" />
  </module>
- <module name="test_wrapper_0" kind="test_wrapper" version="2.0" enabled="1">
+ <module name="test_wrapper_0" kind="test_wrapper" version="3.0" enabled="1">
+  <parameter name="NUM_SUB_MON" value="2" />
   <parameter name="SYS_VERSION" value="40" />
   <parameter name="WIDTH" value="16" />
  </module>
