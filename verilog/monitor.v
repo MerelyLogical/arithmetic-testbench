@@ -18,8 +18,8 @@ module monitor #(
 	always @(posedge clk or posedge reset) begin
 		if (reset) begin
 			dist_ctr[NUM_SUB_MON-1]           <= 1'b1;
-			dist_ctr[NUM_SUB_MON-2:0]         <= 0;
-			dist_ctr_delayed[NUM_SUB_MON-1:0] <= 0;
+			dist_ctr[NUM_SUB_MON-2:0]         <= {(NUM_SUB_MON-1){1'b0}};
+			dist_ctr_delayed[NUM_SUB_MON-1:0] <= {NUM_SUB_MON{1'b0}};
 		end
 		else begin
 			dist_ctr[0]               <= dist_ctr[NUM_SUB_MON-1];
