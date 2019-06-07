@@ -59,14 +59,6 @@
          type = "String";
       }
    }
-   element dut_adder_0
-   {
-      datum _sortIndex
-      {
-         value = "16";
-         type = "int";
-      }
-   }
    element f2sdram_only_master
    {
       datum _sortIndex
@@ -542,9 +534,6 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="4" />
- </module>
- <module name="dut_adder_0" kind="dut_adder" version="1.0" enabled="1">
-  <parameter name="WIDTH" value="16" />
  </module>
  <module
    name="f2sdram_only_master"
@@ -1425,9 +1414,9 @@
    enabled="1">
   <parameter name="id" value="-1395321840" />
  </module>
- <module name="test_wrapper_0" kind="test_wrapper" version="4.0" enabled="1">
+ <module name="test_wrapper_0" kind="test_wrapper" version="4.1" enabled="1">
   <parameter name="NUM_SUB_MON" value="3" />
-  <parameter name="SYS_VERSION" value="40" />
+  <parameter name="SYS_VERSION" value="41" />
   <parameter name="WIDTH" value="16" />
  </module>
  <connection
@@ -1678,11 +1667,6 @@
    kind="clock"
    version="16.0"
    start="pll_dut.outclk0"
-   end="dut_adder_0.clock" />
- <connection
-   kind="clock"
-   version="16.0"
-   start="pll_dut.outclk0"
    end="test_wrapper_0.clock_dut" />
  <connection
    kind="conduit"
@@ -1700,17 +1684,6 @@
    version="16.0"
    start="pll_dut.reconfig_to_pll"
    end="pll_reconfig_dut.reconfig_to_pll">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="16.0"
-   start="test_wrapper_0.to_dut"
-   end="dut_adder_0.to_wrapper">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -1814,11 +1787,6 @@
    version="16.0"
    start="clk_ref_50M.clk_reset"
    end="led_pio.reset" />
- <connection
-   kind="reset"
-   version="16.0"
-   start="clk_ref_50M.clk_reset"
-   end="dut_adder_0.reset" />
  <connection
    kind="reset"
    version="16.0"

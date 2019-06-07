@@ -10,6 +10,8 @@ add wave -position end -radix hex sim:/testbench/i_fbitset_a
 add wave -position end -radix hex sim:/testbench/i_fbitset_b
 add wave -position end -radix hex sim:/testbench/i_fbitclr_a
 add wave -position end -radix hex sim:/testbench/i_fbitclr_b
+add wave -position end -radix hex sim:/testbench/o_maxacc
+add wave -position end -radix hex sim:/testbench/o_minacc
 
 add wave -position end -radix unsigned sim:/testbench/o_data_ctr
 add wave -position end -radix unsigned sim:/testbench/o_error_ctr
@@ -49,6 +51,11 @@ run 2ns
 force sim:/testbench/reset 1'b0 0
 force sim:/testbench/enable 1'b1 0
 run 1ns
-run 200ns
+run 20ns
+
+run 20ns
+force sim:/testbench/i_fbitset_a 32'h1 0
+force sim:/testbench/i_fbitset_b 32'h1 0
+run 60ns
 
 

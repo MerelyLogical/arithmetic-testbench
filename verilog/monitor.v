@@ -8,6 +8,8 @@ module monitor #(
 	input  [WIDTH-1:0] i_dut_ia,
 	input  [WIDTH-1:0] i_dut_ib,
 	input  [WIDTH-1:0] i_dut_os,
+	
+	output             o_mon_ready,
 	output [WIDTH-1:0] o_diff
 );
 
@@ -34,9 +36,11 @@ module monitor #(
 	wire [NUM_SUB_MON*WIDTH-1:0] o_mon;
 	// dtm = dut throught sub monitor
 	wire [NUM_SUB_MON*WIDTH-1:0] o_dtm;
-	wire [NUM_SUB_MON-1:0] clk_sub;
-	reg  [WIDTH-1:0] sub_diff;
-
+	reg  [NUM_SUB_MON*WIDTH-1:0] sub_diff;
+	reg              [WIDTH-1:0] diff;
+	wire       [NUM_SUB_MON-1:0] clk_sub;
+	wire       [NUM_SUB_MON-1:0] mat_diff[WIDTH-1:0];
+	
 	// to show when monitors are ready after reset
 	// this happens at the cycle after distributer has returned to the first position
 	reg [1:0] ready_ctr;
@@ -52,12 +56,13 @@ module monitor #(
 				default: ready_ctr <= 2'b00;
 			endcase
 	end
+	assign o_mon_ready = &ready_ctr;
 	
 	// fix output to 0 if not ready
-	assign o_diff = (&ready_ctr) ? sub_diff : {WIDTH{1'b0}};
-	
-	genvar gi;
-	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
+	assign o_diff = (&ready_ctr) ? diff : {WIDTH{1'b0}};
+
+	genvar gi, gj;
+	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_sub_mon
 		always @(posedge clk)
 			if (reset) begin
 				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
@@ -73,9 +78,11 @@ module monitor #(
 
 		always @(posedge clk)
 			if (reset)
-				sub_diff <= {WIDTH{1'b0}};
+				sub_diff [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
 			else if (dist_ctr[gi])
-				sub_diff <= o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] ^ o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
+				sub_diff [(gi+1)*WIDTH-1:gi*WIDTH] <= o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] ^ o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
+			else
+				sub_diff [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
 		
 		// sub monitors run on delayed clock to ensure data has been written in
 		assign clk_sub[gi] = dist_ctr_delayed[gi];
@@ -94,6 +101,18 @@ module monitor #(
 			.o_dtm_o   ( o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] )
 		);
 		
-	end endgenerate
-
+	end
+	
+	for (gj=0; gj<WIDTH; gj=gj+1) begin: gen_mat_outer
+		for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mat_inner
+			assign mat_diff[gj][gi] = sub_diff [gi*WIDTH+gj];
+		end
+	end
+	
+	for (gj=0; gj<WIDTH; gj=gj+1) begin: gen_diff
+		always @(posedge clk)
+			diff[gj] <= |mat_diff[gj];
+	end
+	
+	endgenerate
 endmodule

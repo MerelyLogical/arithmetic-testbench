@@ -19,7 +19,10 @@ module testbench #(
 	input  [WIDTH-1:0] i_fbitset_a,
 	input  [WIDTH-1:0] i_fbitset_b,
 	input  [WIDTH-1:0] i_fbitclr_a,
-	input  [WIDTH-1:0] i_fbitclr_b//,
+	input  [WIDTH-1:0] i_fbitclr_b,
+	
+	output [31:0] o_maxacc,
+	output [31:0] o_minacc//,
 	
 	/* DUT CONDUIT. DISABLED DURING TESTING
 	output [WIDTH-1:0] o_dut_a,
@@ -28,11 +31,12 @@ module testbench #(
 	*/
 );
 
-	wire [WIDTH-1:0] rand_a;
-	wire [WIDTH-1:0] rand_b;
+	wire      [31:0] rand_a;
+	wire      [31:0] rand_b;
 	wire [WIDTH-1:0] drive_mon_a;
 	wire [WIDTH-1:0] drive_mon_b;
-	wire             mnt_diff;
+	wire [WIDTH-1:0] mnt_diff;
+	wire             mon_ready;
 	
 	// ----INTERNAL ADDER, FOR TESTING ONLY------------
 	
@@ -79,8 +83,8 @@ module testbench #(
 		.reset      ( reset      ),
 		.clk_dut    ( clk_dut    ),
 		
-		.i_rand_a   ( rand_a     ),
-		.i_rand_b   ( rand_b     ),
+		.i_rand_a   ( rand_a[WIDTH-1:0]),
+		.i_rand_b   ( rand_b[WIDTH-1:0]),
 		.i_dut_out  ( i_dut_out  ),
 		
 		.i_fselect    ( i_fselect  ),
@@ -109,6 +113,7 @@ module testbench #(
 		.i_dut_ia   ( drive_mon_a),
 		.i_dut_ib   ( drive_mon_b),
 		.i_dut_os   ( i_dut_out  ),
+		.o_mon_ready( mon_ready  ),
 		.o_diff     ( mnt_diff   )
 	);
 
@@ -120,9 +125,12 @@ module testbench #(
 		.reset      ( reset      ),
 
 		.i_freeze   ( freeze     ),
-		.i_diff     ( mnt_diff  ),
+		.i_mon_ready( mon_ready  ),
+		.i_diff     ( mnt_diff   ),
 		.o_error_ctr( o_error_ctr),
-		.o_data_ctr ( o_data_ctr )
+		.o_data_ctr ( o_data_ctr ),
+		.o_maxacc   ( o_maxacc   ),
+		.o_minacc   ( o_minacc   )
 	);
 
 endmodule

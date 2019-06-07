@@ -45,22 +45,28 @@ module test_wrapper #(
 	reg  [31:0] i_hpc_fbitset_b;
 	reg  [31:0] i_hpc_fbitclr_a;
 	reg  [31:0] i_hpc_fbitclr_b;
+	// maximum and minimum result accuracy
+	reg  [31:0] o_hpc_maxacc;
+	reg  [31:0] o_hpc_minacc;
 	
 	// -----------------------------------------------------
+	// META
 	localparam D_CTRL_ADDR     = 6'h00;
-	
-	localparam O_DATCTR_ADDR   = 6'h04;
-	localparam O_ERRCTR_ADDR   = 6'h08;
-	localparam O_SYSVER_ADDR   = 6'h0C;
-	localparam O_DUTDELAY_ADDR = 6'h10;
-	
-	localparam I_FSELECT_ADDR    = 6'h20;
-	localparam I_FMANUAL_A_ADDR  = 6'h24;
-	localparam I_FMANUAL_B_ADDR  = 6'h28;
-	localparam I_FBITSET_A_ADDR  = 6'h2C;
-	localparam I_FBITSET_B_ADDR  = 6'h30;
-	localparam I_FBITCLR_A_ADDR  = 6'h34;
-	localparam I_FBITCLR_B_ADDR  = 6'h38;
+	localparam O_SYSVER_ADDR   = 6'h04;
+	// DRIVER
+	localparam I_FSELECT_ADDR    = 6'h10;
+	localparam I_FMANUAL_A_ADDR  = 6'h14;
+	localparam I_FMANUAL_B_ADDR  = 6'h18;
+	localparam I_FBITSET_A_ADDR  = 6'h1C;
+	localparam I_FBITSET_B_ADDR  = 6'h20;
+	localparam I_FBITCLR_A_ADDR  = 6'h24;
+	localparam I_FBITCLR_B_ADDR  = 6'h28;
+	localparam O_DUTDELAY_ADDR   = 6'h2C;
+	// SCOREBOARD
+	localparam O_DATCTR_ADDR   = 6'h30;
+	localparam O_ERRCTR_ADDR   = 6'h34;
+	localparam O_MAXACC_ADDR   = 6'h38;
+	localparam O_MINACC_ADDR   = 6'h3C;
 	
 	wire writing = ~slave_read && slave_write;
 	wire reading = slave_read && ~slave_write;
@@ -68,12 +74,14 @@ module test_wrapper #(
 	// -----------------------------------------------------
 	always @(posedge clk) begin
 		case (slave_address)
+			// READ & WRITE
 			D_CTRL_ADDR:
 				if (writing)
 					d_hpc_ctrl <= slave_writedata;
 				else if (reading)
 					slave_readdata <= d_hpc_ctrl;
-					
+			
+			// READ ONLY
 			O_DATCTR_ADDR:
 				if (reading)
 					slave_readdata <= o_hpc_datctr;
@@ -86,7 +94,14 @@ module test_wrapper #(
 			O_DUTDELAY_ADDR:
 				if (reading)
 					slave_readdata <= o_hpc_dutdelay;
-					
+			O_MAXACC_ADDR:
+				if (reading)
+					slave_readdata <= o_hpc_maxacc;
+			O_MINACC_ADDR:
+				if (reading)
+					slave_readdata <= o_hpc_minacc;
+			
+			// WRITE ONLY
 			I_FSELECT_ADDR:
 				if (writing)
 					i_hpc_fselect <= slave_writedata;
@@ -134,7 +149,10 @@ module test_wrapper #(
 		.i_fbitset_a  ( i_hpc_fbitset_a[WIDTH-1:0] ),
 		.i_fbitset_b  ( i_hpc_fbitset_b[WIDTH-1:0] ),
 		.i_fbitclr_a  ( i_hpc_fbitclr_a[WIDTH-1:0] ),
-		.i_fbitclr_b  ( i_hpc_fbitclr_b[WIDTH-1:0] )//,
+		.i_fbitclr_b  ( i_hpc_fbitclr_b[WIDTH-1:0] ),
+		
+		.o_maxacc   ( o_hpc_maxacc  ),
+		.o_minacc   ( o_hpc_minacc  )//,
 		
 		/* DUT CONDUIT. DISABLED DURING TESTING
 		.o_dut_a    ( dut_a      ),
