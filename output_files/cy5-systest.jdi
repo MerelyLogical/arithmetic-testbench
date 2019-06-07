@@ -304,7 +304,7 @@
     </sld_info>
     <sld_info hpath="soc_system:soc_inst" name="soc_inst">
       <assignment_values>
-        <assignment_value text="QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1559242626"/>
+        <assignment_value text="QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1559575629"/>
       </assignment_values>
       <parameters/>
     </sld_info>
