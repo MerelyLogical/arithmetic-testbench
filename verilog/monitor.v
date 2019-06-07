@@ -8,14 +8,14 @@ module monitor #(
 	input  [WIDTH-1:0] i_dut_ia,
 	input  [WIDTH-1:0] i_dut_ib,
 	input  [WIDTH-1:0] i_dut_os,
-	output o_event
+	output [WIDTH-1:0] o_diff
 );
 
 	// one hot counter for distributer
 	// this runs on clk_dut and gives inputs out in a round-robin fashion
 	reg [NUM_SUB_MON-1:0] dist_ctr;
 	reg [NUM_SUB_MON-1:0] dist_ctr_delayed;
-	always @(posedge clk or posedge reset) begin
+	always @(posedge clk) begin
 		if (reset) begin
 			dist_ctr[NUM_SUB_MON-1]           <= 1'b1;
 			dist_ctr[NUM_SUB_MON-2:0]         <= {(NUM_SUB_MON-1){1'b0}};
@@ -27,20 +27,20 @@ module monitor #(
 			dist_ctr_delayed          <= dist_ctr;
 		end
 	end
-		
+	
 	reg  [NUM_SUB_MON*WIDTH-1:0] a;
 	reg  [NUM_SUB_MON*WIDTH-1:0] b;
 	reg  [NUM_SUB_MON*WIDTH-1:0] o_dut;
 	wire [NUM_SUB_MON*WIDTH-1:0] o_mon;
 	// dtm = dut throught sub monitor
 	wire [NUM_SUB_MON*WIDTH-1:0] o_dtm;
-	reg  [NUM_SUB_MON-1:0] sub_event;
 	wire [NUM_SUB_MON-1:0] clk_sub;
+	reg  [WIDTH-1:0] sub_diff;
 
 	// to show when monitors are ready after reset
 	// this happens at the cycle after distributer has returned to the first position
 	reg [1:0] ready_ctr;
-	always @(posedge clk or posedge reset) begin
+	always @(posedge clk) begin
 		if (reset)
 			ready_ctr <= 2'b00;
 		else if (dist_ctr[0])
@@ -54,11 +54,11 @@ module monitor #(
 	end
 	
 	// fix output to 0 if not ready
-	assign o_event = (&ready_ctr) ? (|sub_event) : 1'b0;
+	assign o_diff = (&ready_ctr) ? sub_diff : {WIDTH{1'b0}};
 	
 	genvar gi;
 	generate for (gi=0; gi<NUM_SUB_MON; gi=gi+1) begin: gen_mon
-		always @(posedge clk or posedge reset)
+		always @(posedge clk)
 			if (reset) begin
 				a    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
 				b    [(gi+1)*WIDTH-1:gi*WIDTH] <= {WIDTH{1'b0}};
@@ -71,13 +71,11 @@ module monitor #(
 				o_dut[(gi+1)*WIDTH-1:gi*WIDTH] <= i_dut_os;
 			end
 
-		always @(posedge clk or posedge reset)
+		always @(posedge clk)
 			if (reset)
-				sub_event[gi] <= 1'b0;
+				sub_diff <= {WIDTH{1'b0}};
 			else if (dist_ctr[gi])
-				sub_event[gi] <= o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] != o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
-			else
-				sub_event[gi] <= 1'b0;
+				sub_diff <= o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] ^ o_mon[(gi+1)*WIDTH-1:gi*WIDTH];
 		
 		// sub monitors run on delayed clock to ensure data has been written in
 		assign clk_sub[gi] = dist_ctr_delayed[gi];
@@ -87,7 +85,7 @@ module monitor #(
 			.WIDTH     ( WIDTH )
 		) u_sub_mon (
 			.clk       ( clk_sub[gi] ),
-			// .reset     ( reset    ),
+			.reset     ( reset    ),
 			
 			.i_a       ( a    [(gi+1)*WIDTH-1:gi*WIDTH] ),
 			.i_b       ( b    [(gi+1)*WIDTH-1:gi*WIDTH] ),
@@ -95,18 +93,6 @@ module monitor #(
 			.o_mon_o   ( o_mon[(gi+1)*WIDTH-1:gi*WIDTH] ),
 			.o_dtm_o   ( o_dtm[(gi+1)*WIDTH-1:gi*WIDTH] )
 		);
-		
-		/*
-		// Comparator module to find position of first wrong digit
-		// Can be disabled and then only correctness will be provided as output
-		comparator #(
-			.WIDTH     ( WIDTH )
-		) u_comparator (
-			.clk       ( dist_ctr[gi] ),
-			.i_dut     (),
-			.i_mon     (),
-			.o_err     (),
-		*/
 		
 	end endgenerate
 

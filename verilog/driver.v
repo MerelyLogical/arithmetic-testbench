@@ -72,7 +72,11 @@ module driver #(
 	reg [WIDTH-1:0] b_0;
 	
 	always @(posedge clk_dut)
-		if (&out_count) begin
+		if (reset) begin
+			a_0 <= {WIDTH{1'b0}};
+			b_0 <= {WIDTH{1'b0}};
+		end
+		else if (&out_count) begin
 			a_0 <= {WIDTH{1'b0}};
 			b_0 <= {WIDTH{1'b0}};
 		end
@@ -86,17 +90,24 @@ module driver #(
 	
 	// -------------------------------------------
 	// filter system after delay tester
+	reg [WIDTH-1:0] sa_0;
+	reg [WIDTH-1:0] sb_0;
 	reg [WIDTH-1:0] fa_0;
 	reg [WIDTH-1:0] fb_0;
-	
+
+	// bitclr takes priority. This decision is arbitrary.
 	always @(posedge clk_dut)
 		if (i_fselect == 1'b0) begin
-			fa_0 <= (a_0 | i_fbitset_a) & (~i_fbitclr_a);
-			fb_0 <= (b_0 | i_fbitset_b) & (~i_fbitclr_b);
+			sa_0 <= a_0 | i_fbitset_a;
+			sb_0 <= b_0 | i_fbitset_b;
+			fa_0 <= sa_0 & (~i_fbitclr_a);
+			fb_0 <= sb_0 & (~i_fbitclr_b);
 		end
 		else begin
-			fa_0 <= i_fmanual_a;
-			fb_0 <= i_fmanual_b;
+			sa_0 <= i_fmanual_a;
+			sb_0 <= i_fmanual_b;
+			fa_0 <= sa_0;
+			fb_0 <= sb_0;
 		end
 	
 	// ------------------------------------------

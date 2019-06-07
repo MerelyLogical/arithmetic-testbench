@@ -6,20 +6,46 @@ module scoreboard #(
 	input reset,
 
 	input  i_freeze,
-	input  i_event,
-	output reg [31:0] o_event_ctr,
-	output reg [31:0] o_data_ctr
+	input  i_diff,
+	
+	output [31:0] o_data_ctr,
+	output [31:0] o_error_ctr,
+	output [31:0] o_maxerr,
+	output [31:0] o_minerr
+	
 );
 
-	always @(posedge clk or posedge reset)
+	// ---------------------------------------
+	// counters
+	reg [31:0] data_ctr;
+	reg [31:0] error_ctr;
+
+	always @(posedge clk)
 		if (reset) begin
-			o_event_ctr <= {32{1'b0}};
-			o_data_ctr  <= {32{1'b0}};
+			error_ctr <= {32{1'b0}};
+			data_ctr  <= {32{1'b0}};
 		end
 		else if (!i_freeze) begin
-			o_data_ctr <= o_data_ctr + 1'b1;
-			if (i_event)
-				o_event_ctr <= o_event_ctr + 1'b1;
+			data_ctr <= data_ctr + 1'b1;
+			// report an error if i_diff is not all 0
+			if (|i_diff)
+				error_ctr <= error_ctr + 1'b1;
 		end
-
+	
+	assign o_data_ctr = data_ctr;
+	assign o_error_ctr = error_ctr;
+		
+	// ---------------------------------------
+	// accuracy measurements
+	
+	reg [31:0] maxdiff;
+	reg [31:0] mindiff;
+	always @(posedge clk)
+		if (reset) begin
+			maxdiff <= {WIDTH{1'b0}};
+			mindiff <= {WIDTH{1'b1}};
+		end
+		
+		
+		
 endmodule

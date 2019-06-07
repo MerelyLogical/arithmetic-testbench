@@ -10,7 +10,7 @@ module testbench #(
 	input freeze,
 	
 	output [31:0] o_data_ctr,
-	output [31:0] o_event_ctr,
+	output [31:0] o_error_ctr,
 	output [31:0] o_dut_delay,
 	
 	input              i_fselect,
@@ -19,18 +19,35 @@ module testbench #(
 	input  [WIDTH-1:0] i_fbitset_a,
 	input  [WIDTH-1:0] i_fbitset_b,
 	input  [WIDTH-1:0] i_fbitclr_a,
-	input  [WIDTH-1:0] i_fbitclr_b,
+	input  [WIDTH-1:0] i_fbitclr_b//,
 	
+	/* DUT CONDUIT. DISABLED DURING TESTING
 	output [WIDTH-1:0] o_dut_a,
 	output [WIDTH-1:0] o_dut_b,
 	input  [WIDTH-1:0] i_dut_out
+	*/
 );
 
 	wire [WIDTH-1:0] rand_a;
 	wire [WIDTH-1:0] rand_b;
 	wire [WIDTH-1:0] drive_mon_a;
 	wire [WIDTH-1:0] drive_mon_b;
-	wire             mnt_event;
+	wire             mnt_diff;
+	
+	// ----INTERNAL ADDER, FOR TESTING ONLY------------
+	
+	wire [WIDTH-1:0] o_dut_a;
+	wire [WIDTH-1:0] o_dut_b;
+	reg  [WIDTH-1:0] i_dut_out;
+	reg  [WIDTH-1:0] delay_s;
+	
+	always @(posedge clk_dut) begin
+		delay_s   <= o_dut_a + o_dut_b;
+		i_dut_out <= delay_s;
+	end
+	
+	// ------------------------------------------------
+	
 	
 	// LFSR randomiser
 	randomiser #(
@@ -92,7 +109,7 @@ module testbench #(
 		.i_dut_ia   ( drive_mon_a),
 		.i_dut_ib   ( drive_mon_b),
 		.i_dut_os   ( i_dut_out  ),
-		.o_event    ( mnt_event  )
+		.o_diff     ( mnt_diff   )
 	);
 
 	// counts events
@@ -103,8 +120,8 @@ module testbench #(
 		.reset      ( reset      ),
 
 		.i_freeze   ( freeze     ),
-		.i_event    ( mnt_event  ),
-		.o_event_ctr( o_event_ctr),
+		.i_diff     ( mnt_diff  ),
+		.o_error_ctr( o_error_ctr),
 		.o_data_ctr ( o_data_ctr )
 	);
 
