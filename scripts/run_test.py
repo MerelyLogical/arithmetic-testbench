@@ -144,7 +144,7 @@ wrap.enable()
 wrap.reset()
 print('Running version   {}'.format(wrap.version()))
 # fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
-fqs = range(100, 250, 50)
+fqs = range(100, 450, 50)
 for fq in fqs:
 	pll_fq = pll_conf.set(0, fq)
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))

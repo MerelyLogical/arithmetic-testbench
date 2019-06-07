@@ -19,7 +19,7 @@ module monitor #(
 	reg [NUM_SUB_MON-1:0] dist_ctr_delayed;
 	always @(posedge clk) begin
 		if (reset) begin
-			dist_ctr          [NUM_SUB_MON-1] <= 1'b1;
+			dist_ctr        [NUM_SUB_MON-1]   <= 1'b1;
 			dist_ctr        [NUM_SUB_MON-2:0] <= {(NUM_SUB_MON-1){1'b0}};
 			dist_ctr_delayed[NUM_SUB_MON-1:0] <= {NUM_SUB_MON{1'b0}};
 		end
@@ -87,7 +87,7 @@ module monitor #(
 				sub_diff [gi] <= {WIDTH{1'b0}};
 		
 		// sub monitors run on delayed clock to ensure data has been written in
-		assign clk_sub[gi] = dist_ctr_delayed[gi];
+		assign clk_sub[gi] = clk && dist_ctr_delayed[gi];
 		
 		// instantiate sub monitors
 		sub_mon #(
