@@ -1,5 +1,5 @@
 Assembler report for cy5-systest
-Mon Jun 03 16:38:13 2019
+Fri Jun 07 22:29:56 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
 
 
@@ -39,7 +39,7 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Mon Jun 03 16:38:12 2019 ;
+; Assembler Status      ; Successful - Fri Jun 07 22:29:56 2019 ;
 ; Revision Name         ; cy5-systest                           ;
 ; Top-level Entity Name ; sys_top                               ;
 ; Family                ; Cyclone V                             ;
@@ -79,8 +79,8 @@ agreement for further details.
 ; Option         ; Setting                                                       ;
 +----------------+---------------------------------------------------------------+
 ; Device         ; 5CSXFC6D6F31C6                                                ;
-; JTAG usercode  ; 0x02BA186F                                                    ;
-; Checksum       ; 0x02BA186F                                                    ;
+; JTAG usercode  ; 0x02BBC2B0                                                    ;
+; Checksum       ; 0x02BBC2B0                                                    ;
 +----------------+---------------------------------------------------------------+
 
 
@@ -90,15 +90,15 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
     Info: Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
-    Info: Processing started: Mon Jun 03 16:37:50 2019
+    Info: Processing started: Fri Jun 07 22:29:33 2019
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off cy5-systest -c cy5-systest
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (115030): Assembler is generating device programming files
 Info (11878): Hard Processor Subsystem configuration has not changed and a Preloader software update is not required
 Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 1022 megabytes
-    Info: Processing ended: Mon Jun 03 16:38:13 2019
-    Info: Elapsed time: 00:00:23
+    Info: Peak virtual memory: 1026 megabytes
+    Info: Processing ended: Fri Jun 07 22:29:57 2019
+    Info: Elapsed time: 00:00:24
     Info: Total CPU time (on all processors): 00:00:16
 
 

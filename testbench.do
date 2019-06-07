@@ -54,8 +54,8 @@ run 1ns
 run 20ns
 
 run 20ns
-force sim:/testbench/i_fbitset_a 32'h1 0
-force sim:/testbench/i_fbitset_b 32'h1 0
+#force sim:/testbench/i_fbitset_a 32'h1 0
+#force sim:/testbench/i_fbitset_b 32'h1 0
 run 60ns
 
 
