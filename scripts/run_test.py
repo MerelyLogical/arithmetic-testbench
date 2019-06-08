@@ -51,38 +51,47 @@ class axi:
 class wrapper(module):
 
 	regs = {
-		'i1': 4*0x0,
-		'o1': 4*0x4,
-		'o2': 4*0x8,
-		'o3': 4*0xC,
-		'o4': 4*0x10,
-		'o5': 4*0x14,
-		'o6': 4*0x18,
+		'ctrl':      4*0x00,
+		'sysver':    4*0x04,
+		
+		'fselect':   4*0x10,
+		'fmanual_a': 4*0x14,
+		'fmanual_b': 4*0x18,
+		'fbitset_a': 4*0x1C,
+		'fbitset_b': 4*0x20,
+		'fbitclr_a': 4*0x24,
+		'fbitclr_b': 4*0x28,
+		'dutdelay':  4*0x2C,
+		
+		'data':      4*0x30,
+		'error':     4*0x34,
+		'maxacc':    4*0x38,
+		'minacc':    4*0x3C
 	}
 
 	def reset(self):
-		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp | 0b0001)
-		self.write(self.regs['i1'], tmp & 0b1110)
+		tmp = self.read(self.regs['ctrl'])
+		self.write(self.regs['ctrl'], tmp | 0b0001)
+		self.write(self.regs['ctrl'], tmp & 0b1110)
 
 	def enable(self):
-		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp | 0b0010)
+		tmp = self.read(self.regs['ctrl'])
+		self.write(self.regs['ctrl'], tmp | 0b0010)
 
 	def disable(self):
-		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp & 0b1101)
+		tmp = self.read(self.regs['ctrl'])
+		self.write(self.regs['ctrl'], tmp & 0b1101)
 
 	def freeze(self):
-		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp | 0b0100)
+		tmp = self.read(self.regs['ctrl'])
+		self.write(self.regs['ctrl'], tmp | 0b0100)
 
 	def unfreeze(self):
-		tmp = self.read(self.regs['i1'])
-		self.write(self.regs['i1'], tmp & 0b1011)
+		tmp = self.read(self.regs['ctrl'])
+		self.write(self.regs['ctrl'], tmp & 0b1011)
 
 	def version(self):
-		return self.read(self.regs['o3'])
+		return self.read(self.regs['sysver'])
 		
 class pll(module):
 
@@ -135,7 +144,7 @@ wrap.enable()
 wrap.reset()
 print('Running version   {}'.format(wrap.version()))
 # fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
-fqs = range(100, 250, 50)
+fqs = range(100, 450, 50)
 for fq in fqs:
 	pll_fq = pll_conf.set(0, fq)
 	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
@@ -144,17 +153,17 @@ for fq in fqs:
 	time.sleep(1)
 	wrap.freeze()
 
-	data_ctr = wrap.read(wrap.regs['o1'])
+	data_ctr = wrap.read(wrap.regs['data'])
 	print('data  counter     {}'.format(data_ctr))
 
-	event_ctr = wrap.read(wrap.regs['o2'])
-	print('event counter     {}'.format(event_ctr))
+	error_ctr = wrap.read(wrap.regs['error'])
+	print('error counter     {}'.format(error_ctr))
 	
-	debug_ctr = wrap.read(wrap.regs['o4'])
-	print('debug counter     {}'.format(debug_ctr))
+	dutdelay = wrap.read(wrap.regs['dutdelay'])
+	print('dut delay         {}'.format(dutdelay))
 	
 	if data_ctr != 0:
-		print('error rate        {:.6f}'.format(event_ctr / float(data_ctr)))
+		print('error rate        {:.6f}'.format(error_ctr / float(data_ctr)))
 
 	print('')
 	

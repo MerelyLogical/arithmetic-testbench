@@ -11,7 +11,7 @@ module randomiser #(
 );
 
 	reg [31:0] r;
-	always @(posedge clk or posedge reset) begin
+	always @(posedge clk) begin
 		if (reset)
 			r <= i_initial;
 		else if (enable) begin

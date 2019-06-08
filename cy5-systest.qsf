@@ -155,6 +155,21 @@ set_global_assignment -name ECO_REGENERATE_REPORT ON
 set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER OFF
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
 set_global_assignment -name POWER_USE_INPUT_FILES OFF
+set_global_assignment -name VERILOG_FILE verilog/sub_mon.v
+set_global_assignment -name VERILOG_FILE verilog/randomiser.v
+set_global_assignment -name VERILOG_FILE verilog/scoreboard.v
+set_global_assignment -name VERILOG_FILE verilog/monitor.v
+set_global_assignment -name VERILOG_FILE verilog/driver.v
+set_global_assignment -name VERILOG_FILE verilog/testbench.v
+set_global_assignment -name QIP_FILE soc_system/synthesis/soc_system.qip
+set_global_assignment -name QIP_FILE ip/altsource_probe/hps_reset.qip
+set_global_assignment -name VERILOG_FILE ip/edge_detect/altera_edge_detector.v
+set_global_assignment -name VERILOG_FILE ip/debounce/debounce.v
+set_global_assignment -name VERILOG_FILE verilog/sys_top.v
+set_global_assignment -name VERILOG_FILE verilog/test_wrapper.v
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_can0_RX
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hps_can0_TX
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to hps_emac1_MDC
@@ -619,19 +634,4 @@ set_instance_assignment -name SLEW_RATE 1 -to hps_trace_D4
 set_instance_assignment -name SLEW_RATE 1 -to hps_trace_D5
 set_instance_assignment -name SLEW_RATE 1 -to hps_trace_D6
 set_instance_assignment -name SLEW_RATE 1 -to hps_trace_D7
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VERILOG_FILE verilog/sub_mon.v
-set_global_assignment -name VERILOG_FILE verilog/randomiser.v
-set_global_assignment -name VERILOG_FILE verilog/scoreboard.v
-set_global_assignment -name VERILOG_FILE verilog/monitor.v
-set_global_assignment -name VERILOG_FILE verilog/driver.v
-set_global_assignment -name VERILOG_FILE verilog/testbench.v
-set_global_assignment -name QIP_FILE soc_system/synthesis/soc_system.qip
-set_global_assignment -name QIP_FILE ip/altsource_probe/hps_reset.qip
-set_global_assignment -name VERILOG_FILE ip/edge_detect/altera_edge_detector.v
-set_global_assignment -name VERILOG_FILE ip/debounce/debounce.v
-set_global_assignment -name VERILOG_FILE verilog/sys_top.v
-set_global_assignment -name SDC_FILE "cy5-systest.sdc"
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

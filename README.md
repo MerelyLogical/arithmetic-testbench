@@ -24,6 +24,10 @@
 - [ ] Write to `/dev/leds` and stuff for coolness
 - [ ] sub monitors only have `NUM_SUB_MON-1` cycles to get result, system breaks when only one sub monitor. Intentional?
 
+Useful stuff for future work
+https://electronics.stackexchange.com/questions/196914/verilog-synthesize-high-speed-leading-zero-count
+stackoverflow.com/questions/2368680/count-leading-zero-in-single-cycle-datapath
+
 ## Notes
 # Compilation time
 

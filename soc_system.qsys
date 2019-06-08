@@ -371,6 +371,30 @@
          type = "String";
       }
    }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
    element sysid_qsys
    {
       datum _sortIndex
@@ -1390,9 +1414,9 @@
    enabled="1">
   <parameter name="id" value="-1395321840" />
  </module>
- <module name="test_wrapper_0" kind="test_wrapper" version="3.0" enabled="1">
-  <parameter name="NUM_SUB_MON" value="2" />
-  <parameter name="SYS_VERSION" value="40" />
+ <module name="test_wrapper_0" kind="test_wrapper" version="4.1" enabled="1">
+  <parameter name="NUM_SUB_MON" value="3" />
+  <parameter name="SYS_VERSION" value="41" />
   <parameter name="WIDTH" value="16" />
  </module>
  <connection

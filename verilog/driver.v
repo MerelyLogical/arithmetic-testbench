@@ -1,21 +1,26 @@
 module driver #(
 	parameter WIDTH = 32
 )(
-	// input clk,
 	input reset,
 	input clk_dut,
-	// input reset_dut,
 
 	input  [WIDTH-1:0] i_rand_a,
 	input  [WIDTH-1:0] i_rand_b,
-	// ------------------------------------------
 	input  [WIDTH-1:0] i_dut_out,
 	output      [31:0] o_dut_delay,
-	// ------------------------------------------
-	output [WIDTH-1:0] o_drive_a,
-	output [WIDTH-1:0] o_drive_b,
-	output [WIDTH-1:0] o_drive_delayed_a,
-	output [WIDTH-1:0] o_drive_delayed_b
+	
+	input              i_fselect,
+	input  [WIDTH-1:0] i_fmanual_a,
+	input  [WIDTH-1:0] i_fmanual_b,
+	input  [WIDTH-1:0] i_fbitset_a,
+	input  [WIDTH-1:0] i_fbitset_b,
+	input  [WIDTH-1:0] i_fbitclr_a,
+	input  [WIDTH-1:0] i_fbitclr_b,
+	
+	output [WIDTH-1:0] o_drive_dut_a,
+	output [WIDTH-1:0] o_drive_dut_b,
+	output [WIDTH-1:0] o_drive_mon_a,
+	output [WIDTH-1:0] o_drive_mon_b
 );
 
 
@@ -37,7 +42,7 @@ module driver #(
 	localparam STATE_DONE  = 4'b1000;
 	
 	
-	always @(posedge clk_dut or posedge reset)
+	always @(posedge clk_dut)
 		if (reset)
 			test_state <= STATE_IDLE;
 		else case (test_state)
@@ -48,14 +53,17 @@ module driver #(
 			default    :                  test_state <= STATE_IDLE;
 		endcase
 	
-	always @(posedge clk_dut or posedge reset)
+	always @(posedge clk_dut)
 		if (reset)
 			delay_count <= {K{1'b1}};
 		else if(test_state == STATE_COUNT)
 			delay_count <= delay_count + 1'b1;
 	
-	always @(posedge clk_dut or posedge reset)
+	always @(posedge clk_dut)
 		if (reset)
+			out_count <= {K{1'b0}};
+		// delay tester is disabled if it is done or if driver is in manual input mode
+		else if (test_state == STATE_DONE || i_fselect == 1'b1)
 			out_count <= {K{1'b0}};
 		else
 			out_count <= out_count + 1'b1;
@@ -64,7 +72,11 @@ module driver #(
 	reg [WIDTH-1:0] b_0;
 	
 	always @(posedge clk_dut)
-		if (&out_count) begin
+		if (reset) begin
+			a_0 <= {WIDTH{1'b0}};
+			b_0 <= {WIDTH{1'b0}};
+		end
+		else if (&out_count) begin
 			a_0 <= {WIDTH{1'b0}};
 			b_0 <= {WIDTH{1'b0}};
 		end
@@ -75,31 +87,50 @@ module driver #(
 	
 	assign o_dut_delay = (test_state == STATE_DONE) ? delay_count : {32{1'b1}};
 	
+	
+	// -------------------------------------------
+	// filter system after delay tester
+	reg [WIDTH-1:0] sa_0;
+	reg [WIDTH-1:0] sb_0;
+	reg [WIDTH-1:0] fa_0;
+	reg [WIDTH-1:0] fb_0;
+
+	// bitclr takes priority. This decision is arbitrary.
+	always @(posedge clk_dut)
+		if (i_fselect == 1'b0) begin
+			sa_0 <= a_0 | i_fbitset_a;
+			sb_0 <= b_0 | i_fbitset_b;
+			fa_0 <= sa_0 & (~i_fbitclr_a);
+			fb_0 <= sb_0 & (~i_fbitclr_b);
+		end
+		else begin
+			sa_0 <= i_fmanual_a;
+			sb_0 <= i_fmanual_b;
+			fa_0 <= sa_0;
+			fb_0 <= sb_0;
+		end
+	
 	// ------------------------------------------
-	// normal output to DUT
+	// filtered output to DUT and monitor.
 	// assign as LSFR outputs are on clk_dut as well
 	//	assign o_drive_a = i_rand_a;
 	//	assign o_drive_b = i_rand_b;
-	reg [WIDTH-1:0] a_1;
-	reg [WIDTH-1:0] a_2;
-	// reg [WIDTH-1:0] a_3;
-	reg [WIDTH-1:0] b_1;
-	reg [WIDTH-1:0] b_2;
-	// reg [WIDTH-1:0] b_3;
+	reg [WIDTH-1:0] fa_1;
+	reg [WIDTH-1:0] fa_2;
+	reg [WIDTH-1:0] fb_1;
+	reg [WIDTH-1:0] fb_2;
 	
 	always @(posedge clk_dut) begin
 		// delayed output to monitor
-		a_1 <= a_0;
-		a_2 <= a_1;
-		// a_3 <= a_2;
-		b_1 <= b_0;
-		b_2 <= b_1;
-		// b_3 <= b_2;
+		fa_1 <= fa_0;
+		fa_2 <= fa_1;
+		fb_1 <= fb_0;
+		fb_2 <= fb_1;
 	end
 	
-	assign o_drive_a = a_0;
-	assign o_drive_b = b_0;
-	assign o_drive_delayed_a = a_2;
-	assign o_drive_delayed_b = b_2;
+	assign o_drive_dut_a = fa_0;
+	assign o_drive_dut_b = fb_0;
+	assign o_drive_mon_a = fa_2;
+	assign o_drive_mon_b = fb_2;
 
 endmodule

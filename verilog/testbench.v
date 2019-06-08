@@ -10,34 +10,43 @@ module testbench #(
 	input freeze,
 	
 	output [31:0] o_data_ctr,
-	output [31:0] o_event_ctr,
-	// ------------------------------------------------
-	output [31:0] o_debug
-	// ------------------------------------------------
+	output [31:0] o_error_ctr,
+	output [31:0] o_dut_delay,
 	
-	// DUT conduit
-	/*
-	output [WIDTH-1:0] o_drive_a,
-	output [WIDTH-1:0] o_drive_b,
+	input              i_fselect,
+	input  [WIDTH-1:0] i_fmanual_a,
+	input  [WIDTH-1:0] i_fmanual_b,
+	input  [WIDTH-1:0] i_fbitset_a,
+	input  [WIDTH-1:0] i_fbitset_b,
+	input  [WIDTH-1:0] i_fbitclr_a,
+	input  [WIDTH-1:0] i_fbitclr_b,
+	
+	output [31:0] o_maxacc,
+	output [31:0] o_minacc//,
+	
+	/* DUT CONDUIT. DISABLED DURING TESTING
+	output [WIDTH-1:0] o_dut_a,
+	output [WIDTH-1:0] o_dut_b,
 	input  [WIDTH-1:0] i_dut_out
 	*/
 );
 
-	wire [WIDTH-1:0] rand_a;
-	wire [WIDTH-1:0] rand_b;
-	wire [WIDTH-1:0] drive_delayed_a;
-	wire [WIDTH-1:0] drive_delayed_b;
-	wire             mnt_event;
+	wire      [31:0] rand_a;
+	wire      [31:0] rand_b;
+	wire [WIDTH-1:0] drive_mon_a;
+	wire [WIDTH-1:0] drive_mon_b;
+	wire [WIDTH-1:0] mnt_diff;
+	wire             mon_ready;
 	
 	// ----INTERNAL ADDER, FOR TESTING ONLY------------
 	
-	wire [WIDTH-1:0] o_drive_a;
-	wire [WIDTH-1:0] o_drive_b;
+	wire [WIDTH-1:0] o_dut_a;
+	wire [WIDTH-1:0] o_dut_b;
 	reg  [WIDTH-1:0] i_dut_out;
 	reg  [WIDTH-1:0] delay_s;
 	
 	always @(posedge clk_dut) begin
-		delay_s   <= o_drive_a + o_drive_b;
+		delay_s   <= o_dut_a + o_dut_b;
 		i_dut_out <= delay_s;
 	end
 	
@@ -71,22 +80,26 @@ module testbench #(
 	driver #(
 		.WIDTH      ( WIDTH      )
 	) u_driver (
-		// .clk        ( clk_tb     ),
 		.reset      ( reset      ),
 		.clk_dut    ( clk_dut    ),
-		// .reset_dut  ( reset      ),
 		
-		.i_rand_a   ( rand_a     ),
-		.i_rand_b   ( rand_b     ),
-		// ------------------------------------------------
-		// Debug: send dut out to driver to test delay.
+		.i_rand_a   ( rand_a[WIDTH-1:0]),
+		.i_rand_b   ( rand_b[WIDTH-1:0]),
 		.i_dut_out  ( i_dut_out  ),
-		.o_dut_delay( o_debug    ),
-		// ------------------------------------------------
-		.o_drive_a  ( o_drive_a  ),
-		.o_drive_b  ( o_drive_b  ),
-		.o_drive_delayed_a ( drive_delayed_a ),
-		.o_drive_delayed_b ( drive_delayed_b )
+		
+		.i_fselect    ( i_fselect  ),
+		.i_fmanual_a  ( i_fmanual_a  ),
+		.i_fmanual_b  ( i_fmanual_b  ),
+		.i_fbitset_a  ( i_fbitset_a  ),
+		.i_fbitset_b  ( i_fbitset_b  ),
+		.i_fbitclr_a  ( i_fbitclr_a  ),
+		.i_fbitclr_b  ( i_fbitclr_b  ),
+		
+		.o_dut_delay   ( o_dut_delay ),
+		.o_drive_dut_a ( o_dut_a     ),
+		.o_drive_dut_b ( o_dut_b     ),
+		.o_drive_mon_a ( drive_mon_a ),
+		.o_drive_mon_b ( drive_mon_b )
 	);
 
 	// find errors and other interesting events
@@ -97,10 +110,11 @@ module testbench #(
 		.clk        ( clk_dut    ),
 		.reset      ( reset      ),
 		
-		.i_dut_ia   ( drive_delayed_a ),
-		.i_dut_ib   ( drive_delayed_b ),
+		.i_dut_ia   ( drive_mon_a),
+		.i_dut_ib   ( drive_mon_b),
 		.i_dut_os   ( i_dut_out  ),
-		.o_event    ( mnt_event  )
+		.o_mon_ready( mon_ready  ),
+		.o_diff     ( mnt_diff   )
 	);
 
 	// counts events
@@ -111,9 +125,12 @@ module testbench #(
 		.reset      ( reset      ),
 
 		.i_freeze   ( freeze     ),
-		.i_event    ( mnt_event  ),
-		.o_event_ctr( o_event_ctr),
-		.o_data_ctr ( o_data_ctr )
+		.i_mon_ready( mon_ready  ),
+		.i_diff     ( mnt_diff   ),
+		.o_error_ctr( o_error_ctr),
+		.o_data_ctr ( o_data_ctr ),
+		.o_maxacc   ( o_maxacc   ),
+		.o_minacc   ( o_minacc   )
 	);
 
 endmodule

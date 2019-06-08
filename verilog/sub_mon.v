@@ -2,7 +2,7 @@ module sub_mon #(
 	parameter WIDTH = 32
 )(
 	input clk,
-	// input reset,
+	input reset,
 
 	input      [WIDTH-1:0] i_a,
 	input      [WIDTH-1:0] i_b,
