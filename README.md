@@ -14,6 +14,7 @@
 - [x] Separate avalon slave from main testbench
 - [x] Improved PLL reconfiguration granularity
 - [ ] Figure out if the issue with adder in Qsys is with the delay or something else.
+- [ ] Make LFSR seeds configurable
 
 # Low priority
 - [ ] Upgrade PLL config class to python3
