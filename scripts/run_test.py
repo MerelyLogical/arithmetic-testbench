@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
+# Class module and class axi provided by James Davis
+# PLL class provided James and modified by Zifan
+
 import mmap
 import struct
 import time
-
-# Generic AXI module class. Intended to be inherited by specific module classes
-# James Davis, 2016
 
 class module:
 
@@ -20,9 +20,6 @@ class module:
 	def write(self, addr, data):
 		'Write data as 4 bytes to register at addr'
 		self.axi.write(self.addr + addr, data)
-		
-# AXI interface class
-# James Davis, 2016
 
 class axi:
 	# actual offset is ff20 0000, but lowest address curerntly used it 10 0000.
@@ -134,39 +131,146 @@ class pll(module):
 			pass
 		return m_count*stepsize
 
+def printerr(msg):
+	if msg == 'num':
+		print('ERROR: Incorrect number of arguments.')
+	else if msg == 'arg':
+		print('ERROR: Invalid arguemnts.')
+	else if msg == 'int':
+		print('ERROR: Invalid number format.')
+	else if msg == 'cmd':
+		print('ERROR: Unknown command.')
+	else if msg == 'mod':
+		print('ERROR: Incorrect operating mode.')
+
+def run_test(duration):
+		wrap.enable()
+		wrap.reset()
+		time.sleep(duration/1000)
+		wrap.freeze()
+
+		data_ctr = wrap.read(wrap.regs['data'])
+		print('data  counter     {}'.format(data_ctr))
+
+		error_ctr = wrap.read(wrap.regs['error'])
+		print('error counter     {}'.format(error_ctr))
+		
+		dutdelay = wrap.read(wrap.regs['dutdelay'])
+		print('dut delay         {}'.format(dutdelay))
+		if data_ctr != 0:
+			print('error rate        {:.6f}'.format(error_ctr / float(data_ctr)))
+
+		print('')
+	
+		wrap.unfreeze()
+		wrap.disable()
+
+
 # -----main--------------------------------------------------------------------
 
 ax = axi()
 wrap = wrapper(ax, 0x00000000)
 pll_conf = pll(ax, 0x00010000)
+current_mode = 'auto'
 
-wrap.enable()
-wrap.reset()
-print('Running version   {}'.format(wrap.version()))
-# fqs = [800, 533, 400, 320, 267, 229, 200, 178, 145, 123, 100, 76.2, 50.0]
-fqs = range(100, 450, 50)
-for fq in fqs:
-	pll_fq = pll_conf.set(0, fq)
-	print('PLL Configured to {:.2f}MHz'.format(pll_fq))
-	
-	wrap.reset()
-	time.sleep(1)
-	wrap.freeze()
 
-	data_ctr = wrap.read(wrap.regs['data'])
-	print('data  counter     {}'.format(data_ctr))
+while True:
+	cmdstr = raw_input(current_mode+'> ')
+	cmd = cmdstr.split()
+	verb = cmd[0]
 
-	error_ctr = wrap.read(wrap.regs['error'])
-	print('error counter     {}'.format(error_ctr))
-	
-	dutdelay = wrap.read(wrap.regs['dutdelay'])
-	print('dut delay         {}'.format(dutdelay))
-	
-	if data_ctr != 0:
-		print('error rate        {:.6f}'.format(error_ctr / float(data_ctr)))
+	if verb == 'exit':
+		break
 
-	print('')
-	
-	wrap.unfreeze()
-#disable
-wrap.disable()
+	# detecting invalid commands
+	if verb in ['reset', 'version']:
+		if len(cmd) != 1:
+			printerr('num')
+			continue
+	else if verb in ['freq', 'mode', 'run', 'dofile']:
+		if len(cmd) != 2:
+			printerr('num')
+			continue
+	else if verb in ['manual', 'bitset', 'bitclr']:
+		if len(cmd) != 3:
+			printerr('num')
+			continue
+		else if cmd[1] not in ['a', 'b']:
+			printerr('arg')
+			continue
+		try:
+			val = int(cmd[2], 16)
+		except ValueError:
+			printerr('int')
+			continue
+	else:
+		printerr('cmd')
+		continue
+
+
+	if verb == 'reset':
+		wrap.reset()
+		print('Reset complete')
+	else if verb == 'version':
+		print('Running version   {}'.format(wrap.version()))
+	else if verb == 'freq':
+		try:
+			mhz = int(cmd[1])
+			pll_fq = pll_conf.set(0, mhz)
+			print('PLL Configured to {:.2f}MHz'.format(pll_fq))
+		except ValueError:
+			printerr('int')
+	else if verb == 'mode':
+		if cmd[1] == 'm':
+			wrap.write(wrap.regs['fselect'], 1)
+			current_mode = 'manual'
+		else if cmd[1] == 'a':
+			wrap.write(wrap.regs['fselect'], 0)
+			current_mode = 'auto'
+		else:
+			print('arg')
+	else if verb == 'manual':
+		if current_mode == 'manual':
+			if cmd[1] == 'a':
+				val = int(cmd[2], 16)
+				wrap.write(wrap.regs['fmanual_a'], val)
+			else if cmd[1] == 'b':
+				val = int(cmd[2], 16)
+				wrap.write(wrap.regs['fmanual_b'], val)
+			else:
+				printerr('arg')
+		else:
+			printerr('mod')
+	else if verb == 'bitset':
+		if current_mode == 'auto':
+			if cmd[1] == 'a':
+				val = int(cmd[2], 16)
+				wrap.write(wrap.regs['fbitset_a'], val)
+			else if cmd[1] == 'b':
+				val = int(cmd[2], 16)
+				wrap.write(wrap.regs['fbitset_b'], val)
+			else:
+				printerr('arg')
+		else:
+			printerr('mod')
+	else if verb == 'bitclr':
+		if current_mode == 'auto':
+			if cmd[1] == 'a':
+				val = int(cmd[2], 16)
+				wrap.write(wrap.regs['fbitclr_a'], val)
+			else if cmd[1] == 'b':
+				val = int(cmd[2], 16)
+				wrap.write(wrap.regs['fbitclr_b'], val)
+			else:
+				printerr('arg')
+		else:
+			printerr('mod')
+	else if verb == 'run':
+		try:
+			duration = int(cmd[1])
+			run_test(duration)
+		except ValueError:
+			printerr('int')
+	else:
+		print('cmd')
+	cmdstr = raw_input(current_mode+'> ')
