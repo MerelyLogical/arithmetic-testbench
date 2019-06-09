@@ -26,24 +26,26 @@ class axi:
 	def __init__(self, addr = 0xFF300000, size = 0x10100):
 		self.addr = addr
 		self.size = size
-		self.mem = open('/dev/mem', 'r+b')
-		self.map = mmap.mmap(self.mem.fileno(), self.size, offset = self.addr)
+		#self.mem = open('/dev/mem', 'r+b')
+		#self.map = mmap.mmap(self.mem.fileno(), self.size, offset = self.addr)
 		
 	def __del__(self):
-		self.map.close()
-		self.mem.close()
+		#self.map.close()
+		#self.mem.close()
+		pass
 		
 	def read(self, addr):
 		'Read 4 bytes from register at addr'
-		# print ('read  addr: ' + hex(addr))
-		self.map.seek(addr)
-		return struct.unpack('<L', self.map.read(4))[0]
-		
+		print ('read  addr: ' + hex(addr))
+		#self.map.seek(addr)
+		#return struct.unpack('<L', self.map.read(4))[0]
+		return 0
+
 	def write(self, addr, data):
 		'Write data as 4 bytes to register at addr'
-		# print('write addr: ' + hex(addr) + ' data: ' + hex(data))
-		self.map.seek(addr)
-		self.map.write(struct.pack('<L', data))
+		print('write addr: ' + hex(addr) + ' data: ' + hex(data))
+		#self.map.seek(addr)
+		#self.map.write(struct.pack('<L', data))
 
 class wrapper(module):
 
@@ -70,6 +72,19 @@ class wrapper(module):
 		tmp = self.read(self.regs['ctrl'])
 		self.write(self.regs['ctrl'], tmp | 0b0001)
 		self.write(self.regs['ctrl'], tmp & 0b1110)
+
+	def cleanreset(self):
+		self.reset()
+		self.disable()
+		self.unfreeze()
+		self.write(self.regs['fselect'], 0x00000000)
+		self.write(self.regs['fmanual_a'], 0x00000000)
+		self.write(self.regs['fmanual_b'], 0x00000000)
+		self.write(self.regs['fbitset_a'], 0x00000000)
+		self.write(self.regs['fbitset_b'], 0x00000000)
+		self.write(self.regs['fbitclr_a'], 0x00000000)
+		self.write(self.regs['fbitclr_b'], 0x00000000)
+		self.reset()
 
 	def enable(self):
 		tmp = self.read(self.regs['ctrl'])
@@ -134,13 +149,13 @@ class pll(module):
 def printerr(msg):
 	if msg == 'num':
 		print('ERROR: Incorrect number of arguments.')
-	else if msg == 'arg':
+	elif msg == 'arg':
 		print('ERROR: Invalid arguemnts.')
-	else if msg == 'int':
+	elif msg == 'int':
 		print('ERROR: Invalid number format.')
-	else if msg == 'cmd':
+	elif msg == 'cmd':
 		print('ERROR: Unknown command.')
-	else if msg == 'mod':
+	elif msg == 'mod':
 		print('ERROR: Incorrect operating mode.')
 
 def run_test(duration):
@@ -173,7 +188,6 @@ wrap = wrapper(ax, 0x00000000)
 pll_conf = pll(ax, 0x00010000)
 current_mode = 'auto'
 
-
 while True:
 	cmdstr = raw_input(current_mode+'> ')
 	cmd = cmdstr.split()
@@ -187,15 +201,15 @@ while True:
 		if len(cmd) != 1:
 			printerr('num')
 			continue
-	else if verb in ['freq', 'mode', 'run', 'dofile']:
+	elif verb in ['freq', 'mode', 'run', 'dofile']:
 		if len(cmd) != 2:
 			printerr('num')
 			continue
-	else if verb in ['manual', 'bitset', 'bitclr']:
+	elif verb in ['manual', 'bitset', 'bitclr']:
 		if len(cmd) != 3:
 			printerr('num')
 			continue
-		else if cmd[1] not in ['a', 'b']:
+		elif cmd[1] not in ['a', 'b']:
 			printerr('arg')
 			continue
 		try:
@@ -207,70 +221,68 @@ while True:
 		printerr('cmd')
 		continue
 
-
 	if verb == 'reset':
-		wrap.reset()
+		wrap.cleanreset()
 		print('Reset complete')
-	else if verb == 'version':
+	elif verb == 'version':
 		print('Running version   {}'.format(wrap.version()))
-	else if verb == 'freq':
+	elif verb == 'freq':
 		try:
 			mhz = int(cmd[1])
 			pll_fq = pll_conf.set(0, mhz)
 			print('PLL Configured to {:.2f}MHz'.format(pll_fq))
 		except ValueError:
 			printerr('int')
-	else if verb == 'mode':
+	elif verb == 'mode':
 		if cmd[1] == 'm':
 			wrap.write(wrap.regs['fselect'], 1)
 			current_mode = 'manual'
-		else if cmd[1] == 'a':
+		elif cmd[1] == 'a':
 			wrap.write(wrap.regs['fselect'], 0)
 			current_mode = 'auto'
 		else:
-			print('arg')
-	else if verb == 'manual':
+			printerr('arg')
+	elif verb == 'manual':
 		if current_mode == 'manual':
 			if cmd[1] == 'a':
 				val = int(cmd[2], 16)
 				wrap.write(wrap.regs['fmanual_a'], val)
-			else if cmd[1] == 'b':
+			elif cmd[1] == 'b':
 				val = int(cmd[2], 16)
 				wrap.write(wrap.regs['fmanual_b'], val)
 			else:
 				printerr('arg')
 		else:
 			printerr('mod')
-	else if verb == 'bitset':
+	elif verb == 'bitset':
 		if current_mode == 'auto':
 			if cmd[1] == 'a':
 				val = int(cmd[2], 16)
 				wrap.write(wrap.regs['fbitset_a'], val)
-			else if cmd[1] == 'b':
+			elif cmd[1] == 'b':
 				val = int(cmd[2], 16)
 				wrap.write(wrap.regs['fbitset_b'], val)
 			else:
 				printerr('arg')
 		else:
 			printerr('mod')
-	else if verb == 'bitclr':
+	elif verb == 'bitclr':
 		if current_mode == 'auto':
 			if cmd[1] == 'a':
 				val = int(cmd[2], 16)
 				wrap.write(wrap.regs['fbitclr_a'], val)
-			else if cmd[1] == 'b':
+			elif cmd[1] == 'b':
 				val = int(cmd[2], 16)
 				wrap.write(wrap.regs['fbitclr_b'], val)
 			else:
 				printerr('arg')
 		else:
 			printerr('mod')
-	else if verb == 'run':
+	elif verb == 'run':
 		try:
 			duration = int(cmd[1])
 			run_test(duration)
 		except ValueError:
 			printerr('int')
 	else:
-		print('cmd')
-	cmdstr = raw_input(current_mode+'> ')
+		printerr('cmd')
