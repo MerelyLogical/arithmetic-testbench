@@ -7,6 +7,8 @@ import mmap
 import struct
 import time
 
+DEBUG = True
+
 class module:
 
 	def __init__(self, axi, addr):
@@ -26,26 +28,31 @@ class axi:
 	def __init__(self, addr = 0xFF300000, size = 0x10100):
 		self.addr = addr
 		self.size = size
-		#self.mem = open('/dev/mem', 'r+b')
-		#self.map = mmap.mmap(self.mem.fileno(), self.size, offset = self.addr)
+		if not DEBUG:
+			self.mem = open('/dev/mem', 'r+b')
+			self.map = mmap.mmap(self.mem.fileno(), self.size, offset = self.addr)
 		
 	def __del__(self):
-		#self.map.close()
-		#self.mem.close()
-		pass
+		if not DEBUG:
+			self.map.close()
+			self.mem.close()
 		
 	def read(self, addr):
 		'Read 4 bytes from register at addr'
-		print ('read  addr: ' + hex(addr))
-		#self.map.seek(addr)
-		#return struct.unpack('<L', self.map.read(4))[0]
-		return 0
+		if DEBUG:
+			print ('read  addr: ' + hex(addr))
+			return 0x1337
+		else:
+			self.map.seek(addr)
+			return struct.unpack('<L', self.map.read(4))[0]
 
 	def write(self, addr, data):
 		'Write data as 4 bytes to register at addr'
-		print('write addr: ' + hex(addr) + ' data: ' + hex(data))
-		#self.map.seek(addr)
-		#self.map.write(struct.pack('<L', data))
+		if DEBUG:
+			print('write addr: ' + hex(addr) + ' data: ' + hex(data))
+		else:
+			self.map.seek(addr)
+			self.map.write(struct.pack('<L', data))
 
 class wrapper(module):
 
@@ -223,6 +230,7 @@ while True:
 
 	if verb == 'reset':
 		wrap.cleanreset()
+		current_mode = 'auto'
 		print('Reset complete')
 	elif verb == 'version':
 		print('Running version   {}'.format(wrap.version()))
