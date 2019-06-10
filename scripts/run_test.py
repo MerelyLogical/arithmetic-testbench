@@ -3,11 +3,23 @@
 # Class module and class axi provided by James Davis
 # PLL class provided James and modified by Zifan
 
+import sys
 import mmap
 import struct
 import time
 
-DEBUG = True
+# lightweight bridge offset:   ff20 0000
+# default wrapper location:    0010 0000 - 0010 0100
+# default pll config location: 0011 0000 - 0011 0100
+
+# since lowest address is    ff30 0000,
+# we open /dev/mem:          ff30 0000 - ff31 0100
+# which in relative addr is: 0000 0000 - 0001 0100
+
+BRIDGE_ADDR    = 0xFF300000 # absolute
+WRAPPER_ADDR   = 0x00000000 # relative to bridge
+PLLCONFIG_ADDR = 0x00010000 # relative to bridge
+MAXIMUM_ADDR   = 0x00010100 # relative to bridge
 
 class module:
 
@@ -24,31 +36,35 @@ class module:
 		self.axi.write(self.addr + addr, data)
 
 class axi:
-	# actual offset is ff20 0000, but lowest address curerntly used it 10 0000.
-	def __init__(self, addr = 0xFF300000, size = 0x10100):
+	
+	def __init__(self, addr = 0xFF200000, size = 0x20000):
 		self.addr = addr
 		self.size = size
-		if not DEBUG:
+		if __debug__:
+			pass
+		else:
 			self.mem = open('/dev/mem', 'r+b')
 			self.map = mmap.mmap(self.mem.fileno(), self.size, offset = self.addr)
 		
 	def __del__(self):
-		if not DEBUG:
+		if __debug__:
+			pass
+		else:
 			self.map.close()
 			self.mem.close()
-		
+
 	def read(self, addr):
 		'Read 4 bytes from register at addr'
-		if DEBUG:
+		if __debug__:
 			print ('read  addr: ' + hex(addr))
-			return 0x1337
+			return 0
 		else:
 			self.map.seek(addr)
 			return struct.unpack('<L', self.map.read(4))[0]
 
 	def write(self, addr, data):
 		'Write data as 4 bytes to register at addr'
-		if DEBUG:
+		if __debug__:
 			print('write addr: ' + hex(addr) + ' data: ' + hex(data))
 		else:
 			self.map.seek(addr)
@@ -164,6 +180,8 @@ def printerr(msg):
 		print('ERROR: Unknown command.')
 	elif msg == 'mod':
 		print('ERROR: Incorrect operating mode.')
+	elif msg == 'file':
+		print('ERROR: Invalid file path')
 
 def run_test(duration):
 		wrap.enable()
@@ -187,50 +205,41 @@ def run_test(duration):
 		wrap.unfreeze()
 		wrap.disable()
 
-
-# -----main--------------------------------------------------------------------
-
-ax = axi()
-wrap = wrapper(ax, 0x00000000)
-pll_conf = pll(ax, 0x00010000)
-current_mode = 'auto'
-
-while True:
-	cmdstr = raw_input(current_mode+'> ')
-	cmd = cmdstr.split()
-	verb = cmd[0]
-
-	if verb == 'exit':
-		break
+def repl(cmdstr):
+	try:
+		cmd = cmdstr.split()
+		verb = cmd[0]
+	except IndexError:
+		return None
 
 	# detecting invalid commands
 	if verb in ['reset', 'version']:
 		if len(cmd) != 1:
 			printerr('num')
-			continue
+			return None
 	elif verb in ['freq', 'mode', 'run', 'dofile']:
 		if len(cmd) != 2:
 			printerr('num')
-			continue
+			return None
 	elif verb in ['manual', 'bitset', 'bitclr']:
 		if len(cmd) != 3:
 			printerr('num')
-			continue
+			return None
 		elif cmd[1] not in ['a', 'b']:
 			printerr('arg')
-			continue
+			return None
 		try:
 			val = int(cmd[2], 16)
 		except ValueError:
 			printerr('int')
-			continue
+			return None
 	else:
 		printerr('cmd')
-		continue
+		return None
 
 	if verb == 'reset':
 		wrap.cleanreset()
-		current_mode = 'auto'
+		return 'auto'
 		print('Reset complete')
 	elif verb == 'version':
 		print('Running version   {}'.format(wrap.version()))
@@ -244,48 +253,37 @@ while True:
 	elif verb == 'mode':
 		if cmd[1] == 'm':
 			wrap.write(wrap.regs['fselect'], 1)
-			current_mode = 'manual'
 		elif cmd[1] == 'a':
 			wrap.write(wrap.regs['fselect'], 0)
-			current_mode = 'auto'
 		else:
 			printerr('arg')
 	elif verb == 'manual':
-		if current_mode == 'manual':
-			if cmd[1] == 'a':
-				val = int(cmd[2], 16)
-				wrap.write(wrap.regs['fmanual_a'], val)
-			elif cmd[1] == 'b':
-				val = int(cmd[2], 16)
-				wrap.write(wrap.regs['fmanual_b'], val)
-			else:
-				printerr('arg')
+		if cmd[1] == 'a':
+			val = int(cmd[2], 16)
+			wrap.write(wrap.regs['fmanual_a'], val)
+		elif cmd[1] == 'b':
+			val = int(cmd[2], 16)
+			wrap.write(wrap.regs['fmanual_b'], val)
 		else:
-			printerr('mod')
+			printerr('arg')
 	elif verb == 'bitset':
-		if current_mode == 'auto':
-			if cmd[1] == 'a':
-				val = int(cmd[2], 16)
-				wrap.write(wrap.regs['fbitset_a'], val)
-			elif cmd[1] == 'b':
-				val = int(cmd[2], 16)
-				wrap.write(wrap.regs['fbitset_b'], val)
-			else:
-				printerr('arg')
+		if cmd[1] == 'a':
+			val = int(cmd[2], 16)
+			wrap.write(wrap.regs['fbitset_a'], val)
+		elif cmd[1] == 'b':
+			val = int(cmd[2], 16)
+			wrap.write(wrap.regs['fbitset_b'], val)
 		else:
-			printerr('mod')
+			printerr('arg')
 	elif verb == 'bitclr':
-		if current_mode == 'auto':
-			if cmd[1] == 'a':
-				val = int(cmd[2], 16)
-				wrap.write(wrap.regs['fbitclr_a'], val)
-			elif cmd[1] == 'b':
-				val = int(cmd[2], 16)
-				wrap.write(wrap.regs['fbitclr_b'], val)
-			else:
-				printerr('arg')
+		if cmd[1] == 'a':
+			val = int(cmd[2], 16)
+			wrap.write(wrap.regs['fbitclr_a'], val)
+		elif cmd[1] == 'b':
+			val = int(cmd[2], 16)
+			wrap.write(wrap.regs['fbitclr_b'], val)
 		else:
-			printerr('mod')
+			printerr('arg')
 	elif verb == 'run':
 		try:
 			duration = int(cmd[1])
@@ -294,3 +292,26 @@ while True:
 			printerr('int')
 	else:
 		printerr('cmd')
+
+
+# -----main--------------------------------------------------------------------
+
+ax = axi(BRIDGE_ADDR, MAXIMUM_ADDR)
+wrap = wrapper(ax, WRAPPER_ADDR)
+pll_conf = pll(ax, PLLCONFIG_ADDR)
+
+if len(sys.argv) == 2:
+	try:
+		with open(sys.argv[1], "r") as f:
+			for cmdstr in f:
+				print('> '+cmdstr.rstrip())
+				repl(cmdstr)
+	except IOError:
+		printerr('file')
+else:
+	while True:
+		cmdstr = raw_input('> ')
+		if cmdstr == 'exit':
+			break
+		else:
+			repl(cmdstr)
