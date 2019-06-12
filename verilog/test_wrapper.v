@@ -13,13 +13,11 @@ module test_wrapper #(
 	input             slave_read,
 	input             slave_write,
 	input      [31:0] slave_writedata,
-	output reg [31:0] slave_readdata//,
+	output reg [31:0] slave_readdata,
 	
-	/* DUT CONDUIT. DISABLED DURING TESTING
 	output [WIDTH-1:0] dut_a,
 	output [WIDTH-1:0] dut_b,
 	input  [WIDTH-1:0] dut_out
-	*/
 );
 
 	// Avalon slave logic
@@ -152,13 +150,11 @@ module test_wrapper #(
 		.i_fbitclr_b  ( i_hpc_fbitclr_b[WIDTH-1:0] ),
 		
 		.o_maxacc   ( o_hpc_maxacc  ),
-		.o_minacc   ( o_hpc_minacc  )//,
+		.o_minacc   ( o_hpc_minacc  ),
 		
-		/* DUT CONDUIT. DISABLED DURING TESTING
 		.o_dut_a    ( dut_a      ),
 		.o_dut_b    ( dut_b      ),
 		.i_dut_out  ( dut_out    )
-		*/
 	);
 
 endmodule
