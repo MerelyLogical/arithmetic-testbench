@@ -22,13 +22,12 @@ module testbench #(
 	input  [WIDTH-1:0] i_fbitclr_b,
 	
 	output [31:0] o_maxacc,
-	output [31:0] o_minacc//,
+	output [31:0] o_minacc,
 	
-	/* DUT CONDUIT. DISABLED DURING TESTING
 	output [WIDTH-1:0] o_dut_a,
 	output [WIDTH-1:0] o_dut_b,
 	input  [WIDTH-1:0] i_dut_out
-	*/
+	
 );
 
 	wire      [31:0] rand_a;
@@ -39,7 +38,7 @@ module testbench #(
 	wire             mon_ready;
 	
 	// ----INTERNAL ADDER, FOR TESTING ONLY------------
-	
+	/*
 	wire [WIDTH-1:0] o_dut_a;
 	wire [WIDTH-1:0] o_dut_b;
 	reg  [WIDTH-1:0] i_dut_out;
@@ -49,7 +48,7 @@ module testbench #(
 		delay_s   <= o_dut_a + o_dut_b;
 		i_dut_out <= delay_s;
 	end
-	
+	*/
 	// ------------------------------------------------
 	
 	
