@@ -183,10 +183,10 @@ def printerr(msg):
 	elif msg == 'file':
 		print('ERROR: Invalid file path')
 
-def run_test(duration):
+def run_test(wrap, duration):
 		wrap.enable()
 		wrap.reset()
-		time.sleep(duration/1000)
+		time.sleep(duration)
 		wrap.freeze()
 
 		data_ctr = wrap.read(wrap.regs['data'])
@@ -205,7 +205,7 @@ def run_test(duration):
 		wrap.unfreeze()
 		wrap.disable()
 
-def repl(cmdstr):
+def repl(wrap, pll_conf, cmdstr):
 	try:
 		cmd = cmdstr.split()
 		verb = cmd[0]
@@ -217,7 +217,7 @@ def repl(cmdstr):
 		if len(cmd) != 1:
 			printerr('num')
 			return None
-	elif verb in ['freq', 'mode', 'run', 'dofile']:
+	elif verb in ['freq', 'mode', 'run']:
 		if len(cmd) != 2:
 			printerr('num')
 			return None
@@ -239,7 +239,8 @@ def repl(cmdstr):
 
 	if verb == 'reset':
 		wrap.cleanreset()
-		return 'auto'
+		pll_fq = pll_conf.set(0, 100)
+		print('PLL reseted to    {:.2f}MHz'.format(pll_fq))
 		print('Reset complete')
 	elif verb == 'version':
 		print('Running version   {}'.format(wrap.version()))
@@ -287,7 +288,7 @@ def repl(cmdstr):
 	elif verb == 'run':
 		try:
 			duration = int(cmd[1])
-			run_test(duration)
+			run_test(wrap, duration)
 		except ValueError:
 			printerr('int')
 	else:
@@ -300,12 +301,15 @@ ax = axi(BRIDGE_ADDR, MAXIMUM_ADDR)
 wrap = wrapper(ax, WRAPPER_ADDR)
 pll_conf = pll(ax, PLLCONFIG_ADDR)
 
+pll_fq = pll_conf.set(0, 100)
+print('PLL reseted to    {:.2f}MHz'.format(pll_fq))
+
 if len(sys.argv) == 2:
 	try:
 		with open(sys.argv[1], "r") as f:
 			for cmdstr in f:
 				print('> '+cmdstr.rstrip())
-				repl(cmdstr)
+				repl(wrap, pll_conf, cmdstr)
 	except IOError:
 		printerr('file')
 else:
@@ -314,4 +318,4 @@ else:
 		if cmdstr == 'exit':
 			break
 		else:
-			repl(cmdstr)
+			repl(wrap, pll_conf, cmdstr)
