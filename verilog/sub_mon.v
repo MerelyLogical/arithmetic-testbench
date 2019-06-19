@@ -2,6 +2,7 @@ module sub_mon #(
 	parameter WIDTH = 32
 )(
 	input clk,
+	input enable,
 	input reset,
 
 	input      [WIDTH-1:0] i_a,
@@ -13,12 +14,9 @@ module sub_mon #(
 
 	// adder logic
 	always @(posedge clk)
-		// introduce 25% error rate
-		if (i_a[0] && i_b[0])
-			o_mon_o <= i_b;
-		else
-			o_mon_o <= i_a + i_b;
-	always @(posedge clk)
-		o_dtm_o <= i_dut_o;
-	
+		if (enable) begin
+			o_mon_o <= i_a;
+			o_dtm_o <= i_dut_o;
+		end
+		
 endmodule

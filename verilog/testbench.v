@@ -11,7 +11,6 @@ module testbench #(
 	
 	output [31:0] o_data_ctr,
 	output [31:0] o_error_ctr,
-	output [31:0] o_dut_delay,
 	
 	input              i_fselect,
 	input  [WIDTH-1:0] i_fmanual_a,
@@ -22,11 +21,11 @@ module testbench #(
 	input  [WIDTH-1:0] i_fbitclr_b,
 	
 	output [31:0] o_maxacc,
-	output [31:0] o_minacc,
+	output [31:0] o_minacc/*,
 	
 	output [WIDTH-1:0] o_dut_a,
 	output [WIDTH-1:0] o_dut_b,
-	input  [WIDTH-1:0] i_dut_out
+	input  [WIDTH-1:0] i_dut_out*/
 	
 );
 
@@ -38,17 +37,17 @@ module testbench #(
 	wire             mon_ready;
 	
 	// ----INTERNAL ADDER, FOR TESTING ONLY------------
-	/*
+	
 	wire [WIDTH-1:0] o_dut_a;
 	wire [WIDTH-1:0] o_dut_b;
 	reg  [WIDTH-1:0] i_dut_out;
 	reg  [WIDTH-1:0] delay_s;
 	
 	always @(posedge clk_dut) begin
-		delay_s   <= o_dut_a + o_dut_b;
+		delay_s   <= o_dut_a;
 		i_dut_out <= delay_s;
 	end
-	*/
+	
 	// ------------------------------------------------
 	
 	
@@ -84,7 +83,6 @@ module testbench #(
 		
 		.i_rand_a   ( rand_a[WIDTH-1:0]),
 		.i_rand_b   ( rand_b[WIDTH-1:0]),
-		.i_dut_out  ( i_dut_out  ),
 		
 		.i_fselect    ( i_fselect  ),
 		.i_fmanual_a  ( i_fmanual_a  ),
@@ -94,7 +92,6 @@ module testbench #(
 		.i_fbitclr_a  ( i_fbitclr_a  ),
 		.i_fbitclr_b  ( i_fbitclr_b  ),
 		
-		.o_dut_delay   ( o_dut_delay ),
 		.o_drive_dut_a ( o_dut_a     ),
 		.o_drive_dut_b ( o_dut_b     ),
 		.o_drive_mon_a ( drive_mon_a ),

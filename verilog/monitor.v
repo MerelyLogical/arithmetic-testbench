@@ -21,14 +21,18 @@ module monitor #(
 		if (reset) begin
 			dist_ctr        [NUM_SUB_MON-1]   <= 1'b1;
 			dist_ctr        [NUM_SUB_MON-2:0] <= {(NUM_SUB_MON-1){1'b0}};
-			dist_ctr_delayed[NUM_SUB_MON-1:0] <= {NUM_SUB_MON{1'b0}};
 		end
 		else begin
 			dist_ctr              [0] <= dist_ctr[NUM_SUB_MON-1];
 			dist_ctr[NUM_SUB_MON-1:1] <= dist_ctr[NUM_SUB_MON-2:0];
-			dist_ctr_delayed          <= dist_ctr;
 		end
 	end
+	
+	always @(negedge clk)
+		if (reset)
+			dist_ctr_delayed[NUM_SUB_MON-1:0] <= {NUM_SUB_MON{1'b0}};
+		else
+			dist_ctr_delayed          <= dist_ctr;
 	
 	reg        [WIDTH-1:0] a       [NUM_SUB_MON-1:0];
 	reg        [WIDTH-1:0] b       [NUM_SUB_MON-1:0];
@@ -38,7 +42,6 @@ module monitor #(
 	wire       [WIDTH-1:0] o_dtm   [NUM_SUB_MON-1:0];
 	reg        [WIDTH-1:0] sub_diff[NUM_SUB_MON-1:0];
 	reg        [WIDTH-1:0] diff;
-	wire [NUM_SUB_MON-1:0] clk_sub;
 	wire [NUM_SUB_MON-1:0] mat_diff[WIDTH-1:0];
 	
 	// to show when monitors are ready after reset
@@ -86,14 +89,12 @@ module monitor #(
 			else
 				sub_diff [gi] <= {WIDTH{1'b0}};
 		
-		// sub monitors run on delayed clock to ensure data has been written in
-		assign clk_sub[gi] = clk && dist_ctr_delayed[gi];
-		
 		// instantiate sub monitors
 		sub_mon #(
 			.WIDTH     ( WIDTH )
 		) u_sub_mon (
-			.clk       ( clk_sub[gi] ),
+			.clk       ( clk ),
+			.enable    ( dist_ctr_delayed[gi] ),
 			.reset     ( reset    ),
 			
 			.i_a       ( a    [gi] ),

@@ -1313,7 +1313,7 @@
   <parameter name="gui_multiply_factor" value="1" />
   <parameter name="gui_number_of_clocks" value="1" />
   <parameter name="gui_operation_mode" value="direct" />
-  <parameter name="gui_output_clock_frequency0" value="100.0" />
+  <parameter name="gui_output_clock_frequency0" value="500.0" />
   <parameter name="gui_output_clock_frequency1" value="600.0" />
   <parameter name="gui_output_clock_frequency10" value="100.0" />
   <parameter name="gui_output_clock_frequency11" value="100.0" />
@@ -1415,9 +1415,9 @@
   <parameter name="id" value="-1395321840" />
  </module>
  <module name="test_wrapper_0" kind="test_wrapper" version="4.1" enabled="1">
-  <parameter name="NUM_SUB_MON" value="3" />
+  <parameter name="NUM_SUB_MON" value="4" />
   <parameter name="SYS_VERSION" value="41" />
-  <parameter name="WIDTH" value="16" />
+  <parameter name="WIDTH" value="32" />
  </module>
  <connection
    kind="avalon"

@@ -13,11 +13,11 @@ module test_wrapper #(
 	input             slave_read,
 	input             slave_write,
 	input      [31:0] slave_writedata,
-	output reg [31:0] slave_readdata,
+	output reg [31:0] slave_readdata/*,
 	
 	output [WIDTH-1:0] dut_a,
 	output [WIDTH-1:0] dut_b,
-	input  [WIDTH-1:0] dut_out
+	input  [WIDTH-1:0] dut_out*/
 );
 
 	// Avalon slave logic
@@ -33,8 +33,6 @@ module test_wrapper #(
 	wire [31:0] o_hpc_errctr;
 	// system version
 	wire [31:0] o_hpc_sysver;
-	// measured DUT delay
-	wire [31:0] o_hpc_dutdelay;
 	// driver filter controls
 	reg  [31:0] i_hpc_fselect;
 	reg  [31:0] i_hpc_fmanual_a;
@@ -89,9 +87,6 @@ module test_wrapper #(
 			O_SYSVER_ADDR:
 				if (reading)
 					slave_readdata <= o_hpc_sysver;
-			O_DUTDELAY_ADDR:
-				if (reading)
-					slave_readdata <= o_hpc_dutdelay;
 			O_MAXACC_ADDR:
 				if (reading)
 					slave_readdata <= o_hpc_maxacc;
@@ -139,7 +134,6 @@ module test_wrapper #(
 		
 		.o_data_ctr ( o_hpc_datctr  ),
 		.o_error_ctr( o_hpc_errctr  ),
-		.o_dut_delay( o_hpc_dutdelay),
 		
 		.i_fselect    ( i_hpc_fselect[0] ),
 		.i_fmanual_a  ( i_hpc_fmanual_a[WIDTH-1:0] ),
@@ -150,11 +144,11 @@ module test_wrapper #(
 		.i_fbitclr_b  ( i_hpc_fbitclr_b[WIDTH-1:0] ),
 		
 		.o_maxacc   ( o_hpc_maxacc  ),
-		.o_minacc   ( o_hpc_minacc  ),
+		.o_minacc   ( o_hpc_minacc  )/*,
 		
 		.o_dut_a    ( dut_a      ),
 		.o_dut_b    ( dut_b      ),
-		.i_dut_out  ( dut_out    )
+		.i_dut_out  ( dut_out    )*/
 	);
 
 endmodule
