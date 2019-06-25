@@ -1,5 +1,5 @@
 Flow report for cy5-systest
-Wed Jun 19 14:31:50 2019
+Tue Jun 25 21:39:35 2019
 Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Standard Edition
 
 
@@ -41,15 +41,15 @@ agreement for further details.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Wed Jun 19 14:30:05 2019           ;
+; Flow Status                     ; Successful - Tue Jun 25 19:30:31 2019           ;
 ; Quartus Prime Version           ; 16.0.0 Build 211 04/27/2016 SJ Standard Edition ;
 ; Revision Name                   ; cy5-systest                                     ;
 ; Top-level Entity Name           ; sys_top                                         ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSXFC6D6F31C6                                  ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 4,392 / 41,910 ( 10 % )                         ;
-; Total registers                 ; 5728                                            ;
+; Logic utilization (in ALMs)     ; 4,389 / 41,910 ( 10 % )                         ;
+; Total registers                 ; 5699                                            ;
 ; Total pins                      ; 157 / 499 ( 31 % )                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 527,104 / 5,662,720 ( 9 % )                     ;
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 06/19/2019 14:20:50 ;
+; Start date & time ; 06/25/2019 19:20:32 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cy5-systest         ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
 ; Assignment Name                       ; Value                                                                    ; Default Value ; Entity Name                    ; Section Id     ;
 +---------------------------------------+--------------------------------------------------------------------------+---------------+--------------------------------+----------------+
-; COMPILER_SIGNATURE_ID                 ; 176831339027095.156095044307604                                          ; --            ; --                             ; --             ;
+; COMPILER_SIGNATURE_ID                 ; 176831338576795.156148682508760                                          ; --            ; --                             ; --             ;
 ; ECO_REGENERATE_REPORT                 ; On                                                                       ; Off           ; --                             ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT                ; Verilog Hdl                                                              ; --            ; --                             ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                   ; ModelSim-Altera (Verilog)                                                ; <None>        ; --                             ; --             ;
@@ -127,7 +127,7 @@ agreement for further details.
 ; PROJECT_OUTPUT_DIRECTORY              ; output_files                                                             ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.regmap                                   ; --            ; --                             ; --             ;
 ; SLD_FILE                              ; soc_system/synthesis/soc_system.debuginfo                                ; --            ; --                             ; --             ;
-; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1560870073             ; --            ; soc_system                     ; --             ;
+; SLD_INFO                              ; QSYS_NAME soc_system HAS_SOPCINFO 1 GENERATION_ID 1561486730             ; --            ; soc_system                     ; --             ;
 ; SOPCINFO_FILE                         ; soc_system/synthesis/../../soc_system.sopcinfo                           ; --            ; --                             ; --             ;
 ; SYNTHESIS_ONLY_QIP                    ; On                                                                       ; --            ; --                             ; --             ;
 ; TOP_LEVEL_ENTITY                      ; sys_top                                                                  ; cy5-systest   ; --                             ; --             ;
@@ -141,10 +141,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:02:30     ; 1.9                     ; 1416 MB             ; 00:03:05                           ;
-; Fitter                    ; 00:03:06     ; 1.3                     ; 3661 MB             ; 00:06:26                           ;
-; TimeQuest Timing Analyzer ; 00:01:17     ; 1.4                     ; 1869 MB             ; 00:01:23                           ;
-; Total                     ; 00:06:53     ; --                      ; --                  ; 00:10:54                           ;
+; Analysis & Synthesis      ; 00:02:31     ; 1.9                     ; 1415 MB             ; 00:03:13                           ;
+; Fitter                    ; 00:03:09     ; 1.3                     ; 3659 MB             ; 00:06:35                           ;
+; Assembler                 ; 00:00:24     ; 1.0                     ; 1023 MB             ; 00:00:16                           ;
+; TimeQuest Timing Analyzer ; 00:01:18     ; 1.4                     ; 1867 MB             ; 00:01:24                           ;
+; Total                     ; 00:07:22     ; --                      ; --                  ; 00:11:28                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -153,9 +154,10 @@ agreement for further details.
 +---------------------------+------------------+-----------+------------+----------------+
 ; Module Name               ; Machine Hostname ; OS Name   ; OS Version ; Processor type ;
 +---------------------------+------------------+-----------+------------+----------------+
-; Analysis & Synthesis      ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
-; Fitter                    ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
-; TimeQuest Timing Analyzer ; eews304-032      ; Windows 7 ; 6.1        ; x86_64         ;
+; Analysis & Synthesis      ; eews506a-027     ; Windows 7 ; 6.1        ; x86_64         ;
+; Fitter                    ; eews506a-027     ; Windows 7 ; 6.1        ; x86_64         ;
+; Assembler                 ; eews506a-027     ; Windows 7 ; 6.1        ; x86_64         ;
+; TimeQuest Timing Analyzer ; eews506a-027     ; Windows 7 ; 6.1        ; x86_64         ;
 +---------------------------+------------------+-----------+------------+----------------+
 
 
@@ -164,6 +166,7 @@ agreement for further details.
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off cy5-systest -c cy5-systest
 quartus_fit --read_settings_files=off --write_settings_files=off cy5-systest -c cy5-systest
+quartus_asm --read_settings_files=off --write_settings_files=off cy5-systest -c cy5-systest
 quartus_sta cy5-systest -c cy5-systest
 
 
